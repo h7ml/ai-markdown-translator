@@ -1,9 +1,9 @@
 # ai-markdown-translator
 
 [![NPM version](https://img.shields.io/npm/v/ai-markdown-translator.svg?style=flat)](https://www.npmjs.org/package/ai-markdown-translator)
-[![ci](https://github.com/h7ml/ai-markdown-translator/actions/workflows/ci.yml/badge.svg)](https://github.com/h7ml/ai-markdown-translator/actions/workflows/ci.yml)
-[![NPM Downloads](https://img.shields.io/npm/dm/ai-markdown-translator.svg)](https://npmcharts.com/compare/ai-markdown-translator?minimal=true)
-[![License](https://img.shields.io/npm/l/ai-markdown-translator.svg)](https://github.com/h7ml/ai-markdown-translator/blob/master/LICENSE)
+[![CI](https://github.com/h7ml/ai-markdown-translator/actions/workflows/ci.yml/badge.svg)](https://github.com/h7ml/ai-markdown-translator/actions/workflows/ci.yml)
+![NPM Downloads](https://img.shields.io/npm/dw/ai-markdown-translator)
+![GitHub License](https://img.shields.io/github/license/h7ml/ai-markdown-translator)
 
 ai-markdown-translator is a command-line tool that translates Markdown files from one language to another using OpenAI's language models. It preserves the Markdown syntax while translating the content.
 
@@ -56,12 +56,18 @@ This will create executables for Windows, macOS, and Linux in the `bin` director
 
 ## Usage
 
-You can run the CLI tool using Node.js or as a standalone executable (if you've packaged it).
+You can run the CLI tool using Node.js, `npx`, or as a standalone executable (if you've packaged it).
 
 ### Using Node.js
 
 ```bash
 node dist/index.js --input <input-file> --output <output-file> --language <target-language> [options]
+```
+
+### Using npx
+
+```bash
+npx ai-markdown-translator -i <input-file> -o <output-file> -l <target-language> [options]
 ```
 
 ### Using the standalone executable
@@ -110,6 +116,12 @@ You can set these in a `.env` file in the project root or export them in your sh
 ./ai-markdown-translator --input input.md --output output.md --language "German" --openai-url "https://api.302.ai/v1/chat/completions" --api-key "sk-302-api-key"
 ```
 
+4. Translate a Markdown file using `npx`:
+
+```bash
+npx ai-markdown-translator -i input.md -o output.md -l "Italian"
+```
+
 ## License
 
 [MIT License](LICENSE)
@@ -121,7 +133,7 @@ You can set these in a `.env` file in the project root or export them in your sh
 
 ## Version Information
 
-- **Current Version**: 1.0.0
+- **Current Version**: 1.0.1
 - **NPM Package**: [ai-markdown-translator](https://www.npmjs.com/package/ai-markdown-translator)
 
 ## CI Information
