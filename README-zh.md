@@ -90,7 +90,7 @@ npx ai-markdown-translator -i <输入文件> -o <输出文件> -l <目标语言>
 
 可以设置以下环境变量，而无需将它们作为命令行参数传递：
 
-- `OPENAI_URL`：OpenAI API的 URL
+- `OPENAI_URL`：OpenAI API 的 URL
 - `API_KEY`：你的 OpenAI API 密钥
 - `MODEL`：要使用的 OpenAI 模型（例如，'gpt-3.5-turbo'）
 
@@ -133,7 +133,7 @@ npx ai-markdown-translator -i input.md -o output.md -l "Italian"
 
 ## 版本信息
 
-- **当前版本**：1.0.1
+- **当前版本**：1.0.2
 - **NPM 包**：[ai-markdown-translator](https://www.npmjs.com/package/ai-markdown-translator)
 
 ## CI 信息
