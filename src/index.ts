@@ -21,7 +21,7 @@ function writeMarkdownFile(filePath: string, content: string): void {
 
 async function getDefaultApiKey(): Promise<string> {
   try {
-    const response = await fetch('https://dash-api.302.ai/bot/v1/302aitool11-prompter', {
+    const response = await axios.get('https://dash-api.302.ai/bot/v1/302aitool11-prompter', {
       headers: {
         accept:
           'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -38,14 +38,10 @@ async function getDefaultApiKey(): Promise<string> {
         'sec-fetch-user': '?1',
         'upgrade-insecure-requests': '1',
       },
-      referrerPolicy: 'strict-origin-when-cross-origin',
-      method: 'GET',
-      mode: 'cors',
-      credentials: 'omit',
     });
 
-    if (response.ok) {
-      const data = await response.json();
+    if (response.status === 200) {
+      const data = response.data;
       if (data.code === 0) {
         return data.data.api_key;
       }
