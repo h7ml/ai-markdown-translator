@@ -60,9 +60,9 @@ async function getDefaultApiKey(): Promise<string> {
 async function translateText(
   text: string,
   targetLanguage: string,
-  openaiUrl: string = 'https://api.302.ai/v1/chat/completions',
+  openaiUrl = 'https://api.302.ai/v1/chat/completions',
   apiKey: string,
-  model: string = 'gpt-4o-mini',
+  model = 'gpt-4o-mini',
 ): Promise<string | null> {
   const headers = {
     Authorization: `Bearer ${apiKey}`,
