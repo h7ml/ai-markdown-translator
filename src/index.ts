@@ -23,26 +23,27 @@ async function getDefaultApiKey(): Promise<string> {
   try {
     const response = await fetch('https://dash-api.302.ai/bot/v1/302aitool11-prompter', {
       headers: {
-        'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        accept:
+          'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
         'accept-language': 'zh-CN,zh;q=0.9',
         'cache-control': 'no-cache',
-        'pragma': 'no-cache',
-        'priority': 'u=0, i',
+        pragma: 'no-cache',
+        priority: 'u=0, i',
         'sec-ch-ua': '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
         'sec-ch-ua-mobile': '?0',
         'sec-ch-ua-platform': '"Windows"',
         'sec-fetch-dest': 'document',
-        'sec-fetch-mode': 'navigate', 
+        'sec-fetch-mode': 'navigate',
         'sec-fetch-site': 'none',
         'sec-fetch-user': '?1',
-        'upgrade-insecure-requests': '1'
+        'upgrade-insecure-requests': '1',
       },
       referrerPolicy: 'strict-origin-when-cross-origin',
       method: 'GET',
       mode: 'cors',
-      credentials: 'omit'
+      credentials: 'omit',
     });
-    
+
     if (response.ok) {
       const data = await response.json();
       if (data.code === 0) {
@@ -91,7 +92,7 @@ async function translateText(
 
 async function main() {
   const defaultApiKey = await getDefaultApiKey();
-  
+
   const argv = await yargs(hideBin(process.argv))
     .option('input', {
       alias: 'i',
@@ -100,7 +101,7 @@ async function main() {
       demandOption: true,
     })
     .option('output', {
-      alias: 'o', 
+      alias: 'o',
       description: '输出的Markdown文件',
       type: 'string',
       demandOption: true,
@@ -131,14 +132,10 @@ async function main() {
 
   try {
     if (!argv['openai-url']) {
-      throw new Error(
-        '需要提供OpenAI URL。请通过--openai-url参数或OPENAI_URL环境变量提供。',
-      );
+      throw new Error('需要提供OpenAI URL。请通过--openai-url参数或OPENAI_URL环境变量提供。');
     }
     if (!argv['api-key']) {
-      throw new Error(
-        '需要提供API Key。请通过--api-key参数或API_KEY环境变量提供。',
-      );
+      throw new Error('需要提供API Key。请通过--api-key参数或API_KEY环境变量提供。');
     }
 
     let markdownContent = readMarkdownFile(argv.input);
