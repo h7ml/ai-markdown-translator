@@ -21,31 +21,24 @@ function writeMarkdownFile(filePath: string, content: string): void {
 
 async function getDefaultApiKey(): Promise<string> {
   try {
-    const response = await axios.get('https://dash-api.302.ai/bot/v1/302aitool11-prompter', {
+    const response = await axios({
+      method: 'get',
+      url: 'https://dash-api.302.ai/bot/v1/302aitool11-prompter',
       headers: {
-        accept:
-          'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        accept: 'application/json',
         'accept-language': 'zh-CN,zh;q=0.9',
         'cache-control': 'no-cache',
         pragma: 'no-cache',
-        priority: 'u=0, i',
-        'sec-ch-ua': '"Google Chrome";v="131", "Chromium";v="131", "Not_A Brand";v="24"',
-        'sec-ch-ua-mobile': '?0',
-        'sec-ch-ua-platform': '"Windows"',
-        'sec-fetch-dest': 'document',
-        'sec-fetch-mode': 'navigate',
-        'sec-fetch-site': 'none',
-        'sec-fetch-user': '?1',
-        'upgrade-insecure-requests': '1',
       },
     });
 
-    if (response.status === 200) {
+    if (response.status === 200 && response.data) {
       const data = response.data;
-      if (data.code === 0) {
+      if (data.code === 0 && data.data && data.data.api_key) {
         return data.data.api_key;
       }
     }
+    console.error('获取默认API Key失败: 接口返回数据格式错误');
     return '';
   } catch (error) {
     console.error('获取默认API Key失败:', error);
