@@ -1,0 +1,62 @@
+{
+  "name": "ai-markdown-translator",
+  "version": "1.0.0",
+  "description": "CLI tool to translate Markdown files using OpenAI's language models while preserving the original formatting.",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "package": "pkg .",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,md}\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,md}\""
+  },
+  "bin": {
+    "ai-markdown-translator": "dist/index.js"
+  },
+  "pkg": {
+    "targets": [
+      "node18-linux-x64",
+      "node18-macos-x64",
+      "node18-win-x64"
+    ],
+    "outputPath": "bin"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "dotenv": "^16.0.3",
+    "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.16.3",
+    "@types/yargs": "^17.0.24",
+    "pkg": "^5.8.1",
+    "typescript": "^5.1.6",
+    "eslint": "^8.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "prettier": "^2.0.0",
+    "eslint-config-prettier": "^8.0.0",
+    "eslint-plugin-prettier": "^4.0.0"
+  },
+  "keywords": [
+    "markdown",
+    "translator",
+    "cli",
+    "openai",
+    "language",
+    "translation"
+  ],
+  "author": "h7ml <h7ml@qq.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/h7ml/ai-markdown-translator",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/h7ml/ai-markdown-translator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/h7ml/ai-markdown-translator/issues"
+  }
+}
