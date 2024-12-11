@@ -5,8 +5,37 @@ import axios from 'axios';
 import { config } from 'dotenv';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import * as path from 'path';
+import * as os from 'os';
 
 config();
+
+// 验证URL是否有效
+function isValidUrl(urlString: string): boolean {
+  try {
+    // 支持标准协议
+    if (urlString.match(/^(http|https|ftp|ssh|file):\/\//)) {
+      new URL(urlString);
+      return true;
+    } // 支持 scp 格式的 SSH URL
+
+    if (urlString.match(/^git@[^:]+:/)) {
+      return true;
+    } // 支持本地文件路径
+
+    if (
+      urlString.startsWith('file://') ||
+      urlString.startsWith('/') ||
+      /^[a-zA-Z]:\\/.test(urlString)
+    ) {
+      return true;
+    }
+
+    return false;
+  } catch {
+    return false;
+  }
+}
 
 function readMarkdownFile(filePath: string): string {
   if (!fs.existsSync(filePath)) {
@@ -79,6 +108,63 @@ async function translateText(
   }
 }
 
+async function getContentFromUrl(urlString: string): Promise<string> {
+  const tempDir = os.tmpdir();
+  const tempFile = path.join(tempDir, `md_${Date.now()}.md`);
+  try {
+    // 第一次尝试：直接获取内容
+    const response = await axios({
+      method: 'get',
+      url: urlString,
+      headers: {
+        'User-Agent': 'Mozilla/5.0',
+        Accept: 'text/markdown,text/plain,*/*',
+      },
+      responseType: 'arraybuffer',
+      timeout: 5000, // 5秒超时
+    });
+    return response.data.toString('utf-8');
+  } catch (firstError) {
+    console.log('firstError', firstError);
+    try {
+      // 第二次尝试：作为文件下载
+      const response = await axios({
+        method: 'get',
+        url: urlString,
+        headers: {
+          'User-Agent': 'Mozilla/5.0',
+          Accept: 'application/octet-stream',
+        },
+        responseType: 'stream',
+        timeout: 5000,
+      });
+
+      // 写入临时文件
+      const writer = fs.createWriteStream(tempFile);
+      response.data.pipe(writer);
+
+      await new Promise((resolve, reject) => {
+        writer.on('finish', resolve);
+        writer.on('error', reject);
+      });
+
+      // 读取临时文件内容
+      const content = fs.readFileSync(tempFile, 'utf-8');
+      // 删除临时文件
+      fs.unlinkSync(tempFile);
+      return content;
+    } catch (secondError) {
+      // 简化错误信息
+      throw new Error(`无法从 URL 获取内容: ${urlString}`);
+    } finally {
+      // 确保删除临时文件
+      if (fs.existsSync(tempFile)) {
+        fs.unlinkSync(tempFile);
+      }
+    }
+  }
+}
+
 async function main() {
   const defaultApiKey = await getDefaultApiKey();
 
@@ -87,7 +173,23 @@ async function main() {
       alias: 'i',
       description: '输入的Markdown文件',
       type: 'string',
-      demandOption: true,
+    })
+    .option('url', {
+      alias: 'u',
+      description: '输入的Markdown URL地址',
+      type: 'string',
+    })
+    .check((argv) => {
+      if (!argv.input && !argv.url) {
+        throw new Error('必须提供 --input 或 --url 参数之一');
+      }
+      if (argv.input && argv.url) {
+        throw new Error('--input 和 --url 参数不能同时使用');
+      }
+      if (argv.url && !isValidUrl(argv.url)) {
+        throw new Error('提供的URL格式不正确');
+      }
+      return true;
     })
     .option('output', {
       alias: 'o',
@@ -116,6 +218,10 @@ async function main() {
       type: 'string',
       default: process.env.MODEL || 'gpt-4o-mini',
     })
+    .option('url', {
+      description: '从URL获取Markdown文件',
+      type: 'string',
+    })
     .help()
     .alias('help', 'h').argv;
 
@@ -127,7 +233,14 @@ async function main() {
       throw new Error('需要提供API Key。请通过--api-key参数或API_KEY环境变量提供。');
     }
 
-    let markdownContent = readMarkdownFile(argv.input);
+    let markdownContent: string;
+    if (argv.url) {
+      markdownContent = await getContentFromUrl(argv.url as string);
+    } else if (argv.input) {
+      markdownContent = readMarkdownFile(argv.input as string);
+    } else {
+      throw new Error('必须提供 --input 或 --url 参数之一');
+    }
 
     if (markdownContent.startsWith('```')) {
       markdownContent = markdownContent.slice(3).trim();
