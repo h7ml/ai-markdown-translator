@@ -76,7 +76,9 @@ jobs:
           git config advice.ignoredHook false
           VERSION=${GITHUB_REF#refs/tags/v}
           git commit -m "chore(release): update CHANGELOG for v$VERSION [skip ci]" -a || echo "No changes to commit"
-          git push || echo "Push to repository failed"
+          BRANCH=$(echo "${GITHUB_REF}" | sed 's@refs/tags/@@')
+          git push origin HEAD:$BRANCH || echo "Push to repository failed"
+
 
       - name: Upload Release Assets
         uses: softprops/action-gh-release@v1
