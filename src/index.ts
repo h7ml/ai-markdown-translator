@@ -5,8 +5,46 @@ import axios from 'axios';
 import { config } from 'dotenv';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
+import * as path from 'path';
+import * as os from 'os';
 
 config();
+
+// 添加常量配置
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const ALLOWED_CONTENT_TYPES = [
+  'text/markdown',
+  'text/plain',
+  'text/x-markdown',
+  'application/octet-stream',
+];
+
+// 验证URL是否有效
+function isValidUrl(urlString: string): boolean {
+  try {
+    // 支持标准协议
+    if (urlString.match(/^(http|https|ftp|ssh|file):\/\//)) {
+      new URL(urlString);
+      return true;
+    } // 支持 scp 格式的 SSH URL
+
+    if (urlString.match(/^git@[^:]+:/)) {
+      return true;
+    } // 支持本地文件路径
+
+    if (
+      urlString.startsWith('file://') ||
+      urlString.startsWith('/') ||
+      /^[a-zA-Z]:\\/.test(urlString)
+    ) {
+      return true;
+    }
+
+    return false;
+  } catch {
+    return false;
+  }
+}
 
 function readMarkdownFile(filePath: string): string {
   if (!fs.existsSync(filePath)) {
@@ -79,6 +117,92 @@ async function translateText(
   }
 }
 
+async function getContentFromUrl(urlString: string): Promise<string> {
+  const tempDir = os.tmpdir();
+  const tempFile = path.join(tempDir, `md_${Date.now()}.md`);
+
+  const validateContent = (content: string): boolean => {
+    // 基本的 Markdown 格式验证
+    const hasMarkdownSyntax = /[#*_[\]()-`]/.test(content);
+    const hasText = /[a-zA-Z\u4e00-\u9fa5]/.test(content);
+    return hasMarkdownSyntax && hasText;
+  };
+
+  try {
+    const response = await axios({
+      method: 'get',
+      url: urlString,
+      headers: {
+        'User-Agent': 'Mozilla/5.0',
+        Accept: 'text/markdown,text/plain,*/*',
+      },
+      responseType: 'arraybuffer',
+      timeout: 5000,
+      maxContentLength: MAX_FILE_SIZE,
+      validateStatus: (status) => status === 200,
+    });
+
+    // 验证内容类型
+    const contentType = response.headers['content-type']?.toLowerCase() || '';
+    if (!ALLOWED_CONTENT_TYPES.some((type) => contentType.includes(type))) {
+      throw new Error(`不支持的内容类型: ${contentType}`);
+    }
+
+    const content = response.data.toString('utf-8');
+
+    // 验证内容是否为有效的 Markdown
+    if (!validateContent(content)) {
+      throw new Error('内容不是有效的 Markdown 格式');
+    }
+
+    return content;
+  } catch (firstError) {
+    console.log('直接获取失败,尝试下载方式:', firstError);
+    try {
+      const response = await axios({
+        method: 'get',
+        url: urlString,
+        headers: {
+          'User-Agent': 'Mozilla/5.0',
+          Accept: 'application/octet-stream',
+        },
+        responseType: 'stream',
+        timeout: 5000,
+        maxContentLength: MAX_FILE_SIZE,
+      });
+
+      // 验证内容类型
+      const contentType = response.headers['content-type']?.toLowerCase() || '';
+      if (!ALLOWED_CONTENT_TYPES.some((type) => contentType.includes(type))) {
+        throw new Error(`不支持的内容类型: ${contentType}`);
+      }
+
+      const writer = fs.createWriteStream(tempFile);
+      response.data.pipe(writer);
+
+      await new Promise((resolve, reject) => {
+        writer.on('finish', resolve);
+        writer.on('error', reject);
+      });
+
+      const content = fs.readFileSync(tempFile, 'utf-8');
+
+      // 验证内容是否为有效的 Markdown
+      if (!validateContent(content)) {
+        throw new Error('内容不是有效的 Markdown 格式');
+      }
+
+      return content;
+    } catch (secondError) {
+      throw new Error(`无法从 URL 获取内容: ${urlString}`);
+    } finally {
+      if (fs.existsSync(tempFile)) {
+        fs.unlinkSync(tempFile);
+      }
+    }
+  }
+}
+
 async function main() {
   const defaultApiKey = await getDefaultApiKey();
 
@@ -87,7 +211,23 @@ async function main() {
       alias: 'i',
       description: '输入的Markdown文件',
       type: 'string',
-      demandOption: true,
+    })
+    .option('url', {
+      alias: 'u',
+      description: '输入的Markdown URL地址',
+      type: 'string',
+    })
+    .check((argv) => {
+      if (!argv.input && !argv.url) {
+        throw new Error('必须提供 --input 或 --url 参数之一');
+      }
+      if (argv.input && argv.url) {
+        throw new Error('--input 和 --url 参数不能同时使用');
+      }
+      if (argv.url && !isValidUrl(argv.url)) {
+        throw new Error('提供的URL格式不正确');
+      }
+      return true;
     })
     .option('output', {
       alias: 'o',
@@ -127,7 +267,14 @@ async function main() {
       throw new Error('需要提供API Key。请通过--api-key参数或API_KEY环境变量提供。');
     }
 
-    let markdownContent = readMarkdownFile(argv.input);
+    let markdownContent: string;
+    if (argv.url) {
+      markdownContent = await getContentFromUrl(argv.url as string);
+    } else if (argv.input) {
+      markdownContent = readMarkdownFile(argv.input as string);
+    } else {
+      throw new Error('必须提供 --input 或 --url 参数之一');
+    }
 
     if (markdownContent.startsWith('```')) {
       markdownContent = markdownContent.slice(3).trim();

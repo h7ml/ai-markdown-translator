@@ -78,13 +78,16 @@ npx ai-markdown-translator -i <input-file> -o <output-file> -l <target-language>
 
 ### Options
 
-- `--input`, `-i`: Input Markdown file (required)
+- `--input`, `-i`: Input Markdown file (alternative to --url)
+- `--url`, `-u`: URL of a Markdown file to translate (alternative to --input)
 - `--output`, `-o`: Output Markdown file (required)
 - `--language`, `-l`: Target language for translation (required)
 - `--openai-url`: OpenAI API URL (default: uses OPENAI_URL environment variable)
 - `--api-key`: OpenAI API Key (default: uses API_KEY environment variable)
 - `--model`: OpenAI Model to use (default: uses MODEL environment variable or 'gpt-3.5-turbo')
 - `--help`, `-h`: Show help
+
+Note: `--input` and `--url` are mutually exclusive - you must provide one or the other.
 
 ## Environment Variables
 
@@ -120,6 +123,12 @@ You can set these in a `.env` file in the project root or export them in your sh
 
 ```bash
 npx ai-markdown-translator -i input.md -o output.md -l "Italian"
+```
+
+5. Translate the Markdown content of the URL:
+
+```bash
+./ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/main/README.md -o output.md -l "Italian"
 ```
 
 ## License
