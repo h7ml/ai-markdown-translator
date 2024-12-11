@@ -256,8 +256,20 @@ async function main() {
       type: 'string',
       default: process.env.MODEL || 'gpt-4o-mini',
     })
+    .option('version', {
+      alias: 'v',
+      description: '显示版本号',
+      type: 'boolean',
+    })
     .help()
     .alias('help', 'h').argv;
+
+  if (argv.version) {
+    const packageJsonPath = path.join(__dirname, '..', 'package.json');
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+    console.log(`版本号: ${packageJson.version}`);
+    process.exit(0);
+  }
 
   try {
     if (!argv['openai-url']) {
