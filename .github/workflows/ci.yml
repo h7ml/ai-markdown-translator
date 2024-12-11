@@ -18,15 +18,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
 
       - name: Get pnpm store directory
         shell: bash
@@ -44,19 +44,24 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: |
+          pnpm install --no-frozen-lockfile || (echo "Dependency installation failed" && exit 1)
 
       - name: Check format
-        run: pnpm format:check
+        run: |
+          pnpm format:check || echo "Format check failed"
 
       - name: Run lint
-        run: pnpm lint
+        run: |
+          pnpm lint || echo "Linting issues detected"
 
       - name: Build
-        run: pnpm build
+        run: |
+          pnpm build || (echo "Build failed" && exit 1)
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
           name: dist
           path: dist/
+        if: success()

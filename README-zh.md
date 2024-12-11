@@ -142,7 +142,7 @@ npx ai-markdown-translator -i input.md -o output.md -l "Italian"
 
 ## 版本信息
 
-- **当前版本**：1.0.5
+- **当前版本**：1.0.6
 - **NPM包**：[ai-markdown-translator](https://www.npmjs.com/package/ai-markdown-translator)
 
 ## CI信息

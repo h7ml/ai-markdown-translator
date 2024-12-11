@@ -142,7 +142,7 @@ npx ai-markdown-translator -i input.md -o output.md -l "Italian"
 
 ## Version Information
 
-- **Current Version**: 1.0.5
+- **Current Version**: 1.0.6
 - **NPM Package**: [ai-markdown-translator](https://www.npmjs.com/package/ai-markdown-translator)
 
 ## CI Information
