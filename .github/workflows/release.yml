@@ -64,16 +64,16 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Package binaries
-        run: pnpm package
+      - name: Commit and Push
+        run: |
+          git add CHANGELOG.md
+          git commit -m "chore: update changelog"
+          git push
+    
 
       - name: Upload Release Assets
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            bin/ai-markdown-translator-linux
-            bin/ai-markdown-translator-macos
-            bin/ai-markdown-translator-win.exe
           body_path: CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
