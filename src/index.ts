@@ -10,11 +10,28 @@ import * as os from 'os';
 
 config();
 
-// 添加新函数
+// 验证URL是否有效
 function isValidUrl(urlString: string): boolean {
   try {
-    new URL(urlString);
-    return true;
+    // 支持标准协议
+    if (urlString.match(/^(http|https|ftp|ssh|file):\/\//)) {
+      new URL(urlString);
+      return true;
+    } // 支持 scp 格式的 SSH URL
+
+    if (urlString.match(/^git@[^:]+:/)) {
+      return true;
+    } // 支持本地文件路径
+
+    if (
+      urlString.startsWith('file://') ||
+      urlString.startsWith('/') ||
+      /^[a-zA-Z]:\\/.test(urlString)
+    ) {
+      return true;
+    }
+
+    return false;
   } catch {
     return false;
   }
@@ -139,6 +156,11 @@ async function getContentFromUrl(urlString: string): Promise<string> {
     } catch (secondError) {
       // 简化错误信息
       throw new Error(`无法从 URL 获取内容: ${urlString}`);
+    } finally {
+      // 确保删除临时文件
+      if (fs.existsSync(tempFile)) {
+        fs.unlinkSync(tempFile);
+      }
     }
   }
 }
