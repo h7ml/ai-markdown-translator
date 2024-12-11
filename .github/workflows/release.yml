@@ -67,9 +67,12 @@ jobs:
       - name: Commit and Push
         run: |
           git add CHANGELOG.md
-          git commit -m "chore: update changelog"
+          git config --local user.email "action@h7ml.cn"
+          git config --local user.name "GitHub Action"
+          git config advice.ignoredHook false
+          VERSION=${GITHUB_REF#refs/tags/v}
+          git commit -m "chore(release): update CHANGELOG for v$VERSION [skip ci]" -a || echo "No changes to commit"
           git push
-    
 
       - name: Upload Release Assets
         uses: softprops/action-gh-release@v1
