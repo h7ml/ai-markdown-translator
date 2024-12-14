@@ -233,7 +233,6 @@ async function main() {
       alias: 'o',
       description: '输出的Markdown文件',
       type: 'string',
-      demandOption: true,
     })
     .option('language', {
       alias: 'l',
@@ -295,6 +294,14 @@ async function main() {
       markdownContent = markdownContent.slice(0, -3).trim();
     }
 
+    if (!argv.output && argv.input) {
+      argv.output = argv.input;
+    }
+
+    if (typeof argv.output !== 'string') {
+      throw new Error('输出文件名无效。');
+    }
+
     const translatedContent = await translateText(
       markdownContent,
       argv.language,
@@ -304,7 +311,20 @@ async function main() {
     );
 
     if (translatedContent) {
-      writeMarkdownFile(argv.output, translatedContent);
+      let modifiedContent = translatedContent; // Create a mutable variable
+      // 校验下第一行是否含有```  和 最后是否含有``` 如果是的话 那么删掉第一行和最后行
+      if (modifiedContent.startsWith('```')) {
+        const endOfFirstLine = modifiedContent.indexOf('\n');
+        // 删除整行代码块标记（包括```和可能的语言标识符）
+        modifiedContent = modifiedContent.slice(endOfFirstLine + 1).trim();
+      }
+
+      if (modifiedContent.endsWith('```')) {
+        const startOfLastLine = modifiedContent.lastIndexOf('\n');
+        // 删除整行代码块标记
+        modifiedContent = modifiedContent.slice(0, startOfLastLine).trim();
+      }
+      writeMarkdownFile(argv.output, modifiedContent);
       console.log(`翻译完成。输出已保存到 ${argv.output}。`);
     } else {
       console.log('翻译失败。');

@@ -93,7 +93,7 @@ npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/
 
 - `--input`, `-i`: Input Markdown file (alternative to `--url`).
 - `--url`, `-u`: URL of a Markdown file to translate (alternative to `--input`).
-- `--output`, `-o`: Output Markdown file (required).
+- `--output`, `-o`: Output Markdown file (if not provided, defaults to the input file name).
 - `--language`, `-l`: Target language for translation (required).
 - `--openai-url`: OpenAI API URL (default: uses `OPENAI_URL` environment variable).
 - `--api-key`: OpenAI API Key (default: uses `API_KEY` environment variable).
@@ -150,7 +150,7 @@ npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/
 
 ## Version Information
 
-- **Current Version**: 1.0.6
+- **Current Version**: 1.0.7
 - **NPM Package**: [ai-markdown-translator](https://www.npmjs.com/package/ai-markdown-translator)
 
 ## CI Information
