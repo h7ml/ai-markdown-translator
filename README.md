@@ -91,15 +91,26 @@ npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/
 
 ## Options
 
-- `--input`, `-i`: Input Markdown file (alternative to `--url`).
-- `--url`, `-u`: URL of a Markdown file to translate (alternative to `--input`).
-- `--output`, `-o`: Output Markdown file (if not provided, defaults to the input file name).
-- `--language`, `-l`: Target language for translation (required).
-- `--openai-url`: OpenAI API URL (default: uses `OPENAI_URL` environment variable).
-- `--api-key`: OpenAI API Key (default: uses `API_KEY` environment variable).
-- `--model`: OpenAI Model to use (default: uses `MODEL` environment variable or `gpt-3.5-turbo`).
-- `--help`, `-h`: Show help.
-- `--show-version`, `-v`: Show version.
+- `--input`, `-i`: Input Markdown file or directory (alternative to `--url`). This option allows you to specify the path to the Markdown file or directory you want to translate.
+- `--url`, `-u`: URL of a Markdown file to translate (alternative to `--input`). Use this option to provide a direct link to a Markdown file that you want to translate.
+
+- `--extension`, `-e`: Specify the file extension to translate (e.g., `md`). If not provided, all files will be processed. This option allows you to filter which files to translate based on their extension.
+
+- `--rename`: Whether to modify the file name. If true, the output file will be named `<original-filename>-translated.<extension>`. This option allows you to specify if you want to append a suffix to the translated file name.
+
+- `--output`, `-o`: Output Markdown file (if not provided, defaults to the input file name). This option allows you to specify the name of the output file where the translated content will be saved.
+
+- `--language`, `-l`: Target language for translation (required). This option specifies the language into which you want the Markdown content to be translated.
+
+- `--openai-url`: OpenAI API URL (default: uses `OPENAI_URL` environment variable). This option allows you to specify a custom URL for the OpenAI API if needed.
+
+- `--api-key`: OpenAI API Key (default: uses `API_KEY` environment variable). This option is used to provide your OpenAI API key for authentication.
+
+- `--model`: OpenAI Model to use (default: uses `MODEL` environment variable or `gpt-3.5-turbo`). This option allows you to specify which OpenAI model to use for translation.
+
+- `--help`, `-h`: Show help. This option displays the help information for the command-line tool.
+
+- `--show-version`, `-v`: Show version. This option displays the current version of the tool.
 
 > Note: `--input` and `--url` are mutually exclusive; you must provide one or the other.
 
@@ -137,6 +148,18 @@ npx ai-markdown-translator -i input.md -o output.md -l "German" --openai-url "ht
 
 ```bash
 npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/main/README.md -o output.md -l "Italian"
+```
+
+5. **Translate all Markdown files in a directory and rename them:**
+
+```bash
+npx ai-markdown-translator -i ./markdown-files -l "Chinese" --rename
+```
+
+6. **Translate a Markdown file and specify the output file name:**
+
+```bash
+npx ai-markdown-translator -i example.md -o translated_example.md -l "Japanese"
 ```
 
 ## License

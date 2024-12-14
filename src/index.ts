@@ -7,6 +7,7 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import * as path from 'path';
 import * as os from 'os';
+import * as glob from 'glob';
 
 config();
 
@@ -49,6 +50,9 @@ function isValidUrl(urlString: string): boolean {
 function readMarkdownFile(filePath: string): string {
   if (!fs.existsSync(filePath)) {
     throw new Error(`输入文件 ${filePath} 不存在。`);
+  }
+  if (fs.lstatSync(filePath).isDirectory()) {
+    throw new Error(`错误: ${filePath} 是一个目录。`);
   }
   return fs.readFileSync(filePath, 'utf-8');
 }
@@ -102,7 +106,6 @@ async function translateText(
     model: model,
     messages: [{ role: 'user', content: prompt }],
   };
-
   try {
     const response = await axios.post(openaiUrl, data, { headers });
     if (response.status === 200) {
@@ -203,19 +206,96 @@ async function getContentFromUrl(urlString: string): Promise<string> {
   }
 }
 
+async function translateDirectory(
+  inputDir: string,
+  outputDir: string,
+  targetLanguage: string,
+  openaiUrl: string,
+  apiKey: string,
+  model: string,
+  fileExtension: string | null,
+  rename: string | null,
+) {
+  // 使用glob递归获取所有文件
+  const pattern = fileExtension ? `**/*.${fileExtension}` : '**/*';
+  const markdownFiles = glob.sync(`${inputDir}/${pattern}`, { nodir: true });
+
+  for (const file of markdownFiles) {
+    const relativePath = path.relative(inputDir, file); // 获取相对路径
+    const content = readMarkdownFile(file);
+
+    const translatedContent = await translateText(
+      content,
+      targetLanguage,
+      openaiUrl,
+      apiKey,
+      model,
+    );
+
+    if (translatedContent) {
+      let modifiedContent = translatedContent; // 创建可修改的变量
+      // 校验是否含有代码块标记，如果有则删除第一行和最后一行
+      if (modifiedContent.startsWith('```')) {
+        const endOfFirstLine = modifiedContent.indexOf('\n');
+        modifiedContent = modifiedContent.slice(endOfFirstLine + 1).trim();
+      }
+
+      if (modifiedContent.endsWith('```')) {
+        const startOfLastLine = modifiedContent.lastIndexOf('\n');
+        modifiedContent = modifiedContent.slice(0, startOfLastLine).trim();
+      }
+
+      // 根据相对路径生成输出文件路径
+      const outputFileName = rename
+        ? path.join(
+            outputDir,
+            path.dirname(relativePath),
+            `${path.basename(file, path.extname(file))}-${rename}${path.extname(file)}`,
+          )
+        : path.join(
+            outputDir,
+            path.dirname(relativePath),
+            `${path.basename(file, path.extname(file))}${path.extname(file)}`,
+          );
+
+      // 确保输出目录存在
+      const outputDirPath = path.dirname(outputFileName);
+      if (!fs.existsSync(outputDirPath)) {
+        fs.mkdirSync(outputDirPath, { recursive: true });
+      }
+
+      // 写入翻译后的文件
+      writeMarkdownFile(outputFileName, modifiedContent);
+      console.log(`翻译完成。输出已保存到 ${outputFileName}。`);
+    } else {
+      console.log('翻译失败。');
+    }
+  }
+}
+
 async function main() {
   const defaultApiKey = await getDefaultApiKey();
 
   const argv = await yargs(hideBin(process.argv))
     .option('input', {
       alias: 'i',
-      description: '输入的Markdown文件',
+      description: '输入的Markdown文件或文件夹',
       type: 'string',
     })
     .option('url', {
       alias: 'u',
       description: '输入的Markdown URL地址',
       type: 'string',
+    })
+    .option('extension', {
+      alias: 'e',
+      description: '指定要翻译的文件后缀（例如 md）',
+      type: 'string',
+    })
+    .option('rename', {
+      description: '是否修改文件名称',
+      type: 'string',
+      default: null,
     })
     .check((argv) => {
       if (!argv.input && !argv.url) {
@@ -278,56 +358,71 @@ async function main() {
       throw new Error('需要提供API Key。请通过--api-key参数或API_KEY环境变量提供。');
     }
 
-    let markdownContent: string;
+    let markdownContent: string | null = null;
     if (argv.url) {
       markdownContent = await getContentFromUrl(argv.url as string);
     } else if (argv.input) {
-      markdownContent = readMarkdownFile(argv.input as string);
+      const inputPath = argv.input as string;
+      const stats = fs.statSync(inputPath);
+      if (stats.isDirectory()) {
+        const outputDir = argv.output || inputPath;
+        await translateDirectory(
+          inputPath,
+          outputDir,
+          argv.language,
+          argv['openai-url'] as string,
+          argv['api-key'] as string,
+          argv.model as string,
+          argv.extension || null,
+          argv.rename,
+        );
+      } else {
+        markdownContent = readMarkdownFile(inputPath);
+      }
     } else {
       throw new Error('必须提供 --input 或 --url 参数之一');
     }
 
-    if (markdownContent.startsWith('```')) {
-      markdownContent = markdownContent.slice(3).trim();
-    }
-    if (markdownContent.endsWith('```')) {
-      markdownContent = markdownContent.slice(0, -3).trim();
-    }
-
-    if (!argv.output && argv.input) {
-      argv.output = argv.input;
-    }
-
-    if (typeof argv.output !== 'string') {
-      throw new Error('输出文件名无效。');
-    }
-
-    const translatedContent = await translateText(
-      markdownContent,
-      argv.language,
-      argv['openai-url'] as string,
-      argv['api-key'] as string,
-      argv.model as string,
-    );
-
-    if (translatedContent) {
-      let modifiedContent = translatedContent; // Create a mutable variable
-      // 校验下第一行是否含有```  和 最后是否含有``` 如果是的话 那么删掉第一行和最后行
-      if (modifiedContent.startsWith('```')) {
-        const endOfFirstLine = modifiedContent.indexOf('\n');
-        // 删除整行代码块标记（包括```和可能的语言标识符）
-        modifiedContent = modifiedContent.slice(endOfFirstLine + 1).trim();
+    if (markdownContent) {
+      if (markdownContent.startsWith('```')) {
+        markdownContent = markdownContent.slice(3).trim();
+      }
+      if (markdownContent.endsWith('```')) {
+        markdownContent = markdownContent.slice(0, -3).trim();
       }
 
-      if (modifiedContent.endsWith('```')) {
-        const startOfLastLine = modifiedContent.lastIndexOf('\n');
-        // 删除整行代码块标记
-        modifiedContent = modifiedContent.slice(0, startOfLastLine).trim();
+      if (!argv.output && argv.input) {
+        argv.output = argv.input;
       }
-      writeMarkdownFile(argv.output, modifiedContent);
-      console.log(`翻译完成。输出已保存到 ${argv.output}。`);
-    } else {
-      console.log('翻译失败。');
+
+      if (typeof argv.output !== 'string') {
+        throw new Error('输出文件名无效。');
+      }
+
+      const translatedContent = await translateText(
+        markdownContent,
+        argv.language,
+        argv['openai-url'] as string,
+        argv['api-key'] as string,
+        argv.model as string,
+      );
+
+      if (translatedContent) {
+        let modifiedContent = translatedContent;
+        if (modifiedContent.startsWith('```')) {
+          const endOfFirstLine = modifiedContent.indexOf('\n');
+          modifiedContent = modifiedContent.slice(endOfFirstLine + 1).trim();
+        }
+
+        if (modifiedContent.endsWith('```')) {
+          const startOfLastLine = modifiedContent.lastIndexOf('\n');
+          modifiedContent = modifiedContent.slice(0, startOfLastLine).trim();
+        }
+        writeMarkdownFile(argv.output, modifiedContent);
+        console.log(`翻译完成。输出已保存到 ${argv.output}。`);
+      } else {
+        console.log('翻译失败。');
+      }
     }
   } catch (error: Error | unknown) {
     console.error(`错误: ${error instanceof Error ? error.message : String(error)}`);

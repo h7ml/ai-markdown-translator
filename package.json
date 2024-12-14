@@ -28,8 +28,10 @@
     "CHANGELOG.md"
   ],
   "dependencies": {
+    "@types/glob": "^8.1.0",
     "axios": "^1.4.0",
     "dotenv": "^16.0.3",
+    "glob": "^11.0.0",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
