@@ -150,7 +150,7 @@ npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/
 
 ## Version Information
 
-- **Current Version**: 1.0.6
+- **Current Version**: 1.0.7
 - **NPM Package**: [ai-markdown-translator](https://www.npmjs.com/package/ai-markdown-translator)
 
 ## CI Information
