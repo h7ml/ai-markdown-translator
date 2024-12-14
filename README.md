@@ -1,18 +1,28 @@
+Here’s the revised and consolidated version of the `ai-markdown-translator` documentation with `npx` and `./ai-markdown-translator` examples combined:
+
+---
+
 # ai-markdown-translator
 
-[![NPM version](https://img.shields.io/npm/v/ai-markdown-translator.svg?style=flat)](https://www.npmjs.org/package/ai-markdown-translator)
-[![CI](https://github.com/h7ml/ai-markdown-translator/actions/workflows/ci.yml/badge.svg)](https://github.com/h7ml/ai-markdown-translator/actions/workflows/ci.yml)
-![NPM Downloads](https://img.shields.io/npm/dw/ai-markdown-translator)
-![GitHub License](https://img.shields.io/github/license/h7ml/ai-markdown-translator)
+[![NPM version](https://img.shields.io/npm/v/ai-markdown-translator.svg?style=flat)](https://www.npmjs.org/package/ai-markdown-translator)  
+[![CI](https://github.com/h7ml/ai-markdown-translator/actions/workflows/ci.yml/badge.svg)](https://github.com/h7ml/ai-markdown-translator/actions/workflows/ci.yml)  
+[![Release](https://github.com/h7ml/ai-markdown-translator/actions/workflows/release.yml/badge.svg)](https://github.com/h7ml/ai-markdown-translator/actions/workflows/release.yml)  
+[![NPM Downloads](https://img.shields.io/npm/dw/ai-markdown-translator)](https://www.npmjs.org/package/ai-markdown-translator)  
+[![NPM License](https://img.shields.io/npm/l/ai-markdown-translator)](https://www.npmjs.org/package/ai-markdown-translator)
+[![GitHub Stars](https://img.shields.io/github/stars/h7ml/ai-markdown-translator.svg)](https://github.com/h7ml/ai-markdown-translator/stargazers)  
+[![GitHub Issues](https://img.shields.io/github/issues/h7ml/ai-markdown-translator.svg)](https://github.com/h7ml/ai-markdown-translator/issues)  
+[![GitHub Forks](https://img.shields.io/github/forks/h7ml/ai-markdown-translator.svg)](https://github.com/h7ml/ai-markdown-translator/network/members)  
+[![GitHub Contributors](https://img.shields.io/github/contributors/h7ml/ai-markdown-translator.svg)](https://github.com/h7ml/ai-markdown-translator/graphs/contributors)
 
-ai-markdown-translator is a command-line tool that translates Markdown files from one language to another using OpenAI's language models. It preserves the Markdown syntax while translating the content.
+[English](README.md) | [中文](README-zh.md)
+
+`ai-markdown-translator` is a command-line tool that translates Markdown files from one language to another using OpenAI's language models. It preserves the Markdown syntax while translating the content.
 
 ## Features
 
-- Translate Markdown files to any language supported by OpenAI's models
-- Preserve Markdown syntax during translation
-- Flexible configuration through command-line arguments or environment variables
-- Cross-platform support (Windows, macOS, Linux)
+- Translate Markdown files to any language supported by OpenAI's models.
+- Preserve Markdown syntax during translation.
+- Flexible configuration through command-line arguments or environment variables.
 
 ## Prerequisites
 
@@ -36,23 +46,18 @@ npm install
 npm run build
 ```
 
-5. (Optional) Package the CLI into a standalone executable:
-
-```bash
-npm run package
-```
-
-This will create executables for Windows, macOS, and Linux in the `bin` directory.
-
 ## Scripts
 
-- **build**: Compile TypeScript files to JavaScript.
-- **start**: Run the CLI tool using Node.js.
-- **package**: Create standalone executables for the CLI.
-- **lint**: Run ESLint to check for code quality issues.
-- **lint:fix**: Automatically fix linting issues.
-- **format**: Format code using Prettier.
-- **format:check**: Check code formatting without making changes.
+- `build`: Compiles TypeScript files to JavaScript.
+- `start`: Runs the compiled JavaScript using Node.js.
+- `lint`: Runs ESLint to check for code quality issues in TypeScript files.
+- `lint:fix`: Automatically fixes linting issues in TypeScript files.
+- `format`: Formats code using Prettier for various file types in the `src` directory.
+- `format:check`: Checks code formatting without making changes for various file types in the `src` directory.
+- `postbuild`: Makes the compiled `index.js` file executable.
+- `changelog`: Generates a changelog based on conventional commits.
+- `version`: Updates the changelog and stages it for commit when versioning.
+- `test`: Builds the project and runs the test.
 
 ## Usage
 
@@ -70,65 +75,66 @@ node dist/index.js --input <input-file> --output <output-file> --language <targe
 npx ai-markdown-translator -i <input-file> -o <output-file> -l <target-language> [options]
 ```
 
+For example:
+
+```bash
+npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/main/README.md -o output.md -l "Italian"
+```
+
 ### Using the standalone executable
 
 ```bash
 ./ai-markdown-translator --input <input-file> --output <output-file> --language <target-language> [options]
 ```
 
-### Options
+## Options
 
-- `--input`, `-i`: Input Markdown file (alternative to --url)
-- `--url`, `-u`: URL of a Markdown file to translate (alternative to --input)
-- `--output`, `-o`: Output Markdown file (required)
-- `--language`, `-l`: Target language for translation (required)
-- `--openai-url`: OpenAI API URL (default: uses OPENAI_URL environment variable)
-- `--api-key`: OpenAI API Key (default: uses API_KEY environment variable)
-- `--model`: OpenAI Model to use (default: uses MODEL environment variable or 'gpt-3.5-turbo')
-- `--help`, `-h`: Show help
+- `--input`, `-i`: Input Markdown file (alternative to `--url`).
+- `--url`, `-u`: URL of a Markdown file to translate (alternative to `--input`).
+- `--output`, `-o`: Output Markdown file (required).
+- `--language`, `-l`: Target language for translation (required).
+- `--openai-url`: OpenAI API URL (default: uses `OPENAI_URL` environment variable).
+- `--api-key`: OpenAI API Key (default: uses `API_KEY` environment variable).
+- `--model`: OpenAI Model to use (default: uses `MODEL` environment variable or `gpt-3.5-turbo`).
+- `--help`, `-h`: Show help.
+- `--show-version`, `-v`: Show version.
 
-Note: `--input` and `--url` are mutually exclusive - you must provide one or the other.
+> Note: `--input` and `--url` are mutually exclusive; you must provide one or the other.
 
 ## Environment Variables
 
 You can set the following environment variables instead of passing them as command-line arguments:
 
-- `OPENAI_URL`: The URL for the OpenAI API
-- `API_KEY`: Your OpenAI API key
-- `MODEL`: The OpenAI model to use (e.g., 'gpt-3.5-turbo')
+- `OPENAI_URL`: The URL for the OpenAI API.
+- `API_KEY`: Your OpenAI API key.
+- `MODEL`: The OpenAI model to use (e.g., `'gpt-3.5-turbo'`).
 
 You can set these in a `.env` file in the project root or export them in your shell.
 
 ## Examples
 
-1. Translate a Markdown file from English to Spanish:
+1. **Translate a Markdown file from English to Spanish:**
 
 ```bash
-./ai-markdown-translator --input english.md --output spanish.md --language "Spanish"
+npx ai-markdown-translator -i english.md -o spanish.md -l "Spanish"
 ```
 
-2. Translate using a specific OpenAI model:
+2. **Translate using a specific OpenAI model:**
 
 ```bash
-./ai-markdown-translator --input input.md --output output.md --language "French" --model "gpt-4"
+npx ai-markdown-translator -i input.md -o output.md -l "French" --model "gpt-4"
 ```
 
-3. Translate with custom OpenAI URL and API key:
+3. **Translate with custom OpenAI URL and API key:**
 
 ```bash
-./ai-markdown-translator --input input.md --output output.md --language "German" --openai-url "https://api.302.ai/v1/chat/completions" --api-key "sk-302-api-key"
+npx ai-markdown-translator -i input.md -o output.md -l "German" --openai-url "https://api.302.ai/v1/chat/completions" --api-key "sk-302-api-key"
 ```
 
-4. Translate a Markdown file using `npx`:
+4. **Translate the Markdown content of a URL:**
 
 ```bash
-npx ai-markdown-translator -i input.md -o output.md -l "Italian"
-```
-
-5. Translate the Markdown content of the URL:
-
-```bash
-./ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/main/README.md -o output.md -l "Italian"
+npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/main/README.md -o output.md -l "Italian"
 ```
 
 ## License
@@ -161,3 +167,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## Support
 
 If you encounter any problems or have any questions, please open an issue in this repository.
+
+---
+
+This version combines the usage examples for both `npx` and the standalone executable (`./ai-markdown-translator`) into one cohesive section. Let me know if you'd like to make any further adjustments!

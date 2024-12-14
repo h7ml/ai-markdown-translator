@@ -59,6 +59,10 @@ jobs:
         run: |
           pnpm build || (echo "Build failed" && exit 1)
 
+      - name: Test
+        run: |
+          pnpm test || (echo "Test failed" && exit 1)
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:

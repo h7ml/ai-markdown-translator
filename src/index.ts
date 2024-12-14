@@ -256,7 +256,7 @@ async function main() {
       type: 'string',
       default: process.env.MODEL || 'gpt-4o-mini',
     })
-    .option('version', {
+    .option('show-version', {
       alias: 'v',
       description: '显示版本号',
       type: 'boolean',
@@ -264,7 +264,7 @@ async function main() {
     .help()
     .alias('help', 'h').argv;
 
-  if (argv.version) {
+  if (argv['show-version']) {
     const packageJsonPath = path.join(__dirname, '..', 'package.json');
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
     console.log(`版本号: ${packageJson.version}`);

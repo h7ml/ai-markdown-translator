@@ -13,7 +13,8 @@
     "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,md}\"",
     "postbuild": "chmod +x dist/index.js",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md"
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
+    "test": "npm run build && node dist/index.js -i README.md -o README-zh.md -l Chinese"
   },
   "bin": {
     "ai-markdown-translator": "dist/index.js"
