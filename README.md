@@ -4,15 +4,17 @@ Here’s the revised and consolidated version of the `ai-markdown-translator` do
 
 # ai-markdown-translator
 
-[![NPM version](https://img.shields.io/npm/v/ai-markdown-translator.svg?style=flat)](https://www.npmjs.org/package/ai-markdown-translator)  
-[![CI](https://github.com/h7ml/ai-markdown-translator/actions/workflows/ci.yml/badge.svg)](https://github.com/h7ml/ai-markdown-translator/actions/workflows/ci.yml)  
-[![Release](https://github.com/h7ml/ai-markdown-translator/actions/workflows/release.yml/badge.svg)](https://github.com/h7ml/ai-markdown-translator/actions/workflows/release.yml)  
-[![NPM Downloads](https://img.shields.io/npm/dw/ai-markdown-translator)](https://www.npmjs.org/package/ai-markdown-translator)  
-[![NPM License](https://img.shields.io/npm/l/ai-markdown-translator)](https://www.npmjs.org/package/ai-markdown-translator)
-[![GitHub Stars](https://img.shields.io/github/stars/h7ml/ai-markdown-translator.svg)](https://github.com/h7ml/ai-markdown-translator/stargazers)  
-[![GitHub Issues](https://img.shields.io/github/issues/h7ml/ai-markdown-translator.svg)](https://github.com/h7ml/ai-markdown-translator/issues)  
-[![GitHub Forks](https://img.shields.io/github/forks/h7ml/ai-markdown-translator.svg)](https://github.com/h7ml/ai-markdown-translator/network/members)  
-[![GitHub Contributors](https://img.shields.io/github/contributors/h7ml/ai-markdown-translator.svg)](https://github.com/h7ml/ai-markdown-translator/graphs/contributors)
+<div>
+  <a href="https://www.npmjs.org/package/ai-markdown-translator"><img src="https://img.shields.io/npm/v/ai-markdown-translator.svg?style=flat" alt="NPM version"></a>
+  <a href="https://github.com/h7ml/ai-markdown-translator/actions/workflows/ci.yml"><img src="https://github.com/h7ml/ai-markdown-translator/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/h7ml/ai-markdown-translator/actions/workflows/release.yml"><img src="https://github.com/h7ml/ai-markdown-translator/actions/workflows/release.yml/badge.svg" alt="Release"></a>
+  <a href="https://www.npmjs.org/package/ai-markdown-translator"><img src="https://img.shields.io/npm/dw/ai-markdown-translator" alt="NPM Downloads"></a>
+  <a href="https://www.npmjs.org/package/ai-markdown-translator"><img src="https://img.shields.io/npm/l/ai-markdown-translator" alt="NPM License"></a>
+  <a href="https://github.com/h7ml/ai-markdown-translator/stargazers"><img src="https://img.shields.io/github/stars/h7ml/ai-markdown-translator.svg" alt="GitHub Stars"></a>
+  <a href="https://github.com/h7ml/ai-markdown-translator/issues"><img src="https://img.shields.io/github/issues/h7ml/ai-markdown-translator.svg" alt="GitHub Issues"></a>
+  <a href="https://github.com/h7ml/ai-markdown-translator/network/members"><img src="https://img.shields.io/github/forks/h7ml/ai-markdown-translator.svg" alt="GitHub Forks"></a>
+  <a href="https://github.com/h7ml/ai-markdown-translator/graphs/contributors"><img src="https://img.shields.io/github/contributors/h7ml/ai-markdown-translator.svg" alt="GitHub Contributors"></a>
+</div>
 
 [English](README.md) | [中文](README-zh.md)
 
