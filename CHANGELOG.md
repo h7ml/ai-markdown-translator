@@ -1,12 +1,3 @@
-## [1.0.7](https://github.com/h7ml/ai-markdown-translator/compare/v1.0.6...v1.0.7) (2024-12-14)
-
-
-### Features
-
-* 优化 CLI 工具的输出文件处理逻辑 ([4bc6f4b](https://github.com/h7ml/ai-markdown-translator/commit/4bc6f4b4e25488d6f4740fb0b739d10a7dc69d01))
-
-
-
 ## [1.0.6](https://github.com/h7ml/ai-markdown-translator/compare/v1.0.5...v1.0.6) (2024-12-11)
 
 
