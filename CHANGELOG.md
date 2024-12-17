@@ -1,3 +1,41 @@
+## v1.0.10
+
+[compare changes](https://github.com/h7ml/ai-markdown-translator/compare/v1.0.8...v1.0.10)
+
+### 💅 Refactors
+
+- 优化翻译完成后的控制台输出信息 ([fb80347](https://github.com/h7ml/ai-markdown-translator/commit/fb80347))
+
+### 📖 Documentation
+
+- **README:** Update README-zh.md ([8ceca79](https://github.com/h7ml/ai-markdown-translator/commit/8ceca79))
+
+### 🏡 Chore
+
+- **release:** Update CHANGELOG for v1.0.8 [skip ci] ([d17947d](https://github.com/h7ml/ai-markdown-translator/commit/d17947d))
+
+### ❤️ Contributors
+
+- H7ml ([@h7ml](http://github.com/h7ml))
+- GitHub Action ([@dextr7](http://github.com/dextr7))
+
+## v1.0.9
+
+[compare changes](https://github.com/h7ml/ai-markdown-translator/compare/v1.0.8...v1.0.9)
+
+### 📖 Documentation
+
+- **README:** Update README-zh.md ([8ceca79](https://github.com/h7ml/ai-markdown-translator/commit/8ceca79))
+- **README:** Update README-zh.md ([687ae3f](https://github.com/h7ml/ai-markdown-translator/commit/687ae3f))
+
+### 🏡 Chore
+
+- **release:** Update CHANGELOG for v1.0.8 [skip ci] ([d17947d](https://github.com/h7ml/ai-markdown-translator/commit/d17947d))
+
+### ❤️ Contributors
+
+- GitHub Action ([@dextr7](http://github.com/dextr7))
+
 ## [1.0.7](https://github.com/h7ml/ai-markdown-translator/compare/v1.0.6...v1.0.7) (2024-12-14)
 
 
