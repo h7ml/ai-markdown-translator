@@ -419,7 +419,7 @@ async function main() {
           modifiedContent = modifiedContent.slice(0, startOfLastLine).trim();
         }
         writeMarkdownFile(argv.output, modifiedContent);
-        console.log(`翻译完成。输出已保存到 ${argv.output}。`);
+        console.log(`翻译 ${argv.input} 完成。输出已保存到 ${argv.output}`);
       } else {
         console.log('翻译失败。');
       }
