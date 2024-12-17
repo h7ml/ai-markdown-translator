@@ -10,8 +10,6 @@
 
 - **README:** Update README-zh.md ([8ceca79](https://github.com/h7ml/ai-markdown-translator/commit/8ceca79))
 
-### 🏡 Chore
-
 - **release:** Update CHANGELOG for v1.0.10 [skip ci] ([d17947d](https://github.com/h7ml/ai-markdown-translator/commit/d17947d))
 
 ### ❤️ Contributors
