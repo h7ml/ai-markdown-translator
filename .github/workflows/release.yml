@@ -49,7 +49,7 @@ jobs:
 
       - name: Generate Changelog
         run: |
-          npx conventional-changelog-cli -p angular -i CHANGELOG.md -s -r 0 || echo "Changelog generation failed"
+          npx changelogen@latest --release --bump || echo "Changelog generation failed"
 
       - name: Create Release
         id: create_release

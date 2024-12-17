@@ -1,7 +1,3 @@
-这是合并后的`ai-markdown-translator`文档的修订版本，包括了`npx`和`./ai-markdown-translator`的示例：
-
----
-
 # ai-markdown-translator
 
 <div>
@@ -173,7 +169,7 @@ npx ai-markdown-translator -i example.md -o translated_example.md -l "日语"
 
 ## 版本信息
 
-- **当前版本**: 1.0.8
+- **当前版本**: 1.0.10
 - **NPM 包**: [ai-markdown-translator](https://www.npmjs.com/package/ai-markdown-translator)
 
 ## CI 信息
@@ -192,7 +188,3 @@ npx ai-markdown-translator -i example.md -o translated_example.md -l "日语"
 ## 支持
 
 如果您遇到任何问题或有任何疑问，请在此仓库中打开一个问题。
-
----
-
-此版本将`npx`和独立可执行文件(`./ai-markdown-translator`)的使用示例合并为一个统一的部分。如果您需要进一步调整，请告诉我！
