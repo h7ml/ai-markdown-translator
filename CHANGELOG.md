@@ -1,6 +1,6 @@
-## v1.0.10
+## v1.0.11
 
-[compare changes](https://github.com/h7ml/ai-markdown-translator/compare/v1.0.10...v1.0.10)
+[compare changes](https://github.com/h7ml/ai-markdown-translator/compare/v1.0.11...v1.0.11)
 
 ### 💅 Refactors
 
@@ -10,7 +10,7 @@
 
 - **README:** Update README-zh.md ([8ceca79](https://github.com/h7ml/ai-markdown-translator/commit/8ceca79))
 
-- **release:** Update CHANGELOG for v1.0.10 [skip ci] ([d17947d](https://github.com/h7ml/ai-markdown-translator/commit/d17947d))
+- **release:** Update CHANGELOG for v1.0.11 [skip ci] ([d17947d](https://github.com/h7ml/ai-markdown-translator/commit/d17947d))
 
 ### ❤️ Contributors
 
@@ -19,7 +19,7 @@
 
 ## v1.0.9
 
-[compare changes](https://github.com/h7ml/ai-markdown-translator/compare/v1.0.10...v1.0.9)
+[compare changes](https://github.com/h7ml/ai-markdown-translator/compare/v1.0.11...v1.0.9)
 
 ### 📖 Documentation
 
@@ -28,7 +28,7 @@
 
 ### 🏡 Chore
 
-- **release:** Update CHANGELOG for v1.0.10 [skip ci] ([d17947d](https://github.com/h7ml/ai-markdown-translator/commit/d17947d))
+- **release:** Update CHANGELOG for v1.0.11 [skip ci] ([d17947d](https://github.com/h7ml/ai-markdown-translator/commit/d17947d))
 
 ### ❤️ Contributors
 

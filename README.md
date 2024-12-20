@@ -173,7 +173,7 @@ npx ai-markdown-translator -i example.md -o translated_example.md -l "Japanese"
 
 ## Version Information
 
-- **Current Version**: 1.0.10
+- **Current Version**: 1.0.11
 - **NPM Package**: [ai-markdown-translator](https://www.npmjs.com/package/ai-markdown-translator)
 
 ## CI Information

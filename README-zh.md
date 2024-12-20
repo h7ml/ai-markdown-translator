@@ -173,7 +173,7 @@ npx ai-markdown-translator -i example.md -o translated_example.md -l "日语"
 
 ## 版本信息
 
-- **当前版本**: 1.0.10
+- **当前版本**: 1.0.11
 - **NPM 包**: [ai-markdown-translator](https://www.npmjs.com/package/ai-markdown-translator)
 
 ## CI 信息
