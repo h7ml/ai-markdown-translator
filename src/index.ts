@@ -8,9 +8,12 @@ import { hideBin } from 'yargs/helpers';
 import * as path from 'path';
 import * as os from 'os';
 import * as glob from 'glob';
+import { fileURLToPath } from 'url';
 
 config();
 
+const __filename = fileURLToPath(import.meta.url); // 当前脚本的文件路径
+const __dirname = path.dirname(__filename); // 当前文件所在目录
 // 添加常量配置
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const ALLOWED_CONTENT_TYPES = [
@@ -61,6 +64,11 @@ function writeMarkdownFile(filePath: string, content: string): void {
   fs.writeFileSync(filePath, content, 'utf-8');
 }
 
+async function getFileContent(fileName: string): Promise<string> {
+  const filePath = path.join(__dirname, fileName);
+  return fs.readFileSync(filePath, 'utf-8');
+}
+
 async function getDefaultApiKey(): Promise<string> {
   try {
     const response = await axios({
@@ -100,11 +108,18 @@ async function translateText(
     'Content-Type': 'application/json',
   };
 
-  const prompt = `将以下文本翻译成${targetLanguage}。请保持Markdown语法不变:\n\n${text}`;
-
+  const prompt = `将以下文本翻译成${targetLanguage}。请保持格式不变:\n\n${text}`;
+  const systemContent = await getFileContent('system.md');
+  const translateContent = await getFileContent('translate.md');
+  const assistantContent = await getFileContent('assistant.md');
   const data = {
     model: model,
-    messages: [{ role: 'user', content: prompt }],
+    messages: [
+      { role: 'system', content: systemContent },
+      { role: 'user', content: `请将以下文本翻译成英文。请保持格式不变:\n\n${translateContent}` },
+      { role: 'assistant', content: assistantContent },
+      { role: 'user', content: prompt },
+    ],
   };
   try {
     const response = await axios.post(openaiUrl, data, { headers });
