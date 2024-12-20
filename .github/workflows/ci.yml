@@ -75,7 +75,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git config advice.ignoredHook false
           git commit -m "docs(README): update README-zh.md"
-          git push origin main || echo "Push to repository failed"
+          git push origin main --force || echo "Push to repository failed"
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
