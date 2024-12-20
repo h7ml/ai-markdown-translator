@@ -1,7 +1,3 @@
-Here’s the revised and consolidated version of the `ai-markdown-translator` documentation with `npx` and `./ai-markdown-translator` examples combined:
-
----
-
 # ai-markdown-translator
 
 <div>
@@ -192,7 +188,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## Support
 
 If you encounter any problems or have any questions, please open an issue in this repository.
-
----
-
-This version combines the usage examples for both `npx` and the standalone executable (`./ai-markdown-translator`) into one cohesive section. Let me know if you'd like to make any further adjustments!
