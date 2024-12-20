@@ -256,10 +256,11 @@ async function translateDirectory(
       }
 
       if (modifiedContent.endsWith('```')) {
-        const startOfLastLine = modifiedContent.lastIndexOf('\n');
-        modifiedContent = modifiedContent.slice(0, startOfLastLine).trim();
+        const endIndex = modifiedContent.lastIndexOf('```');
+        if (endIndex !== -1) {
+          modifiedContent = modifiedContent.slice(0, endIndex);
+        }
       }
-
       // 根据相对路径生成输出文件路径
       const outputFileName = rename
         ? path.join(
@@ -430,8 +431,10 @@ async function main() {
         }
 
         if (modifiedContent.endsWith('```')) {
-          const startOfLastLine = modifiedContent.lastIndexOf('\n');
-          modifiedContent = modifiedContent.slice(0, startOfLastLine).trim();
+          const endIndex = modifiedContent.lastIndexOf('```');
+          if (endIndex !== -1) {
+            modifiedContent = modifiedContent.slice(0, endIndex);
+          }
         }
         writeMarkdownFile(argv.output, modifiedContent);
         console.log(`翻译 ${argv.input} 完成。输出已保存到 ${argv.output}`);
