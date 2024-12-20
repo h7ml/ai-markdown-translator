@@ -1,7 +1,3 @@
-这里是经过修订和合并的 `ai-markdown-translator` 文档版本，同时包含了 `npx` 和 `./ai-markdown-translator` 示例：
-
----
-
 # ai-markdown-translator
 
 <div>
@@ -192,7 +188,3 @@ npx ai-markdown-translator -i example.md -o translated_example.md -l "日语"
 ## 支持
 
 如果你遇到任何问题或有任何疑问，请在此存储库中提出问题。
-
----
-
-此版本将 `npx` 和独立可执行文件（`./ai-markdown-translator`）的用法示例合并为一个统一的部分。如需进一步调整，请告诉我！
