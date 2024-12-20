@@ -13,7 +13,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write # 写入仓库内容
+      issues: write # 管理 issues
+      pull-requests: write # 管理 pull requests
+      actions: write # 修改 Actions 工作流
+      workflows: write # 修改工作流（.github/workflows）
+      discussions: write # 写入讨论区
+      statuses: write # 更新 commit 状态
+      packages: write # 上传、删除包
+      pages: write # 发布 GitHub Pages
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
