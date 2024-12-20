@@ -282,7 +282,7 @@ async function translateDirectory(
 
       // 写入翻译后的文件
       writeMarkdownFile(outputFileName, modifiedContent);
-      console.log(`翻译完成。输出已保存到 ${outputFileName}。`);
+      console.log(`翻译完成。输出已保存到 ${outputFileName}`);
     } else {
       console.log('翻译失败。');
     }

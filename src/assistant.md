@@ -41,6 +41,37 @@ let message: string = 'Hello, World!'; // Declare a string variable
 console.log(message); // Print to the console
 ```
 
+```ts
+type CommonRequest = Omit<RequestInit, 'body'> & { body?: URLSearchParams };
+
+export async function request(url: string, init?: CommonRequest) {
+  if (import.meta.env.DEV) {
+    const nodeFetch = await import('node-fetch');
+    const https = await import('node:https');
+
+    const agent = url.startsWith('https')
+      ? new https.Agent({ rejectUnauthorized: false })
+      : undefined;
+
+    return nodeFetch.default(url, { ...init, agent });
+  }
+
+  return fetch(url, init);
+}
+```
+
+### **React.js**
+
+```tsx
+import { RemixBrowser } from '@remix-run/react';
+import { startTransition } from 'react';
+import { hydrateRoot } from 'react-dom/client';
+
+startTransition(() => {
+  hydrateRoot(document.getElementById('root')!, <RemixBrowser />);
+});
+```
+
 #### **Vue.js**
 
 ```javascript
@@ -197,3 +228,4 @@ Route::get('/', function () {
 ```sql
 -- Simple query example, returns 'Hello, World!'
 SELECT 'Hello, World!';
+```
