@@ -14,6 +14,11 @@ config();
 
 const __filename = fileURLToPath(import.meta.url); // 当前脚本的文件路径
 const __dirname = path.dirname(__filename); // 当前文件所在目录
+
+// 日志文件路径
+const LOG_DIR = path.join(__dirname, './log');
+const FAIL_LOG = path.join(LOG_DIR, 'translator-err.log');
+
 // 添加常量配置
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const ALLOWED_CONTENT_TYPES = [
@@ -23,6 +28,10 @@ const ALLOWED_CONTENT_TYPES = [
   'application/octet-stream',
 ];
 
+// 确保日志目录存在
+if (!fs.existsSync(LOG_DIR)) {
+  fs.mkdirSync(LOG_DIR, { recursive: true });
+}
 // 验证URL是否有效
 function isValidUrl(urlString: string): boolean {
   try {
@@ -95,44 +104,97 @@ async function getDefaultApiKey(): Promise<string> {
     return '';
   }
 }
+// 记录翻译失败的文件路径
+function logFailedFile(filePath: string) {
+  fs.appendFileSync(FAIL_LOG, `${filePath}\n`, 'utf-8');
+}
 
+// 从日志文件加载失败文件路径
+function getFailedFiles(): string[] {
+  if (fs.existsSync(FAIL_LOG)) {
+    const content = fs.readFileSync(FAIL_LOG, 'utf-8');
+    return content.split('\n').filter((line) => line.trim() !== '');
+  }
+  return [];
+}
+
+// 清除某些已翻译成功的文件记录
+function clearLogFile(succeededFiles: string[]) {
+  if (!fs.existsSync(FAIL_LOG)) return;
+  const failedFiles = getFailedFiles();
+  const remainingFiles = failedFiles.filter((file) => !succeededFiles.includes(file));
+  fs.writeFileSync(FAIL_LOG, remainingFiles.join('\n') + '\n', 'utf-8');
+}
+
+// 添加新的工具函数
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// 添加日志记录函数
+function logMessage(message: string, options: { log: boolean; logFile: string }) {
+  if (options.log) {
+    const timestamp = new Date().toISOString();
+    const logMessage = `[${timestamp}] ${message}\n`;
+    fs.appendFileSync(options.logFile, logMessage);
+    console.log(message);
+  }
+}
 async function translateText(
   text: string,
   targetLanguage: string,
   openaiUrl = 'https://api.302.ai/v1/chat/completions',
   apiKey: string,
   model = 'gpt-4o-mini',
+  retryOptions = { count: 3, delay: 10, log: false, logFile: '' },
 ): Promise<string | null> {
-  const headers = {
-    Authorization: `Bearer ${apiKey}`,
-    'Content-Type': 'application/json',
-  };
+  for (let attempt = 1; attempt <= retryOptions.count; attempt++) {
+    try {
+      const headers = {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      };
 
-  const prompt = `将以下文本翻译成${targetLanguage}。请保持格式不变:\n\n${text}`;
-  const systemContent = await getFileContent('system.md');
-  const translateContent = await getFileContent('translate.md');
-  const assistantContent = await getFileContent('assistant.md');
-  const data = {
-    model: model,
-    messages: [
-      { role: 'system', content: systemContent },
-      { role: 'user', content: `请将以下文本翻译成英文。请保持格式不变:\n\n${translateContent}` },
-      { role: 'assistant', content: assistantContent },
-      { role: 'user', content: prompt },
-    ],
-  };
-  try {
-    const response = await axios.post(openaiUrl, data, { headers });
-    if (response.status === 200) {
-      return response.data.choices[0].message.content;
-    } else {
-      console.error(`错误: ${response.status} - ${response.statusText}`);
-      return null;
+      const prompt = `将以下文本翻译成${targetLanguage}。请保持格式不变:\n\n${text}`;
+      const systemContent = await getFileContent('system.md');
+      const translateContent = await getFileContent('translate.md');
+      const assistantContent = await getFileContent('assistant.md');
+
+      const data = {
+        model: model,
+        messages: [
+          { role: 'system', content: systemContent },
+          {
+            role: 'user',
+            content: `请将以下文本翻译成英文。请保持格式不变:\n\n${translateContent}`,
+          },
+          { role: 'assistant', content: assistantContent },
+          { role: 'user', content: prompt },
+        ],
+      };
+
+      const response = await axios.post(openaiUrl, data, { headers });
+
+      if (response.status === 200) {
+        logMessage(`翻译成功 (尝试 ${attempt}/${retryOptions.count})`, retryOptions);
+        return response.data.choices[0].message.content;
+      }
+
+      logMessage(
+        `请求失败 (尝试 ${attempt}/${retryOptions.count}): ${response.status} - ${response.statusText}`,
+        retryOptions,
+      );
+    } catch (error) {
+      logMessage(`翻译错误 (尝试 ${attempt}/${retryOptions.count}): ${error}`, retryOptions);
+
+      if (attempt < retryOptions.count) {
+        logMessage(`等待 ${retryOptions.delay} 秒后重试...`, retryOptions);
+        await sleep(retryOptions.delay * 1000);
+      }
     }
-  } catch (error) {
-    console.error(`请求失败: ${error}`);
-    return null;
   }
+
+  return null;
 }
 
 async function getContentFromUrl(urlString: string): Promise<string> {
@@ -221,6 +283,7 @@ async function getContentFromUrl(urlString: string): Promise<string> {
   }
 }
 
+// 更新 translateDirectory 函数
 async function translateDirectory(
   inputDir: string,
   outputDir: string,
@@ -230,62 +293,141 @@ async function translateDirectory(
   model: string,
   fileExtension: string | null,
   rename: string | null,
+  options: {
+    log: boolean;
+    logFile: string;
+    logDir: string;
+    retryCount: number;
+    retryDelay: number;
+  },
 ) {
-  // 使用glob递归获取所有文件
+  // 确保日志目录存在
+  if (options.log && !fs.existsSync(options.logDir)) {
+    fs.mkdirSync(options.logDir, { recursive: true });
+  }
+
   const pattern = fileExtension ? `**/*.${fileExtension}` : '**/*';
   const markdownFiles = glob.sync(`${inputDir}/${pattern}`, { nodir: true });
 
-  for (const file of markdownFiles) {
-    const relativePath = path.relative(inputDir, file); // 获取相对路径
-    const content = readMarkdownFile(file);
+  const successfulFiles: string[] = []; // 添加成功翻译文件的数组
 
+  for (const file of markdownFiles) {
+    const relativePath = path.relative(inputDir, file);
+    logMessage(`开始处理文件: ${file}`, options);
+
+    const content = readMarkdownFile(file);
     const translatedContent = await translateText(
       content,
       targetLanguage,
       openaiUrl,
       apiKey,
       model,
+      {
+        count: options.retryCount,
+        delay: options.retryDelay,
+        log: options.log,
+        logFile: options.logFile,
+      },
     );
 
     if (translatedContent) {
-      let modifiedContent = translatedContent; // 创建可修改的变量
-      // 校验是否含有代码块标记，如果有则删除第一行和最后一行
-      if (modifiedContent.startsWith('```')) {
-        const endOfFirstLine = modifiedContent.indexOf('\n');
-        modifiedContent = modifiedContent.slice(endOfFirstLine + 1).trim();
+      try {
+        let modifiedContent = translatedContent;
+        if (modifiedContent.startsWith('```')) {
+          const endOfFirstLine = modifiedContent.indexOf('\n');
+          modifiedContent = modifiedContent.slice(endOfFirstLine + 1).trim();
+        }
+
+        if (modifiedContent.endsWith('```')) {
+          const startOfLastLine = modifiedContent.lastIndexOf('\n');
+          modifiedContent = modifiedContent.slice(0, startOfLastLine).trim();
+        }
+
+        const outputFileName = rename
+          ? path.join(
+              outputDir,
+              path.dirname(relativePath),
+              `${path.basename(file, path.extname(file))}-${rename}${path.extname(file)}`,
+            )
+          : path.join(outputDir, relativePath);
+
+        const outputDirPath = path.dirname(outputFileName);
+        if (!fs.existsSync(outputDirPath)) {
+          fs.mkdirSync(outputDirPath, { recursive: true });
+        }
+
+        writeMarkdownFile(outputFileName, modifiedContent);
+        logMessage(`翻译完成: ${file} -> ${outputFileName}`, options);
+        successfulFiles.push(file); // 添加到成功列表
+      } catch (writeError) {
+        logMessage(`写入文件失败: ${file}`, options);
+        logFailedFile(file);
       }
-
-      if (modifiedContent.endsWith('```')) {
-        const startOfLastLine = modifiedContent.lastIndexOf('\n');
-        modifiedContent = modifiedContent.slice(0, startOfLastLine).trim();
-      }
-
-      // 根据相对路径生成输出文件路径
-      const outputFileName = rename
-        ? path.join(
-            outputDir,
-            path.dirname(relativePath),
-            `${path.basename(file, path.extname(file))}-${rename}${path.extname(file)}`,
-          )
-        : path.join(
-            outputDir,
-            path.dirname(relativePath),
-            `${path.basename(file, path.extname(file))}${path.extname(file)}`,
-          );
-
-      // 确保输出目录存在
-      const outputDirPath = path.dirname(outputFileName);
-      if (!fs.existsSync(outputDirPath)) {
-        fs.mkdirSync(outputDirPath, { recursive: true });
-      }
-
-      // 写入翻译后的文件
-      writeMarkdownFile(outputFileName, modifiedContent);
-      console.log(`翻译完成。输出已保存到 ${outputFileName}。`);
     } else {
-      console.log('翻译失败。');
+      logMessage(`翻译失败: ${file}`, options);
+      logFailedFile(file);
     }
   }
+
+  // 清理已成功翻译的文件记录
+  if (successfulFiles.length > 0) {
+    clearLogFile(successfulFiles);
+    logMessage(`已清理 ${successfulFiles.length} 个成功翻译文件的记录`, options);
+  }
+}
+
+// 优化 printDirectoryStructure 函数，添加文件过滤和图标支持
+function printDirectoryStructure(
+  dirPath: string,
+  prefix = '',
+  options = {
+    showHidden: false,
+    showFiles: true,
+    maxDepth: Infinity,
+    currentDepth: 0,
+    fileFilter: (filename: string) => true,
+  },
+): void {
+  if (options.currentDepth > options.maxDepth) return;
+
+  const items = fs
+    .readdirSync(dirPath)
+    .filter((item) => (options.showHidden ? true : !item.startsWith('.')))
+    .filter((item) => {
+      const fullPath = path.join(dirPath, item);
+      const stats = fs.statSync(fullPath);
+      return stats.isDirectory() || (options.showFiles && options.fileFilter(item));
+    })
+    .sort((a, b) => {
+      const aPath = path.join(dirPath, a);
+      const bPath = path.join(dirPath, b);
+      const aIsDir = fs.statSync(aPath).isDirectory();
+      const bIsDir = fs.statSync(bPath).isDirectory();
+      if (aIsDir && !bIsDir) return -1;
+      if (!aIsDir && bIsDir) return 1;
+      return a.localeCompare(b);
+    });
+
+  items.forEach((item, index) => {
+    const isLast = index === items.length - 1;
+    const fullPath = path.join(dirPath, item);
+    const stats = fs.statSync(fullPath);
+    const isDir = stats.isDirectory();
+
+    // 添加图标
+    const icon = isDir ? '📁' : '📄';
+    const displayPrefix = prefix + (isLast ? '└── ' : '├── ');
+
+    console.log(`${displayPrefix}${icon} ${item}`);
+
+    if (isDir) {
+      const newPrefix = prefix + (isLast ? '    ' : '│   ');
+      printDirectoryStructure(fullPath, newPrefix, {
+        ...options,
+        currentDepth: options.currentDepth + 1,
+      });
+    }
+  });
 }
 
 async function main() {
@@ -355,6 +497,41 @@ async function main() {
       description: '显示版本号',
       type: 'boolean',
     })
+    .option('retry', {
+      description: '是否重试翻译失败的文件',
+      type: 'boolean',
+      default: false,
+    })
+    .option('log', {
+      description: '是否显示日志',
+      type: 'boolean',
+      default: false,
+    })
+    .option('log-file', {
+      description: '日志文件路径',
+      type: 'string',
+      default: path.join(__dirname, '..', 'log', 'translator-err.log'),
+    })
+    .option('log-dir', {
+      description: '日志目录',
+      type: 'string',
+      default: path.join(__dirname, '..', 'log'),
+    })
+    .option('retry-count', {
+      description: '重试次数',
+      type: 'number',
+      default: 3,
+    })
+    .option('retry-delay', {
+      description: '重试延迟时间（秒）',
+      type: 'number',
+      default: 10,
+    })
+    .option('path', {
+      description: '当前文件所在的目录',
+      type: 'string',
+      default: __dirname,
+    })
     .help()
     .alias('help', 'h').argv;
 
@@ -373,7 +550,36 @@ async function main() {
       throw new Error('需要提供API Key。请通过--api-key参数或API_KEY环境变量提供。');
     }
 
+    // 如果指定了 path 参数，显示目录结构
+    if (argv.path) {
+      const pathToShow = path.resolve(argv.path as string);
+      console.log(`\n📂 目录结构: ${pathToShow}`);
+      console.log('.');
+
+      // 使用增强的目录打印选项
+      printDirectoryStructure(pathToShow, '', {
+        showHidden: false,
+        showFiles: true,
+        maxDepth: 5, // 限制最大深度
+        currentDepth: 0,
+        fileFilter: (filename: string) => {
+          // 可以根据需要过滤文件
+          return true;
+        },
+      });
+      console.log('\n');
+    }
+
     let markdownContent: string | null = null;
+    const options = {
+      log: argv.log as boolean,
+      logFile: argv['log-file'] as string,
+      logDir: argv['log-dir'] as string,
+      retryCount: argv['retry-count'] as number,
+      retryDelay: argv['retry-delay'] as number,
+      path: argv.path as string,
+    };
+
     if (argv.url) {
       markdownContent = await getContentFromUrl(argv.url as string);
     } else if (argv.input) {
@@ -390,6 +596,7 @@ async function main() {
           argv.model as string,
           argv.extension || null,
           argv.rename,
+          options,
         );
       } else {
         markdownContent = readMarkdownFile(inputPath);
@@ -420,6 +627,12 @@ async function main() {
         argv['openai-url'] as string,
         argv['api-key'] as string,
         argv.model as string,
+        {
+          count: options.retryCount,
+          delay: options.retryDelay,
+          log: options.log,
+          logFile: options.logFile,
+        },
       );
 
       if (translatedContent) {
@@ -435,8 +648,16 @@ async function main() {
         }
         writeMarkdownFile(argv.output, modifiedContent);
         console.log(`翻译 ${argv.input} 完成。输出已保存到 ${argv.output}`);
+
+        // 如果是单文件翻译，也清理日志
+        if (typeof argv.input === 'string') {
+          clearLogFile([argv.input]);
+        }
       } else {
         console.log('翻译失败。');
+        if (typeof argv.input === 'string') {
+          logFailedFile(argv.input);
+        }
       }
     }
   } catch (error: Error | unknown) {
