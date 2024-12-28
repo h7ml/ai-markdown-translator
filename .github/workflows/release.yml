@@ -57,14 +57,19 @@ jobs:
         run: |
           npx changelogen@latest --release --bump || echo "Changelog generation failed"
 
+      - name: Configure Git identity
+        run: |
+          git config --global user.email "action@h7ml.cn"
+          git config --global user.name "GitHub Action"
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ github.ref_name }} # 使用有效标签名，如 'v1.0.14'
+          release_name: Release ${{ github.ref_name }}
           body_path: CHANGELOG.md
           draft: false
           prerelease: false
@@ -83,7 +88,7 @@ jobs:
           git config advice.ignoredHook false
 
           # 获取版本号
-          VERSION=${GITHUB_REF#refs/tags/v}  # 处理从标签获取版本号
+          VERSION=${GITHUB_REF#refs/tags/v}  # 从标签提取版本号
           # 如果是手动触发（workflow_dispatch），则使用输入的版本号
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             VERSION="${{ github.event.inputs.tags }}"
