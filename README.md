@@ -248,7 +248,7 @@ npx ai-markdown-translator -i ./markdown-files -o ./output -l "Japanese" \
 
 ## Version Information
 
-- **Current Version**: 1.0.12
+- **Current Version**: 1.0.13
 - **NPM Package**: [ai-markdown-translator](https://www.npmjs.com/package/ai-markdown-translator)
 
 ## CI Information
