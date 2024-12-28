@@ -9,7 +9,7 @@ on:
   pull_request:
     branches:
       - main
-
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,7 +18,6 @@ jobs:
       issues: write # 管理 issues
       pull-requests: write # 管理 pull requests
       actions: write # 修改 Actions 工作流
-      workflows: write # 修改工作流（.github/workflows）
       discussions: write # 写入讨论区
       statuses: write # 更新 commit 状态
       packages: write # 上传、删除包
