@@ -18,9 +18,13 @@
 
 ## Features
 
-- Translate Markdown files to any language supported by OpenAI's models.
-- Preserve Markdown syntax during translation.
-- Flexible configuration through command-line arguments or environment variables.
+- Translate Markdown files to any language supported by OpenAI's models
+- Preserve Markdown syntax during translation
+- Support for recursive directory translation
+- Automatic retry mechanism for failed translations
+- Comprehensive logging system
+- Directory structure visualization
+- File failure tracking and recovery
 
 ## Prerequisites
 
@@ -108,6 +112,18 @@ npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/
 
 - `--show-version`, `-v`: Show version. This option displays the current version of the tool.
 
+- `--log`: Enable logging (default: false). Enables detailed logging of the translation process, including success and failure information.
+
+- `--log-file`: Specify the log file path (default: `<project_root>/log/translator-err.log`). The file where translation errors and failures will be logged.
+
+- `--log-dir`: Specify the log directory (default: `<project_root>/log`). The directory where all log files will be stored.
+
+- `--retry-count`: Number of retry attempts for failed translations (default: 3). How many times the translator should attempt to retry failed translations.
+
+- `--retry-delay`: Delay in seconds between retry attempts (default: 10). How long to wait between retry attempts.
+
+- `--path`, `-p`: Display directory structure (default: current script directory). Shows a tree view of the specified directory structure.
+
 > Note: `--input` and `--url` are mutually exclusive; you must provide one or the other.
 
 ## Environment Variables
@@ -158,6 +174,69 @@ npx ai-markdown-translator -i ./markdown-files -l "Chinese" --rename
 npx ai-markdown-translator -i example.md -o translated_example.md -l "Japanese"
 ```
 
+7. **Translate with logging and retry options:**
+
+```bash
+npx ai-markdown-translator -i ./docs -o ./translated -l "Chinese" --log --retry-count 5 --retry-delay 15
+```
+
+8. **Translate with custom log directory:**
+
+```bash
+npx ai-markdown-translator -i input.md -o output.md -l "Japanese" --log --log-dir "./custom-logs"
+```
+
+9. **Translate with all logging and retry options:**
+
+```bash
+npx ai-markdown-translator -i ./markdown-files -l "French" \
+  --log \
+  --log-dir "./logs" \
+  --log-file "./logs/translation.log" \
+  --retry-count 3 \
+  --retry-delay 5
+```
+
+10. **Display directory structure:**
+
+```bash
+npx ai-markdown-translator -p ./src
+```
+
+Output example:
+
+```
+📂 Directory structure: /path/to/src
+.
+├── 📁 components
+│   ├── 📄 Button.tsx
+│   └── 📄 Input.tsx
+├── 📁 utils
+│   ├── 📄 logger.ts
+│   └── 📄 translator.ts
+└── 📄 index.ts
+```
+
+11. **Translate with automatic retry and logging:**
+
+```bash
+npx ai-markdown-translator -i ./docs -o ./translated -l "Chinese" \
+  --log \
+  --retry-count 5 \
+  --retry-delay 15 \
+  --log-file "./logs/translation.log"
+```
+
+12. **Translate directory with failure tracking:**
+
+```bash
+npx ai-markdown-translator -i ./markdown-files -o ./output -l "Japanese" \
+  --log \
+  --log-dir "./logs" \
+  --retry-count 3 \
+  --retry-delay 10
+```
+
 ## License
 
 [MIT License](LICENSE)
@@ -169,7 +248,7 @@ npx ai-markdown-translator -i example.md -o translated_example.md -l "Japanese"
 
 ## Version Information
 
-- **Current Version**: 1.0.11
+- **Current Version**: 1.0.12
 - **NPM Package**: [ai-markdown-translator](https://www.npmjs.com/package/ai-markdown-translator)
 
 ## CI Information
