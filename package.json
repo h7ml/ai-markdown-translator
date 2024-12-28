@@ -20,7 +20,7 @@
     "ai-markdown-translator": "dist/index.js"
   },
   "files": [
-    "dist/index.js",
+    "dist/**/*",
     "src/**/*",
     "LICENSE",
     "README.md",
