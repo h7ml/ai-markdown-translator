@@ -19,7 +19,7 @@ const __dirname = path.dirname(__filename); // 当前文件所在目录
 const LOG_DIR = path.join(__dirname, './log');
 const FAIL_LOG = path.join(LOG_DIR, 'translator-err.log');
 
-// 添加常量配置
+// 常量配置
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const ALLOWED_CONTENT_TYPES = [
   'text/markdown',
@@ -176,20 +176,32 @@ async function translateText(
       const response = await axios.post(openaiUrl, data, { headers });
 
       if (response.status === 200) {
-        logMessage(`翻译成功 (尝试 ${attempt}/${retryOptions.count})`, retryOptions);
+        // 简化日志输出
+        logMessage(
+          attempt === 1 ? '翻译完成' : `重试成功 (${attempt}/${retryOptions.count})`,
+          retryOptions,
+        );
         return response.data.choices[0].message.content;
       }
 
-      logMessage(
-        `请求失败 (尝试 ${attempt}/${retryOptions.count}): ${response.status} - ${response.statusText}`,
-        retryOptions,
-      );
-    } catch (error) {
-      logMessage(`翻译错误 (尝试 ${attempt}/${retryOptions.count}): ${error}`, retryOptions);
-
+      // 失败时的日志
+      const errorMsg = `请求失败: ${response.status} - ${response.statusText}`;
       if (attempt < retryOptions.count) {
-        logMessage(`等待 ${retryOptions.delay} 秒后重试...`, retryOptions);
+        logMessage(`${errorMsg}, 准备重试 (${attempt}/${retryOptions.count})`, retryOptions);
+      } else {
+        logMessage(`${errorMsg}, 已达到最大重试次数`, retryOptions);
+      }
+    } catch (error) {
+      // 错误处理的日志
+      const errorMsg = `翻译错误: ${error}`;
+      if (attempt < retryOptions.count) {
+        logMessage(
+          `${errorMsg}, 将在 ${retryOptions.delay} 秒后重试 (${attempt}/${retryOptions.count})`,
+          retryOptions,
+        );
         await sleep(retryOptions.delay * 1000);
+      } else {
+        logMessage(`${errorMsg}, 已达到最大重试次数`, retryOptions);
       }
     }
   }
@@ -376,7 +388,14 @@ async function translateDirectory(
   }
 }
 
-// 优化 printDirectoryStructure 函数，添加文件过滤和图标支持
+/**
+ * 打印目录结构
+ * @param dirPath
+ * @param prefix
+ * @param options
+ * @param stats
+ * @returns
+ */
 function printDirectoryStructure(
   dirPath: string,
   prefix = '',
@@ -387,6 +406,7 @@ function printDirectoryStructure(
     currentDepth: 0,
     fileFilter: (filename: string) => true,
   },
+  stats = { dirs: 0, files: 0 }, // 添加统计对象
 ): void {
   if (options.currentDepth > options.maxDepth) return;
 
@@ -411,23 +431,59 @@ function printDirectoryStructure(
   items.forEach((item, index) => {
     const isLast = index === items.length - 1;
     const fullPath = path.join(dirPath, item);
-    const stats = fs.statSync(fullPath);
-    const isDir = stats.isDirectory();
+    const itemStats = fs.statSync(fullPath);
+    const isDir = itemStats.isDirectory();
 
-    // 添加图标
+    // 更新统计信息
+    if (isDir) {
+      stats.dirs++;
+    } else {
+      stats.files++;
+    }
+
+    // 添加图标和文件大小
     const icon = isDir ? '📁' : '📄';
+    const size = isDir ? '' : formatFileSize(itemStats.size);
     const displayPrefix = prefix + (isLast ? '└── ' : '├── ');
+    const displaySize = size ? ` (${size})` : '';
 
-    console.log(`${displayPrefix}${icon} ${item}`);
+    console.log(`${displayPrefix}${icon} ${item}${displaySize}`);
 
     if (isDir) {
       const newPrefix = prefix + (isLast ? '    ' : '│   ');
-      printDirectoryStructure(fullPath, newPrefix, {
-        ...options,
-        currentDepth: options.currentDepth + 1,
-      });
+      printDirectoryStructure(
+        fullPath,
+        newPrefix,
+        {
+          ...options,
+          currentDepth: options.currentDepth + 1,
+        },
+        stats,
+      );
     }
   });
+
+  // 在根目录打印统计信息
+  if (options.currentDepth === 0) {
+    console.log('\n🔍 统计信息:');
+    console.log(`   目录数量: ${stats.dirs}`);
+    console.log(`   文件数量: ${stats.files}`);
+    console.log(`   总计: ${stats.dirs + stats.files} 个项目`);
+  }
+}
+
+// 添加文件大小格式化函数
+function formatFileSize(bytes: number): string {
+  const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+  let size = bytes;
+  let unitIndex = 0;
+
+  while (size >= 1024 && unitIndex < units.length - 1) {
+    size /= 1024;
+    unitIndex++;
+  }
+
+  return `${size.toFixed(1)} ${units[unitIndex]}`;
 }
 
 async function main() {
@@ -537,6 +593,20 @@ async function main() {
       type: 'boolean',
       default: false,
     })
+    .option('show-hidden', {
+      description: '显示隐藏文件',
+      type: 'boolean',
+      default: false,
+    })
+    .option('max-depth', {
+      description: '目录显示的最大深度',
+      type: 'number',
+      default: 5,
+    })
+    .option('file-filter', {
+      description: '文件过滤器（例如: .md,.txt）',
+      type: 'string',
+    })
     .help()
     .alias('help', 'h').argv;
 
@@ -548,31 +618,44 @@ async function main() {
   }
 
   try {
-    if (!argv['openai-url']) {
-      throw new Error('需要提供OpenAI URL。请通过--openai-url参数或OPENAI_URL环境变量提供。');
-    }
-    if (!argv['api-key']) {
-      throw new Error('需要提供API Key。请通过--api-key参数或API_KEY环境变量提供。');
-    }
-
-    // 如果指定了 path 参数，显示目录结构
+    // 如果指定了 show-path 参数，显示目录结构
     if (argv['show-path']) {
       const pathToShow = path.resolve(argv.path as string);
       console.log(`\n📂 目录结构: ${pathToShow}`);
       console.log('.');
 
-      // 使用增强的目录打印选项
-      printDirectoryStructure(pathToShow, '', {
-        showHidden: false,
-        showFiles: true,
-        maxDepth: 5, // 限制最大深度
-        currentDepth: 0,
-        fileFilter: (filename: string) => {
-          // 可以根据需要过滤文件
-          return true;
+      const fileFilter = argv['file-filter']
+        ? (filename: string) => {
+            const extensions = (argv['file-filter'] as string)
+              .split(',')
+              .map((ext) => (ext.startsWith('.') ? ext : `.${ext}`));
+            return extensions.some((ext) => filename.endsWith(ext));
+          }
+        : () => true;
+
+      printDirectoryStructure(
+        pathToShow,
+        '',
+        {
+          showHidden: argv['show-hidden'] as boolean,
+          showFiles: true,
+          maxDepth: argv['max-depth'] as number,
+          currentDepth: 0,
+          fileFilter: fileFilter,
         },
-      });
-      console.log('\n');
+        { dirs: 0, files: 0 },
+      );
+
+      // 如果没有其他操作参数，则退出程序
+      if (!argv.input && !argv.url) {
+        process.exit(0);
+      }
+    }
+    if (!argv['openai-url']) {
+      throw new Error('需要提供OpenAI URL。请通过--openai-url参数或OPENAI_URL环境变量提供。');
+    }
+    if (!argv['api-key']) {
+      throw new Error('需要提供API Key。请通过--api-key参数或API_KEY环境变量提供。');
     }
 
     let markdownContent: string | null = null;
