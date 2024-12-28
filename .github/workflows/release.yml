@@ -3,7 +3,12 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*' # 当推送标签（如 v1.0.13）时触发
+  workflow_dispatch:
+    inputs:
+      tags:
+        type: string
+        default: '1.0.13' # 默认的版本号，如果手动触发时没有输入，使用默认值
 
 jobs:
   release:
@@ -47,6 +52,7 @@ jobs:
         run: |
           pnpm build || echo "Build failed"
           node ./scripts/copy.js
+
       - name: Generate Changelog
         run: |
           npx changelogen@latest --release --bump || echo "Changelog generation failed"
@@ -72,15 +78,23 @@ jobs:
       - name: Commit and Push
         run: |
           git add CHANGELOG.md
-          git config --local user.email "action@h7ml.cn"
-          git config --local user.name "GitHub Action"
+          git config --global user.email "action@h7ml.cn"
+          git config --global user.name "GitHub Action"
           git config advice.ignoredHook false
-          VERSION=${GITHUB_REF#refs/tags/v}
+
+          # 获取版本号
+          VERSION=${GITHUB_REF#refs/tags/v}  # 处理从标签获取版本号
+          # 如果是手动触发（workflow_dispatch），则使用输入的版本号
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            VERSION="${{ github.event.inputs.tags }}"
+          fi
+
+          # 提交更新的 changelog
           git commit -m "chore(release): update CHANGELOG for v$VERSION [skip ci]" -a || echo "No changes to commit"
 
           git checkout main || git checkout -b main 
 
-          git push origin main || echo "Push to repository failed"
+          git push origin main --force || echo "Push to repository failed"
 
       - name: Upload Release Assets
         uses: softprops/action-gh-release@v1
