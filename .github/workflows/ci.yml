@@ -13,7 +13,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write # 写入仓库内容
+      issues: write # 管理 issues
+      pull-requests: write # 管理 pull requests
+      actions: write # 修改 Actions 工作流
+      workflows: write # 修改工作流（.github/workflows）
+      discussions: write # 写入讨论区
+      statuses: write # 更新 commit 状态
+      packages: write # 上传、删除包
+      pages: write # 发布 GitHub Pages
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -67,7 +76,7 @@ jobs:
           mkdir -p translate
           node ./dist/index.js -i ./src/system.md -o ./translate/system-gpt-4o-en.md -l English --openai-url https://models.inference.ai.azure.com/chat/completions --api-key ${{ secrets.OPENAI_API_KEY }} --model gpt-4o
           node ./dist/index.js -i ./src/system.md -o ./translate/system-ministral-3b-ja.md -l Japanese --openai-url https://models.inference.ai.azure.com/chat/completions --api-key ${{ secrets.OPENAI_API_KEY }} --model Ministral-3B
-          node ./dist/index.js -i ./src/system.md -o ./translate/system-phi-3.5-mini-instruct-fr.md -l 法语 --openai-url https://models.inference.ai.azure.com/chat/completions --api-key ${{ secrets.OPENAI_API_KEY }} --model Phi-3.5-mini-instruct
+          node ./dist/index.js -i ./src/system.md -o ./translate/system-phi-3.5-mini-instruct-fr.md -l 法语 --openai-url https://models.inference.ai.azure.com/chat/completions --api-key ${{ secrets.OPENAI_API_KEY }} --model Ministral-3B
       - name: Commit and Push
         run: |
           git add README-zh.md translate/
@@ -75,7 +84,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git config advice.ignoredHook false
           git commit -m "docs(README): update README-zh.md"
-          git push origin main || echo "Push to repository failed"
+          git push origin main --force || echo "Push to repository failed"
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3

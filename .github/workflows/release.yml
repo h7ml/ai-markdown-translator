@@ -46,7 +46,7 @@ jobs:
       - name: Build
         run: |
           pnpm build || echo "Build failed"
-
+          node ./scripts/copy.js
       - name: Generate Changelog
         run: |
           npx changelogen@latest --release --bump || echo "Changelog generation failed"
