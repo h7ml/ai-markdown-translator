@@ -532,6 +532,11 @@ async function main() {
       type: 'string',
       default: __dirname,
     })
+    .option('show-path', {
+      description: '显示当前文件所在的目录',
+      type: 'boolean',
+      default: false,
+    })
     .help()
     .alias('help', 'h').argv;
 
@@ -551,7 +556,7 @@ async function main() {
     }
 
     // 如果指定了 path 参数，显示目录结构
-    if (argv.path) {
+    if (argv['show-path']) {
       const pathToShow = path.resolve(argv.path as string);
       console.log(`\n📂 目录结构: ${pathToShow}`);
       console.log('.');
