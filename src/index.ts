@@ -5,7 +5,6 @@ import { config } from 'dotenv';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import * as path from 'path';
-import * as os from 'os';
 import { fileURLToPath } from 'url';
 import { LOG_DIR } from './config/constants';
 import { isValidUrl } from './utils/validator';
@@ -18,12 +17,11 @@ import {
   printDirectoryStructure,
 } from './services/file';
 import { DirectoryOptions } from './types';
-import { DEFAULT_LOG_DIR, DEFAULT_LOG_FILE } from './config/constants';
-import { logMessage } from './utils/logger';
 
 config();
 
-const __dirname = path.dirname(process.cwd());
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // 确保日志目录存在
 if (!fs.existsSync(LOG_DIR)) {
@@ -214,10 +212,11 @@ async function main() {
     if (argv.url) {
       markdownContent = await getContentFromUrl(argv.url as string);
     } else if (argv.input) {
-      const inputPath = argv.input as string;
+      console.log('input path:', argv.input);
+      const inputPath = path.resolve(argv.input);
       const stats = fs.statSync(inputPath);
       if (stats.isDirectory()) {
-        const outputDir = argv.output || inputPath;
+        const outputDir = argv.output ? path.resolve(argv.output) : inputPath;
         await translateDirectory(
           inputPath,
           outputDir,
@@ -252,6 +251,7 @@ async function main() {
         throw new Error('输出文件名无效。');
       }
 
+      const outputPath = path.resolve(argv.output);
       const translatedContent = await translateText(
         markdownContent,
         argv.language,
@@ -277,8 +277,8 @@ async function main() {
           const startOfLastLine = modifiedContent.lastIndexOf('\n');
           modifiedContent = modifiedContent.slice(0, startOfLastLine).trim();
         }
-        writeMarkdownFile(argv.output, modifiedContent);
-        console.log(`翻译 ${argv.input} 完成。输出已保存到 ${argv.output}`);
+        writeMarkdownFile(outputPath, modifiedContent);
+        console.log(`翻译 ${argv.input} 完成。输出已保存到 ${outputPath}`);
       } else {
         console.log('翻译失败。');
       }

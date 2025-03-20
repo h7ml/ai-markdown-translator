@@ -110,6 +110,7 @@ export async function translateDirectory(
   rename: string | null,
   options: DirectoryOptions,
 ) {
+  console.log('check api key:', apiKey);
   if (options.log && !fs.existsSync(options.logDir)) {
     fs.mkdirSync(options.logDir, { recursive: true });
   }
@@ -117,6 +118,7 @@ export async function translateDirectory(
   const pattern = fileExtension ? `**/*.${fileExtension}` : '**/*';
   const markdownFiles = glob.sync(`${inputDir}/${pattern}`, { nodir: true });
 
+  console.log('target files:', markdownFiles);
   const successfulFiles: string[] = [];
 
   for (const file of markdownFiles) {

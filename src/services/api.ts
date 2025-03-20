@@ -5,6 +5,10 @@ import { sleep } from '../utils/formatter';
 import { TranslationOptions } from '../types';
 import path from 'path';
 import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export async function getDefaultApiKey(): Promise<string> {
   try {
@@ -53,6 +57,13 @@ export async function translateText(
       const translateContent = await getFileContent('translate.md');
       const assistantContent = await getFileContent('assistant.md');
 
+      if (!(systemContent && translateContent && assistantContent)) {
+        console.error('cannot read prompt contents');
+        throw new Error('cannot read prompt contents');
+      }
+
+      console.log('read all system contents');
+
       const data = {
         model: model,
         messages: [
@@ -66,6 +77,8 @@ export async function translateText(
         ],
       };
 
+      console.log('post to', openaiUrl);
+
       const response = await axios.post(openaiUrl, data, { headers });
 
       if (response.status === 200) {
@@ -75,6 +88,8 @@ export async function translateText(
         );
         return response.data.choices[0].message.content;
       }
+
+      console.log('response invalid');
 
       const errorMsg = `请求失败: ${response.status} - ${response.statusText}`;
       if (attempt < retryOptions.count) {
@@ -100,6 +115,7 @@ export async function translateText(
 }
 
 async function getFileContent(fileName: string): Promise<string> {
-  const filePath = path.join(__dirname, '../../', fileName);
+  const filePath = path.join(__dirname, './', fileName);
+
   return fs.readFileSync(filePath, 'utf-8');
 }
