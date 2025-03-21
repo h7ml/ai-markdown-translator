@@ -9,13 +9,14 @@ import { formatFileSize } from '../utils/formatter';
 import { DirectoryOptions, DirectoryStats, DirectoryPrintOptions } from '../types';
 import { logMessage, logFailedFile, clearLogFile } from '../utils/logger';
 import { translateText } from './api';
+import { t } from '../utils/i18n';
 
 export function readMarkdownFile(filePath: string): string {
   if (!fs.existsSync(filePath)) {
-    throw new Error(`输入文件 ${filePath} 不存在。`);
+    throw new Error(t('file.not.exists', filePath));
   }
   if (fs.lstatSync(filePath).isDirectory()) {
-    throw new Error(`错误: ${filePath} 是一个目录。`);
+    throw new Error(t('file.is.directory', filePath));
   }
   return fs.readFileSync(filePath, 'utf-8');
 }
@@ -44,18 +45,18 @@ export async function getContentFromUrl(urlString: string): Promise<string> {
 
     const contentType = response.headers['content-type']?.toLowerCase() || '';
     if (!ALLOWED_CONTENT_TYPES.some((type) => contentType.includes(type))) {
-      throw new Error(`不支持的内容类型: ${contentType}`);
+      throw new Error(t('file.content.type.unsupported', contentType));
     }
 
     const content = response.data.toString('utf-8');
 
     if (!validateContent(content)) {
-      throw new Error('内容不是有效的 Markdown 格式');
+      throw new Error(t('file.content.invalid'));
     }
 
     return content;
   } catch (firstError) {
-    console.log('直接获取失败,尝试下载方式:', firstError);
+    console.log(t('file.direct.fetch.failed'), firstError);
     try {
       const response = await axios({
         method: 'get',
@@ -71,7 +72,7 @@ export async function getContentFromUrl(urlString: string): Promise<string> {
 
       const contentType = response.headers['content-type']?.toLowerCase() || '';
       if (!ALLOWED_CONTENT_TYPES.some((type) => contentType.includes(type))) {
-        throw new Error(`不支持的内容类型: ${contentType}`);
+        throw new Error(t('file.content.type.unsupported', contentType));
       }
 
       const writer = fs.createWriteStream(tempFile);
@@ -85,12 +86,12 @@ export async function getContentFromUrl(urlString: string): Promise<string> {
       const content = fs.readFileSync(tempFile, 'utf-8');
 
       if (!validateContent(content)) {
-        throw new Error('内容不是有效的 Markdown 格式');
+        throw new Error(t('file.content.invalid'));
       }
 
       return content;
     } catch (secondError) {
-      throw new Error(`无法从 URL 获取内容: ${urlString}`);
+      throw new Error(t('file.url.fetch.failed', urlString));
     } finally {
       if (fs.existsSync(tempFile)) {
         fs.unlinkSync(tempFile);
@@ -110,7 +111,8 @@ export async function translateDirectory(
   rename: string | null,
   options: DirectoryOptions,
 ) {
-  console.log('check api key:', apiKey);
+  console.log(t('file.check.api.key'), apiKey);
+
   if (options.log && !fs.existsSync(options.logDir)) {
     fs.mkdirSync(options.logDir, { recursive: true });
   }
@@ -118,12 +120,12 @@ export async function translateDirectory(
   const pattern = fileExtension ? `**/*.${fileExtension}` : '**/*';
   const markdownFiles = glob.sync(`${inputDir}/${pattern}`, { nodir: true });
 
-  console.log('target files:', markdownFiles);
+  console.log(t('file.target.files'), markdownFiles);
   const successfulFiles: string[] = [];
 
   for (const file of markdownFiles) {
     const relativePath = path.relative(inputDir, file);
-    logMessage(`开始处理文件: ${file}`, options);
+    logMessage(t('file.start.processing', file), options);
 
     const content = readMarkdownFile(file);
     const translatedContent = await translateText(
@@ -137,6 +139,7 @@ export async function translateDirectory(
         delay: options.retryDelay,
         log: options.log,
         logFile: options.logFile,
+        locale: options.locale,
       },
     );
 
@@ -167,21 +170,21 @@ export async function translateDirectory(
         }
 
         writeMarkdownFile(outputFileName, modifiedContent);
-        logMessage(`翻译完成: ${file} -> ${outputFileName}`, options);
+        logMessage(t('file.translation.complete', file, outputFileName), options);
         successfulFiles.push(file);
       } catch (writeError) {
-        logMessage(`写入文件失败: ${file}`, options);
+        logMessage(t('file.write.failed', file), options);
         logFailedFile(file);
       }
     } else {
-      logMessage(`翻译失败: ${file}`, options);
+      logMessage(t('file.translation.failed', file), options);
       logFailedFile(file);
     }
   }
 
   if (successfulFiles.length > 0) {
     clearLogFile(successfulFiles);
-    logMessage(`已清理 ${successfulFiles.length} 个成功翻译文件的记录`, options);
+    logMessage(t('file.log.cleared', successfulFiles.length), options);
   }
 }
 
@@ -245,9 +248,9 @@ export function printDirectoryStructure(
   });
 
   if (options.currentDepth === 0) {
-    console.log('\n🔍 统计信息:');
-    console.log(`   目录数量: ${stats.dirs}`);
-    console.log(`   文件数量: ${stats.files}`);
-    console.log(`   总计: ${stats.dirs + stats.files} 个项目`);
+    console.log('\n🔍 ' + t('file.stats.title'));
+    console.log('   ' + t('file.stats.dirs', stats.dirs));
+    console.log('   ' + t('file.stats.files', stats.files));
+    console.log('   ' + t('file.stats.total', stats.dirs + stats.files));
   }
 }

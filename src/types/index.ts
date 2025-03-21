@@ -1,8 +1,11 @@
+import { SupportedLocale } from '../config/i18n';
+
 export interface TranslationOptions {
   count: number;
   delay: number;
   log: boolean;
   logFile: string;
+  locale?: SupportedLocale;
 }
 
 export interface DirectoryOptions {
@@ -12,6 +15,7 @@ export interface DirectoryOptions {
   retryCount: number;
   retryDelay: number;
   path: string;
+  locale?: SupportedLocale;
 }
 
 export interface DirectoryStats {

@@ -1,13 +1,29 @@
 import * as fs from 'fs';
 import { FAIL_LOG } from '../config/constants';
+import { SupportedLocale } from '../config/i18n';
+import { getLocale, t } from './i18n';
 
-export function logMessage(message: string, options: { log: boolean; logFile: string }) {
+export interface LogOptions {
+  log: boolean;
+  logFile: string;
+  locale?: SupportedLocale;
+}
+
+export function logMessage(message: string, options: LogOptions) {
   if (options.log) {
     const timestamp = new Date().toISOString();
     const logMessage = `[${timestamp}] ${message}\n`;
     fs.appendFileSync(options.logFile, logMessage);
     console.log(message);
   }
+}
+
+export function logLocalizedMessage(key: string, options: LogOptions, ...args: any[]) {
+  // 특정 로케일이 지정된 경우 해당 로케일 사용
+  const currentLocale = options.locale || getLocale();
+  options.locale = currentLocale;
+  const message = t(key, ...args);
+  logMessage(message, options);
 }
 
 export function logFailedFile(filePath: string) {
