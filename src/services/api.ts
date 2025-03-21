@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { DEFAULT_OPENAI_URL, DEFAULT_MODEL } from '../config/constants';
 import { logMessage } from '../utils/logger';
 import { sleep } from '../utils/formatter';
@@ -77,28 +77,51 @@ export async function translateText(
         ],
       };
 
-      console.log('post to', openaiUrl);
+      try {
+        const response = await axios.post(openaiUrl, data, { headers });
 
-      const response = await axios.post(openaiUrl, data, { headers });
+        console.log('API response status:', response.status, response.statusText);
 
-      if (response.status === 200) {
-        logMessage(
-          attempt === 1 ? '翻译完成' : `重试成功 (${attempt}/${retryOptions.count})`,
-          retryOptions,
+        if (response.status === 200) {
+          logMessage(
+            attempt === 1 ? '翻译完成' : `重试成功 (${attempt}/${retryOptions.count})`,
+            retryOptions,
+          );
+
+          if (response.data.choices && response.data.choices.length > 0) {
+            console.log('Translation successful');
+            return response.data.choices[0].message.content;
+          } else {
+            console.log(
+              'API response structure invalid:',
+              JSON.stringify(response.data).substring(0, 200),
+            );
+            throw new Error('API response structure is invalid');
+          }
+        }
+
+        console.log('API response invalid:', JSON.stringify(response.data).substring(0, 200));
+
+        const errorMsg = `请求失败: ${response.status} - ${response.statusText}`;
+        if (attempt < retryOptions.count) {
+          logMessage(`${errorMsg}, 准备重试 (${attempt}/${retryOptions.count})`, retryOptions);
+        } else {
+          logMessage(`${errorMsg}, 已达到最大重试次数`, retryOptions);
+        }
+      } catch (innerError: unknown) {
+        const axiosError = innerError as AxiosError;
+        console.log('API request failed:', axiosError.message);
+        console.log('API request error code:', axiosError.code);
+        console.log(
+          'API request error response:',
+          axiosError.response
+            ? JSON.stringify(axiosError.response.data).substring(0, 200)
+            : 'No response',
         );
-        return response.data.choices[0].message.content;
+        throw innerError;
       }
-
-      console.log('response invalid');
-
-      const errorMsg = `请求失败: ${response.status} - ${response.statusText}`;
-      if (attempt < retryOptions.count) {
-        logMessage(`${errorMsg}, 准备重试 (${attempt}/${retryOptions.count})`, retryOptions);
-      } else {
-        logMessage(`${errorMsg}, 已达到最大重试次数`, retryOptions);
-      }
-    } catch (error) {
-      const errorMsg = `翻译错误: ${error}`;
+    } catch (error: unknown) {
+      const errorMsg = `翻译错误: ${error instanceof Error ? error.message : String(error)}`;
       if (attempt < retryOptions.count) {
         logMessage(
           `${errorMsg}, 将在 ${retryOptions.delay} 秒后重试 (${attempt}/${retryOptions.count})`,
