@@ -27,22 +27,22 @@ export async function parseCliOptions() {
     .option('input', {
       alias: 'i',
       description:
-        '입력 마크다운 파일 또는 폴더 / Input markdown file or folder / 输入的Markdown文件或文件夹',
+        '输入的Markdown文件或文件夹 / Input markdown file or folder / 입력 마크다운 파일 또는 폴더',
       type: 'string',
     })
     .option('url', {
       alias: 'u',
-      description: '입력 마크다운 URL / Input markdown URL / 输入的Markdown URL地址',
+      description: '输入的Markdown URL地址 / Input markdown URL / 입력 마크다운 URL',
       type: 'string',
     })
     .option('extension', {
       alias: 'e',
       description:
-        '번역할 파일 확장자 지정 (예: md) / Specify file extension to translate (e.g. md) / 指定要翻译的文件后缀（例如 md）',
+        '指定要翻译的文件后缀（例如 md） / Specify file extension to translate (e.g. md) / 번역할 파일 확장자 지정 (예: md)',
       type: 'string',
     })
     .option('rename', {
-      description: '파일명 수정 접미사 / File name modification suffix / 修改文件名称的后缀',
+      description: '文件名修改后缀 / File name modification suffix / 파일명 수정 접미사',
       type: 'string',
       default: null,
     })
@@ -60,97 +60,97 @@ export async function parseCliOptions() {
     })
     .option('output', {
       alias: 'o',
-      description: '출력 마크다운 파일 / Output markdown file / 输出的Markdown文件',
+      description: '输出的Markdown文件 / Output markdown file / 출력 마크다운 파일',
       type: 'string',
     })
     .option('language', {
       alias: 'l',
-      description: '대상 언어 / Target language / 目标语言',
+      description: '目标语言 / Target language / 대상 언어',
       type: 'string',
       demandOption: true,
     })
     .option('openai-url', {
-      description: 'OpenAI API URL / OpenAI API 网址',
+      description: 'OpenAI API 网址 / OpenAI API URL / OpenAI API URL',
       type: 'string',
       default: process.env.OPENAI_URL || DEFAULT_OPENAI_URL,
     })
     .option('api-key', {
-      description: 'OpenAI API Key / OpenAI API 密钥',
+      description: 'OpenAI API 密钥 / OpenAI API Key / OpenAI API Key',
       type: 'string',
       default: process.env.API_KEY || defaultApiKey,
     })
     .option('model', {
-      description: '사용할 OpenAI 모델 / OpenAI model to use / 使用的OpenAI模型',
+      description: '使用的OpenAI模型 / OpenAI model to use / 사용할 OpenAI 모델',
       type: 'string',
       default: process.env.MODEL || DEFAULT_MODEL,
     })
     .option('show-version', {
       alias: 'v',
-      description: '버전 표시 / Show version / 显示版本号',
+      description: '显示版本号 / Show version / 버전 표시',
       type: 'boolean',
     })
     .option('retry', {
       description:
-        '번역 실패 파일 재시도 여부 / Whether to retry failed translation files / 是否重试翻译失败的文件',
+        '是否重试翻译失败的文件 / Whether to retry failed translation files / 번역 실패 파일 재시도 여부',
       type: 'boolean',
       default: false,
     })
     .option('log', {
-      description: '로그 표시 여부 / Whether to show logs / 是否显示日志',
+      description: '是否显示日志 / Whether to show logs / 로그 표시 여부',
       type: 'boolean',
       default: false,
     })
     .option('log-file', {
-      description: '로그 파일 경로 / Log file path / 日志文件路径',
+      description: '日志文件路径 / Log file path / 로그 파일 경로',
       type: 'string',
       default: path.join(__dirname, '../..', 'log', 'translator-err.log'),
     })
     .option('log-dir', {
-      description: '로그 디렉토리 / Log directory / 日志目录',
+      description: '日志目录 / Log directory / 로그 디렉토리',
       type: 'string',
       default: path.join(__dirname, '../..', 'log'),
     })
     .option('retry-count', {
-      description: '재시도 횟수 / Retry count / 重试次数',
+      description: '重试次数 / Retry count / 재시도 횟수',
       type: 'number',
       default: 3,
     })
     .option('retry-delay', {
-      description: '재시도 지연 시간(초) / Retry delay (seconds) / 重试延迟时间（秒）',
+      description: '重试延迟时间（秒） / Retry delay (seconds) / 재시도 지연 시간(초)',
       type: 'number',
       default: 10,
     })
     .option('path', {
-      description: '현재 파일 위치 디렉토리 / Current file location directory / 当前文件所在的目录',
+      description: '当前文件所在的目录 / Current file location directory / 현재 파일 위치 디렉토리',
       type: 'string',
       default: __dirname,
     })
     .option('show-path', {
       description:
-        '현재 파일 위치 디렉토리 표시 / Show current file location directory / 显示当前文件所在的目录',
+        '显示当前文件所在的目录 / Show current file location directory / 현재 파일 위치 디렉토리 표시',
       type: 'boolean',
       default: false,
     })
     .option('show-hidden', {
-      description: '숨김 파일 표시 / Show hidden files / 显示隐藏文件',
+      description: '显示隐藏文件 / Show hidden files / 숨김 파일 표시',
       type: 'boolean',
       default: false,
     })
     .option('max-depth', {
       description:
-        '디렉토리 표시 최대 깊이 / Maximum depth for directory display / 目录显示的最大深度',
+        '目录显示的最大深度 / Maximum depth for directory display / 디렉토리 표시 최대 깊이',
       type: 'number',
       default: 5,
     })
     .option('file-filter', {
       description:
-        '파일 필터 (예: .md,.txt) / File filter (e.g. .md,.txt) / 文件过滤器（例如: .md,.txt）',
+        '文件过滤器（例如: .md,.txt） / File filter (e.g. .md,.txt) / 파일 필터 (예: .md,.txt)',
       type: 'string',
     })
     .option('locale', {
       alias: 'lang',
       description:
-        '로그 메시지 언어 설정 (en, zh, ko) / Log message language setting / 日志消息语言设置',
+        '日志消息语言设置 / Log message language setting / 로그 메시지 언어 설정 (en, zh, ko)',
       type: 'string',
       choices: ['en', 'zh', 'ko'],
       default: 'zh',

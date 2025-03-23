@@ -63,7 +63,7 @@ export async function processInputPath(
     );
   } else {
     const markdownContent = readMarkdownFile(resolvedInputPath);
-    // 출력 경로가 없으면 입력 경로를 사용 / If no output path, use input path / 如果没有输出路径，则使用输入路径
+    // 如果没有输出路径，则使用输入路径 / If no output path, use input path / 출력 경로가 없으면 입력 경로를 사용
     const finalOutputPath = outputPath || inputPath;
     await processContent(
       markdownContent,
@@ -91,7 +91,7 @@ export async function processContent(
   model: string,
   options: DirectoryOptions,
 ): Promise<void> {
-  // 마크다운 코드 블록 처리 / Process markdown code blocks / 处理Markdown代码块
+  // 处理Markdown代码块 / Process markdown code blocks / 마크다운 코드 블록 처리
   let cleanedContent = markdownContent;
   if (cleanedContent.startsWith('```')) {
     cleanedContent = cleanedContent.slice(3).trim();
@@ -122,7 +122,7 @@ export async function processContent(
 
   if (translatedContent) {
     let modifiedContent = translatedContent;
-    // 번역된 콘텐츠에서 마크다운 코드 블록 제거 / Remove markdown code blocks from translated content / 从翻译内容中删除Markdown代码块
+    // 从翻译内容中删除Markdown代码块 / Remove markdown code blocks from translated content / 번역된 콘텐츠에서 마크다운 코드 블록 제거
     if (modifiedContent.startsWith('```')) {
       const endOfFirstLine = modifiedContent.indexOf('\n');
       modifiedContent = modifiedContent.slice(endOfFirstLine + 1).trim();

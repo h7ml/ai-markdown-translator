@@ -55,15 +55,15 @@ export async function translateText(
 
       const prompt = `将以下文本翻译成${targetLanguage}。请保持格式不变:\n\n${text}`;
       const systemContent = await getFileContent('system.md');
-      const translateContent = await getFileContent('translate.md');
-      const assistantContent = await getFileContent('assistant.md');
+      const translateContent = await getFileContent('input.md');
+      const assistantContent = await getFileContent('output.md');
 
       if (!(systemContent && translateContent && assistantContent)) {
         console.error(t('api.prompt.error'));
         throw new Error(t('api.prompt.error'));
       }
 
-      console.log('read all system contents');
+      console.log('read all prompt contents');
 
       const data = {
         model: model,
@@ -161,7 +161,7 @@ export async function translateText(
 }
 
 async function getFileContent(fileName: string): Promise<string> {
-  const filePath = path.join(__dirname, './', fileName);
+  const filePath = path.join(__dirname, './prompts/', fileName);
 
   try {
     return fs.readFileSync(filePath, 'utf-8');

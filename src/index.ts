@@ -15,27 +15,27 @@ import {
 
 config();
 
-// 로그 디렉토리 존재 확인
+// 检查日志目录是否存在 / Check if log directory exists / 로그 디렉토리 존재 확인
 if (!fs.existsSync(LOG_DIR)) {
   fs.mkdirSync(LOG_DIR, { recursive: true });
 }
 
 async function main() {
   try {
-    // CLI 옵션 파싱
+    // 解析 CLI 选项 / Parse CLI options / CLI 옵션 파싱
     const argv = await parseCliOptions();
 
-    // 버전 표시
+    // 显示版本 / Show version / 버전 표시
     if (argv['show-version']) {
       showVersion();
     }
 
-    // 디렉토리 구조 표시
+    // 显示目录结构 / Show directory structure / 디렉토리 구조 표시
     if (argv['show-path']) {
       showDirectoryPath(argv);
     }
 
-    // OpenAI URL 및 API 키 필수 검증
+    // 验证必需的 OpenAI URL 和 API 密钥 / Validate required OpenAI URL and API key / OpenAI URL 및 API 키 필수 검증
     if (!argv['openai-url']) {
       throw new Error(t('cli.openai.url.required'));
     }
@@ -43,10 +43,10 @@ async function main() {
       throw new Error(t('cli.api.key.required'));
     }
 
-    // 옵션 준비
+    // 准备选项 / Prepare options / 옵션 준비
     const options = prepareOptions(argv);
 
-    // URL 또는 파일/디렉토리 처리
+    // 处理 URL 或文件/目录 / Process URL or file/directory / URL 또는 파일/디렉토리 처리
     if (argv.url) {
       await processUrlContent(
         argv.url as string,
@@ -80,7 +80,7 @@ async function main() {
 
 main()
   .catch((error) => {
-    console.error('처리되지 않은 오류:', error);
+    console.error('Unresolved error:', error);
     process.exit(1);
   })
   .finally(() => {

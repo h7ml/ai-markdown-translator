@@ -26,7 +26,7 @@ export default {
       exclude: ['**/*.spec.ts'],
     }),
     copy({
-      targets: [{ src: 'src/*.md', dest: 'dist' }],
+      targets: [{ src: 'src/prompts/*.md', dest: 'dist/prompts' }],
     }),
   ],
   external: ['fs', 'path', 'dotenv', 'yargs', 'yargs/helpers'],
