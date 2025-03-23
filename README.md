@@ -12,7 +12,7 @@
   <a href="https://github.com/h7ml/ai-markdown-translator/graphs/contributors"><img src="https://img.shields.io/github/contributors/h7ml/ai-markdown-translator.svg" alt="GitHub Contributors"></a>
 </div>
 
-[English](README.md) | [中文](README-zh.md)
+[English](README.md) | [中文](README-zh.md) | [한국어](README-ko.md)
 
 `ai-markdown-translator` is a command-line tool that translates Markdown files from one language to another using OpenAI's language models. It preserves the Markdown syntax while translating the content.
 
