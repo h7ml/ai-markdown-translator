@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
 import { logLocalizedMessage } from '../utils/logger';
 import { sleep } from '../utils/formatter';
-import { TranslationOptions } from '../types';
+import { DirectoryOptions } from '../types';
 import { t } from '../utils/i18n';
 import axios from 'axios';
 
@@ -36,21 +36,21 @@ type ApiCallFunction<T> = () => Promise<T>;
 
 async function withRetry<T>(
   apiCall: ApiCallFunction<T>,
-  retryOptions: TranslationOptions,
+  directoryOptions: DirectoryOptions,
 ): Promise<T | null> {
-  for (let attempt = 1; attempt <= retryOptions.count; attempt++) {
+  for (let attempt = 1; attempt <= directoryOptions.retryCount; attempt++) {
     try {
       const result = await apiCall();
       logLocalizedMessage(
         attempt === 1 ? 'api.translation.complete' : 'api.translation.retry.success',
-        retryOptions,
+        directoryOptions,
         attempt,
-        retryOptions.count,
+        directoryOptions.retryCount,
       );
       return result;
     } catch (error: unknown) {
-      await handleError(error, retryOptions, attempt);
-      if (attempt === retryOptions.count) {
+      await handleError(error, directoryOptions, attempt);
+      if (attempt === directoryOptions.retryCount) {
         return null;
       }
     }
@@ -60,7 +60,7 @@ async function withRetry<T>(
 
 export async function translateTextWithModule(
   apiKey: string,
-  retryOptions: TranslationOptions,
+  retryOptions: DirectoryOptions,
   data: OpenAI.Chat.Completions.ChatCompletionCreateParamsNonStreaming,
 ): Promise<string | null> {
   const openai = new OpenAI({ apiKey });
@@ -81,7 +81,7 @@ export async function translateTextWithModule(
 export async function translateTextWithRestApi(
   apiKey: string,
   openaiUrl: string,
-  retryOptions: TranslationOptions,
+  directoryOptions: DirectoryOptions,
   data: {
     model: string;
     messages: { role: string; content: string }[];
@@ -111,31 +111,31 @@ export async function translateTextWithRestApi(
     console.log('API response invalid:', JSON.stringify(response.data).substring(0, 200));
     const errorMsg = t('api.request.failed', response.status, response.statusText);
     throw new Error(errorMsg);
-  }, retryOptions);
+  }, directoryOptions);
 }
 
-async function handleError(error: unknown, retryOptions: TranslationOptions, attempt: number) {
+async function handleError(error: unknown, directoryOptions: DirectoryOptions, attempt: number) {
   const errorMsg = t(
     'api.error.retry',
     error instanceof Error ? error.message : String(error),
-    retryOptions.delay,
+    directoryOptions.retryDelay,
     attempt,
-    retryOptions.count,
+    directoryOptions.retryCount,
   );
-  if (attempt < retryOptions.count) {
+  if (attempt < directoryOptions.retryCount) {
     logLocalizedMessage(
       'api.error.retry',
-      retryOptions,
+      directoryOptions,
       error instanceof Error ? error.message : errorMsg,
-      retryOptions.delay,
+      directoryOptions.retryDelay,
       attempt,
-      retryOptions.count,
+      directoryOptions.retryCount,
     );
-    await sleep(retryOptions.delay * 1000);
+    await sleep(directoryOptions.retryDelay * 1000);
   } else {
     logLocalizedMessage(
       'api.error.max',
-      retryOptions,
+      directoryOptions,
       error instanceof Error ? error.message : errorMsg,
     );
   }

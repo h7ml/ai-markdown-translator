@@ -44,31 +44,13 @@ async function main() {
     }
 
     // 准备选项 / Prepare options / 옵션 준비
-    const options = prepareOptions(argv);
+    const runtimeOptions = prepareOptions(argv);
 
     // 处理 URL 或文件/目录 / Process URL or file/directory / URL 또는 파일/디렉토리 처리
-    if (argv.url) {
-      await processUrlContent(
-        argv.url as string,
-        argv.output as string,
-        argv.language as string,
-        argv['openai-url'] as string,
-        argv['api-key'] as string,
-        argv.model as string,
-        options,
-      );
-    } else if (argv.input) {
-      await processInputPath(
-        argv.input as string,
-        argv.output as string,
-        argv.language as string,
-        argv['openai-url'] as string,
-        argv['api-key'] as string,
-        argv.model as string,
-        argv.extension || null,
-        argv.rename,
-        options,
-      );
+    if (runtimeOptions.url) {
+      await processUrlContent(runtimeOptions);
+    } else if (runtimeOptions.input) {
+      await processInputPath(runtimeOptions);
     } else {
       throw new Error(t('cli.input.file.required'));
     }

@@ -1,13 +1,5 @@
 import { SupportedLocale } from '../config/i18n';
 
-export interface TranslationOptions {
-  count: number;
-  delay: number;
-  log: boolean;
-  logFile: string;
-  locale?: SupportedLocale;
-}
-
 export interface DirectoryOptions {
   log: boolean;
   logFile: string;
@@ -34,4 +26,17 @@ export interface DirectoryPrintOptions {
 export interface ChatData {
   model: string;
   messages: { role: 'developer' | 'user' | 'assistant'; content: string }[];
+}
+
+export interface RuntimeOptions {
+  input?: string;
+  url?: string;
+  output: string;
+  language: string;
+  openaiUrl: string;
+  apiKey: string;
+  model: string;
+  extension: string | null;
+  rename?: string;
+  directoryOptions: DirectoryOptions;
 }

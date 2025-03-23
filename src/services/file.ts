@@ -6,10 +6,11 @@ import axios from 'axios';
 import { MAX_FILE_SIZE, ALLOWED_CONTENT_TYPES } from '../config/constants';
 import { validateContent } from '../utils/validator';
 import { formatFileSize } from '../utils/formatter';
-import { DirectoryOptions, DirectoryStats, DirectoryPrintOptions } from '../types';
+import { DirectoryStats, DirectoryPrintOptions } from '../types';
 import { logMessage, logFailedFile, clearLogFile } from '../utils/logger';
 import { translateText } from './api';
 import { t } from '../utils/i18n';
+import { RuntimeOptions } from '../types';
 
 export function readMarkdownFile(filePath: string): string {
   if (!fs.existsSync(filePath)) {
@@ -103,21 +104,15 @@ export async function getContentFromUrl(urlString: string): Promise<string> {
 export async function translateDirectory(
   inputDir: string,
   outputDir: string,
-  targetLanguage: string,
-  openaiUrl: string,
-  apiKey: string,
-  model: string,
-  fileExtension: string | null,
-  rename: string | null,
-  options: DirectoryOptions,
+  options: RuntimeOptions,
 ) {
-  console.log(t('file.check.api.key'), apiKey);
+  console.log(t('file.check.api.key'), options.apiKey);
 
-  if (options.log && !fs.existsSync(options.logDir)) {
-    fs.mkdirSync(options.logDir, { recursive: true });
+  if (options.directoryOptions.log && !fs.existsSync(options.directoryOptions.logDir)) {
+    fs.mkdirSync(options.directoryOptions.logDir, { recursive: true });
   }
 
-  const pattern = fileExtension ? `**/*.${fileExtension}` : '**/*';
+  const pattern = options.extension ? `**/*.${options.extension}` : '**/*';
   const markdownFiles = glob.sync(`${inputDir}/${pattern}`, { nodir: true });
 
   console.log(t('file.target.files'), markdownFiles);
@@ -125,23 +120,10 @@ export async function translateDirectory(
 
   for (const file of markdownFiles) {
     const relativePath = path.relative(inputDir, file);
-    logMessage(t('file.start.processing', file), options);
+    logMessage(t('file.start.processing', file), options.directoryOptions);
 
     const content = readMarkdownFile(file);
-    const translatedContent = await translateText(
-      content,
-      targetLanguage,
-      openaiUrl,
-      apiKey,
-      model,
-      {
-        count: options.retryCount,
-        delay: options.retryDelay,
-        log: options.log,
-        logFile: options.logFile,
-        locale: options.locale,
-      },
-    );
+    const translatedContent = await translateText(content, options);
 
     if (translatedContent) {
       try {
@@ -156,11 +138,11 @@ export async function translateDirectory(
           modifiedContent = modifiedContent.slice(0, startOfLastLine).trim();
         }
 
-        const outputFileName = rename
+        const outputFileName = options.rename
           ? path.join(
               outputDir,
               path.dirname(relativePath),
-              `${path.basename(file, path.extname(file))}-${rename}${path.extname(file)}`,
+              `${path.basename(file, path.extname(file))}-${options.rename}${path.extname(file)}`,
             )
           : path.join(outputDir, relativePath);
 
@@ -170,21 +152,21 @@ export async function translateDirectory(
         }
 
         writeMarkdownFile(outputFileName, modifiedContent);
-        logMessage(t('file.translation.complete', file, outputFileName), options);
+        logMessage(t('file.translation.complete', file, outputFileName), options.directoryOptions);
         successfulFiles.push(file);
       } catch (writeError) {
-        logMessage(t('file.write.failed', file), options);
+        logMessage(t('file.write.failed', file), options.directoryOptions);
         logFailedFile(file);
       }
     } else {
-      logMessage(t('file.translation.failed', file), options);
+      logMessage(t('file.translation.failed', file), options.directoryOptions);
       logFailedFile(file);
     }
   }
 
   if (successfulFiles.length > 0) {
     clearLogFile(successfulFiles);
-    logMessage(t('file.log.cleared', successfulFiles.length), options);
+    logMessage(t('file.log.cleared', successfulFiles.length), options.directoryOptions);
   }
 }
 

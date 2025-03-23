@@ -8,24 +8,18 @@ import {
   translateDirectory,
 } from '../services/file';
 import { translateText } from '../services/api';
-import { DirectoryOptions } from '../types';
+import { RuntimeOptions } from '../types';
 
 /**
  * Process URL content.
  * 处理URL内容。
  * URL 콘텐츠를 처리합니다.
  */
-export async function processUrlContent(
-  url: string,
-  outputPath: string | undefined,
-  language: string,
-  openaiUrl: string,
-  apiKey: string,
-  model: string,
-  options: DirectoryOptions,
-): Promise<void> {
-  const markdownContent = await getContentFromUrl(url);
-  await processContent(markdownContent, outputPath, language, openaiUrl, apiKey, model, options);
+export async function processUrlContent(options: RuntimeOptions): Promise<void> {
+  if (!options.url) return;
+
+  const markdownContent = await getContentFromUrl(options.url);
+  await processContent(markdownContent, options);
 }
 
 /**
@@ -33,46 +27,24 @@ export async function processUrlContent(
  * 处理输入文件或目录。
  * 입력 파일 또는 디렉토리를 처리합니다.
  */
-export async function processInputPath(
-  inputPath: string,
-  outputPath: string | undefined,
-  language: string,
-  openaiUrl: string,
-  apiKey: string,
-  model: string,
-  extension: string | null,
-  rename: string | null,
-  options: DirectoryOptions,
-): Promise<void> {
-  const resolvedInputPath = path.resolve(inputPath);
+export async function processInputPath(options: RuntimeOptions): Promise<void> {
+  if (!options.input) return;
+
+  const resolvedInputPath = path.resolve(options.input);
   const stats = fs.statSync(resolvedInputPath);
 
   if (stats.isDirectory()) {
-    const outputDir = outputPath ? path.resolve(outputPath) : resolvedInputPath;
-    await translateDirectory(
-      resolvedInputPath,
-      outputDir,
-      language,
-      openaiUrl,
-      apiKey,
-      model,
-      extension,
-      rename,
-      options,
-    );
+    const outputDir = options.output ? path.resolve(options.output) : resolvedInputPath;
+    await translateDirectory(resolvedInputPath, outputDir, options);
   } else {
     const markdownContent = readMarkdownFile(resolvedInputPath);
     // 如果没有输出路径，则使用输入路径 / If no output path, use input path / 출력 경로가 없으면 입력 경로를 사용
-    const finalOutputPath = outputPath || inputPath;
-    await processContent(
-      markdownContent,
-      finalOutputPath,
-      language,
-      openaiUrl,
-      apiKey,
-      model,
-      options,
-    );
+    const finalOutputPath = options.output || options.input;
+
+    await processContent(markdownContent, {
+      ...options,
+      output: finalOutputPath,
+    });
   }
 }
 
@@ -83,12 +55,7 @@ export async function processInputPath(
  */
 export async function processContent(
   markdownContent: string,
-  outputPath: string | undefined,
-  language: string,
-  openaiUrl: string,
-  apiKey: string,
-  model: string,
-  options: DirectoryOptions,
+  options: RuntimeOptions,
 ): Promise<void> {
   // 处理Markdown代码块 / Process markdown code blocks / 마크다운 코드 블록 처리
   let cleanedContent = markdownContent;
@@ -99,25 +66,12 @@ export async function processContent(
     cleanedContent = cleanedContent.slice(0, -3).trim();
   }
 
-  if (!outputPath) {
+  if (!options.output) {
     throw new Error(t('cli.output.invalid'));
   }
 
-  const resolvedOutputPath = path.resolve(outputPath);
-  const translatedContent = await translateText(
-    cleanedContent,
-    language,
-    openaiUrl,
-    apiKey,
-    model,
-    {
-      count: options.retryCount,
-      delay: options.retryDelay,
-      log: options.log,
-      logFile: options.logFile,
-      locale: options.locale,
-    },
-  );
+  const resolvedOutputPath = path.resolve(options.output);
+  const translatedContent = await translateText(cleanedContent, options);
 
   if (translatedContent) {
     let modifiedContent = translatedContent;
@@ -133,7 +87,7 @@ export async function processContent(
     }
 
     writeMarkdownFile(resolvedOutputPath, modifiedContent);
-    console.log(t('cli.translation.complete', outputPath, resolvedOutputPath));
+    console.log(t('cli.translation.complete', options.output, resolvedOutputPath));
   } else {
     console.log(t('api.translation.failed'));
   }

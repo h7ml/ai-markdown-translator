@@ -1,5 +1,5 @@
-import { DEFAULT_OPENAI_URL, DEFAULT_MODEL } from '../config/constants';
-import { ChatData, TranslationOptions } from '../types';
+import { DEFAULT_OPENAI_URL } from '../config/constants';
+import { ChatData, RuntimeOptions } from '../types';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
@@ -9,15 +9,8 @@ import { translateTextWithModule, translateTextWithRestApi } from './openai';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export async function translateText(
-  text: string,
-  targetLanguage: string,
-  openaiUrl = DEFAULT_OPENAI_URL,
-  apiKey: string,
-  model = DEFAULT_MODEL,
-  retryOptions: TranslationOptions,
-): Promise<string | null> {
-  const prompt = `将以下文本翻译成${targetLanguage}。请保持格式不变:\n\n${text}`;
+export async function translateText(text: string, options: RuntimeOptions): Promise<string | null> {
+  const prompt = `将以下文本翻译成${options.language}。请保持格式不变:\n\n${text}`;
   const systemContent = await getFileContent('system.md');
   const inputContent = await getFileContent('input.md');
   const outputContent = await getFileContent('output.md');
@@ -28,7 +21,7 @@ export async function translateText(
   }
 
   const data: ChatData = {
-    model: model,
+    model: options.model,
     messages: [
       { role: 'developer', content: systemContent },
       {
@@ -40,10 +33,15 @@ export async function translateText(
     ],
   };
 
-  if (openaiUrl == DEFAULT_OPENAI_URL) {
-    return translateTextWithModule(apiKey, retryOptions, data);
+  if (options.openaiUrl === DEFAULT_OPENAI_URL) {
+    return translateTextWithModule(options.apiKey, options.directoryOptions, data);
   } else {
-    return translateTextWithRestApi(apiKey, openaiUrl, retryOptions, data);
+    return translateTextWithRestApi(
+      options.apiKey,
+      options.openaiUrl,
+      options.directoryOptions,
+      data,
+    );
   }
 }
 

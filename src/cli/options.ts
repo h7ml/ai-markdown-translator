@@ -10,7 +10,7 @@ import { setLocale } from '../utils/i18n';
 import { isValidUrl } from '../utils/validator';
 import { t } from '../utils/i18n';
 import { printDirectoryStructure } from '../services/file';
-import { DirectoryOptions } from '../types';
+import { DirectoryOptions, RuntimeOptions } from '../types';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -218,8 +218,8 @@ export function showDirectoryPath(argv: any) {
  * 准备程序选项。
  * 프로그램 옵션을 준비합니다.
  */
-export function prepareOptions(argv: any): DirectoryOptions {
-  return {
+export function prepareOptions(argv: any): RuntimeOptions {
+  const directoryOptions: DirectoryOptions = {
     log: argv.log as boolean,
     logFile: argv['log-file'] as string,
     logDir: argv['log-dir'] as string,
@@ -227,5 +227,18 @@ export function prepareOptions(argv: any): DirectoryOptions {
     retryDelay: argv['retry-delay'] as number,
     path: argv.path as string,
     locale: argv.locale as SupportedLocale,
+  };
+
+  return {
+    input: argv.input,
+    url: argv.url,
+    output: argv.output,
+    language: argv.language,
+    openaiUrl: argv['openai-url'],
+    apiKey: argv['api-key'],
+    model: argv.model,
+    extension: argv.extension || null,
+    rename: argv.rename,
+    directoryOptions,
   };
 }
