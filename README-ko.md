@@ -1,27 +1,27 @@
 # ai-markdown-translator
 
 <div>
-  <a href="https://www.npmjs.org/package/ai-markdown-translator"><img src="https://img.shields.io/npm/v/ai-markdown-translator.svg?style=flat" alt="NPM 버전"></a>
+  <a href="https://www.npmjs.org/package/ai-markdown-translator"><img src="https://img.shields.io/npm/v/ai-markdown-translator.svg?style=flat" alt="NPM version"></a>
   <a href="https://github.com/h7ml/ai-markdown-translator/actions/workflows/ci.yml"><img src="https://github.com/h7ml/ai-markdown-translator/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="https://github.com/h7ml/ai-markdown-translator/actions/workflows/release.yml"><img src="https://github.com/h7ml/ai-markdown-translator/actions/workflows/release.yml/badge.svg" alt="Release"></a>
-  <a href="https://www.npmjs.org/package/ai-markdown-translator"><img src="https://img.shields.io/npm/dw/ai-markdown-translator" alt="NPM 다운로드 수"></a>
-  <a href="https://www.npmjs.org/package/ai-markdown-translator"><img src="https://img.shields.io/npm/l/ai-markdown-translator" alt="NPM 라이선스"></a>
-  <a href="https://github.com/h7ml/ai-markdown-translator/stargazers"><img src="https://img.shields.io/github/stars/h7ml/ai-markdown-translator.svg" alt="GitHub 별"></a>
-  <a href="https://github.com/h7ml/ai-markdown-translator/issues"><img src="https://img.shields.io/github/issues/h7ml/ai-markdown-translator.svg" alt="GitHub 이슈"></a>
-  <a href="https://github.com/h7ml/ai-markdown-translator/network/members"><img src="https://img.shields.io/github/forks/h7ml/ai-markdown-translator.svg" alt="GitHub 포크"></a>
-  <a href="https://github.com/h7ml/ai-markdown-translator/graphs/contributors"><img src="https://img.shields.io/github/contributors/h7ml/ai-markdown-translator.svg" alt="GitHub 기여자"></a>
+  <a href="https://www.npmjs.org/package/ai-markdown-translator"><img src="https://img.shields.io/npm/dw/ai-markdown-translator" alt="NPM Downloads"></a>
+  <a href="https://www.npmjs.org/package/ai-markdown-translator"><img src="https://img.shields.io/npm/l/ai-markdown-translator" alt="NPM License"></a>
+  <a href="https://github.com/h7ml/ai-markdown-translator/stargazers"><img src="https://img.shields.io/github/stars/h7ml/ai-markdown-translator.svg" alt="GitHub Stars"></a>
+  <a href="https://github.com/h7ml/ai-markdown-translator/issues"><img src="https://img.shields.io/github/issues/h7ml/ai-markdown-translator.svg" alt="GitHub Issues"></a>
+  <a href="https://github.com/h7ml/ai-markdown-translator/network/members"><img src="https://img.shields.io/github/forks/h7ml/ai-markdown-translator.svg" alt="GitHub Forks"></a>
+  <a href="https://github.com/h7ml/ai-markdown-translator/graphs/contributors"><img src="https://img.shields.io/github/contributors/h7ml/ai-markdown-translator.svg" alt="GitHub Contributors"></a>
 </div>
 
-[영어](README.md) | [중국어](README-zh.md)
+[English](README.md) | [中文](README-zh.md)
 
-`ai-markdown-translator`는 OpenAI의 언어 모델을 사용하여 Markdown 파일을 한 언어에서 다른 언어로 번역하는 명령줄 도구입니다. 번역 시 Markdown 구문을 그대로 유지합니다.
+`ai-markdown-translator`는 OpenAI의 언어 모델을 사용하여 Markdown 파일을 한 언어에서 다른 언어로 번역하는 명령줄 도구입니다. 번역하는 동안 Markdown 문법은 그대로 유지됩니다.
 
 ## 기능
 
 - OpenAI 모델이 지원하는 모든 언어로 Markdown 파일 번역
-- 번역 중에도 Markdown 구문 보존
-- 재귀적 디렉토리 번역 지원
-- 실패한 번역에 대한 자동 재시도 메커니즘
+- 번역 중에 Markdown 문법 유지
+- 디렉토리 재귀 번역 지원
+- 번역 실패에 대한 자동 재시도 메커니즘
 - 포괄적인 로깅 시스템
 - 디렉토리 구조 시각화
 - 파일 실패 추적 및 복구
@@ -52,18 +52,18 @@ npm run build
 
 - `build`: TypeScript 파일을 JavaScript로 컴파일합니다.
 - `start`: 컴파일된 JavaScript를 Node.js로 실행합니다.
-- `lint`: TypeScript 파일의 코드 품질 문제를 확인하기 위해 ESLint를 실행합니다.
+- `lint`: TypeScript 파일에서 코드 품질 문제를 확인하기 위해 ESLint를 실행합니다.
 - `lint:fix`: TypeScript 파일의 린트 문제를 자동으로 수정합니다.
-- `format`: `src` 디렉토리의 다양한 파일 형식을 Prettier로 코드 포맷팅합니다.
-- `format:check`: `src` 디렉토리의 다양한 파일 형식에 대해 변경 없이 코드 포맷팅을 검사합니다.
+- `format`: `src` 디렉토리의 다양한 파일 유형에 대해 Prettier를 사용하여 코드를 포맷합니다.
+- `format:check`: 변경 없이 코드 포맷을 확인합니다.
 - `postbuild`: 컴파일된 `index.js` 파일을 실행 가능하게 만듭니다.
-- `changelog`: 컨벤셔널 커밋을 기반으로 변경 로그를 생성합니다.
-- `version`: 버전 관리 시 변경 로그를 업데이트하고 커밋을 위해 준비합니다.
+- `changelog`: 관례적 커밋(conventional commits)을 기반으로 변경 로그를 생성합니다.
+- `version`: 버전 업데이트 시 변경 로그를 갱신하고 커밋할 준비를 합니다.
 - `test`: 프로젝트를 빌드하고 테스트를 실행합니다.
 
 ## 사용법
 
-Node.js, `npx` 또는 독립 실행 파일(패키징한 경우)로 CLI 도구를 실행할 수 있습니다.
+Node.js, `npx` 또는 독립 실행형 실행 파일로 CLI 도구를 실행할 수 있습니다 (패키징된 경우).
 
 ### Node.js 사용
 
@@ -77,7 +77,7 @@ node dist/index.js --input <input-file> --output <output-file> --language <targe
 npx ai-markdown-translator -i <input-file> -o <output-file> -l <target-language> [options]
 ```
 
-예를 들어:
+예시:
 
 ```bash
 npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/main/README.md -o output.md -l "Italian"
@@ -91,38 +91,38 @@ npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/
 
 ## 옵션
 
-- `--input`, `-i`: 번역할 Markdown 파일 또는 디렉토리 지정 (대안: `--url`). 이 옵션을 통해 번역할 Markdown 파일이나 디렉토리의 경로를 지정합니다.
-- `--url`, `-u`: 번역할 Markdown 파일의 URL (대안: `--input`). 번역할 Markdown 파일의 직접 링크를 제공하기 위해 이 옵션을 사용합니다.
-- `--extension`, `-e`: 번역할 파일 확장자 지정 (예: `md`). 제공하지 않을 경우 모든 파일이 처리됩니다. 이 옵션을 사용하면 파일 확장자에 따라 번역할 파일을 필터링할 수 있습니다.
-- `--rename`: 파일 이름 변경 여부. true인 경우 출력 파일 이름이 `<original-filename>-translated.<extension>`으로 지정됩니다. 이 옵션은 번역된 파일 이름에 접미사를 추가할지 여부를 지정합니다.
-- `--output`, `-o`: 출력 Markdown 파일 (제공하지 않을 경우 입력 파일 이름이 기본값으로 사용됨). 이 옵션은 번역된 내용이 저장될 출력 파일의 이름을 지정할 수 있습니다.
-- `--language`, `-l`: 번역 대상 언어 (필수). 이 옵션은 Markdown 내용을 번역할 언어를 지정합니다.
-- `--openai-url`: OpenAI API URL (기본값: `OPENAI_URL` 환경 변수를 사용). 필요한 경우 OpenAI API의 사용자 지정 URL을 지정할 수 있습니다.
-- `--api-key`: OpenAI API 키 (기본값: `API_KEY` 환경 변수를 사용). 이 옵션은 인증을 위해 OpenAI API 키를 제공하는 데 사용됩니다.
-- `--model`: 사용할 OpenAI 모델 (기본값: `MODEL` 환경 변수 또는 `gpt-3.5-turbo` 사용). 이 옵션은 번역에 사용할 OpenAI 모델을 지정할 수 있습니다.
+- `--input`, `-i`: 입력 Markdown 파일 또는 디렉토리 (`--url`의 대안). 이 옵션을 사용하여 번역할 Markdown 파일이나 디렉토리의 경로를 지정할 수 있습니다.
+- `--url`, `-u`: 번역할 Markdown 파일의 URL (`--input`의 대안). 이 옵션을 사용하여 번역할 Markdown 파일의 직접 링크를 제공할 수 있습니다.
+- `--extension`, `-e`: 번역할 파일 확장자를 지정합니다 (예: `md`). 제공하지 않으면 모든 파일이 처리됩니다. 이 옵션을 사용하면 확장자에 따라 번역할 파일을 필터링할 수 있습니다.
+- `--rename`: 파일 이름을 수정할지 여부를 지정합니다. true이면 출력 파일이 `<original-filename>-translated.<extension>`로 이름이 지정됩니다. 이 옵션을 사용하여 번역된 파일 이름에 접미사를 추가할지 지정할 수 있습니다.
+- `--output`, `-o`: 출력 Markdown 파일 (제공하지 않으면 입력 파일 이름을 사용). 이 옵션을 사용하여 번역된 내용이 저장될 출력 파일의 이름을 지정할 수 있습니다.
+- `--language`, `-l`: 번역할 대상 언어 (필수). 이 옵션은 Markdown 콘텐츠를 번역할 언어를 지정합니다.
+- `--openai-url`: OpenAI API URL (기본값: `OPENAI_URL` 환경 변수 사용). 필요에 따라 OpenAI API를 위한 사용자 지정 URL을 지정할 수 있습니다.
+- `--api-key`: OpenAI API 키 (기본값: `API_KEY` 환경 변수 사용). 인증을 위해 OpenAI API 키를 제공하는 데 사용됩니다.
+- `--model`: 사용할 OpenAI 모델 (기본값: `MODEL` 환경 변수 또는 `gpt-3.5-turbo` 사용). 이 옵션을 통해 번역에 사용할 OpenAI 모델을 지정할 수 있습니다.
 - `--help`, `-h`: 도움말 표시. 이 옵션은 명령줄 도구의 도움말 정보를 표시합니다.
 - `--show-version`, `-v`: 버전 표시. 이 옵션은 도구의 현재 버전을 표시합니다.
-- `--log`: 로깅 활성화 (기본값: false). 성공 및 실패 정보를 포함한 번역 과정의 상세 로깅을 활성화합니다.
-- `--log-file`: 로그 파일 경로 지정 (기본값: `<project_root>/log/translator-err.log`). 번역 오류 및 실패가 기록되는 파일입니다.
-- `--log-dir`: 로그 디렉토리 지정 (기본값: `<project_root>/log`). 모든 로그 파일이 저장되는 디렉토리입니다.
-- `--locale`: 로그 메시지 언어 설정 (기본값: 'zh'). 이 옵션은 로그 메시지의 언어를 지정할 수 있습니다 (선택: 'en', 'zh', 'ko').
-- `--retry-count`: 실패한 번역에 대한 재시도 횟수 (기본값: 3). 번역기가 실패한 번역을 재시도할 횟수를 지정합니다.
-- `--retry-delay`: 재시도 사이의 대기 시간(초) (기본값: 10). 재시도 간의 대기 시간을 지정합니다.
-- `--path`, `-p`: 디렉토리 구조 표시 (기본값: 현재 스크립트 디렉토리). 지정된 디렉토리 구조의 트리 뷰를 보여줍니다.
+- `--log`: 로깅 활성화 (기본값: false). 성공 및 실패 정보를 포함한 번역 과정의 자세한 로깅을 활성화합니다.
+- `--log-file`: 로그 파일 경로 지정 (기본값: `<project_root>/log/translator-err.log`). 번역 오류 및 실패가 기록될 파일입니다.
+- `--log-dir`: 로그 디렉토리 지정 (기본값: `<project_root>/log`). 모든 로그 파일이 저장될 디렉토리입니다.
+- `--locale`: 로그 메시지 언어 설정 (기본값: 'zh'). 이 옵션을 사용하여 로그 메시지의 언어를 지정할 수 있습니다 (선택 사항: 'en', 'zh', 'ko').
+- `--retry-count`: 번역 실패에 대한 재시도 횟수 (기본값: 3). 번역 실패 시 몇 번 재시도할지를 지정합니다.
+- `--retry-delay`: 재시도 시도 사이의 지연 시간 (초, 기본값: 10). 재시도 시도 사이에 대기할 시간을 지정합니다.
+- `--path`, `-p`: 디렉토리 구조 표시 (기본값: 현재 스크립트 디렉토리). 지정한 디렉토리 구조의 트리 보기를 표시합니다.
 
-> 주의: `--input`과 `--url`은 상호 배타적입니다; 둘 중 하나를 제공해야 합니다.
+> 참고: `--input`과 `--url`은 서로 배타적입니다. 둘 중 하나를 제공해야 합니다.
 
 ## 환경 변수
 
-명령줄 인수로 전달하는 대신 다음 환경 변수를 설정할 수 있습니다:
+명령줄 인수 대신 다음 환경 변수를 설정할 수 있습니다:
 
-- `OPENAI_URL`: OpenAI API의 URL입니다.
-- `API_KEY`: 당신의 OpenAI API 키입니다.
+- `OPENAI_URL`: OpenAI API의 URL.
+- `API_KEY`: OpenAI API 키.
 - `MODEL`: 사용할 OpenAI 모델 (예: `'gpt-3.5-turbo'`).
 
-이들을 프로젝트 루트의 `.env` 파일에 설정하거나 셸에서 내보낼 수 있습니다.
+이 값들은 프로젝트 루트의 `.env` 파일에 설정하거나 쉘에서 export 할 수 있습니다.
 
-## 예제
+## 예시
 
 1. **영어에서 스페인어로 Markdown 파일 번역:**
 
@@ -136,7 +136,7 @@ npx ai-markdown-translator -i english.md -o spanish.md -l "Spanish"
 npx ai-markdown-translator -i input.md -o output.md -l "French" --model "gpt-4"
 ```
 
-3. **사용자 지정 OpenAI URL과 API 키를 사용하여 번역:**
+3. **사용자 지정 OpenAI URL 및 API 키로 번역:**
 
 ```bash
 npx ai-markdown-translator -i input.md -o output.md -l "German" --openai-url "https://api.302.ai/v1/chat/completions" --api-key "sk-302-api-key"
@@ -148,7 +148,7 @@ npx ai-markdown-translator -i input.md -o output.md -l "German" --openai-url "ht
 npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/main/README.md -o output.md -l "Italian"
 ```
 
-5. **디렉토리 내의 모든 Markdown 파일을 번역하고 이름 변경:**
+5. **디렉토리 내 모든 Markdown 파일을 번역하고 파일 이름 변경:**
 
 ```bash
 npx ai-markdown-translator -i ./markdown-files -l "Chinese" --rename
@@ -160,19 +160,19 @@ npx ai-markdown-translator -i ./markdown-files -l "Chinese" --rename
 npx ai-markdown-translator -i example.md -o translated_example.md -l "Japanese"
 ```
 
-7. **로깅 및 재시도 옵션을 사용하여 번역:**
+7. **로깅 및 재시도 옵션과 함께 번역:**
 
 ```bash
 npx ai-markdown-translator -i ./docs -o ./translated -l "Chinese" --log --retry-count 5 --retry-delay 15
 ```
 
-8. **사용자 지정 로그 디렉토리를 사용하여 번역:**
+8. **사용자 지정 로그 디렉토리로 번역:**
 
 ```bash
 npx ai-markdown-translator -i input.md -o output.md -l "Japanese" --log --log-dir "./custom-logs"
 ```
 
-9. **모든 로깅 및 재시도 옵션을 사용하여 번역:**
+9. **모든 로깅 및 재시도 옵션과 함께 번역:**
 
 ```bash
 npx ai-markdown-translator -i ./markdown-files -l "French" \
@@ -189,7 +189,7 @@ npx ai-markdown-translator -i ./markdown-files -l "French" \
 npx ai-markdown-translator -p ./src
 ```
 
-출력 예:
+출력 예시:
 
 ```
 📂 Directory structure: /path/to/src
@@ -203,7 +203,7 @@ npx ai-markdown-translator -p ./src
 └── 📄 index.ts
 ```
 
-11. **자동 재시도 및 로깅으로 번역:**
+11. **자동 재시도 및 로깅과 함께 번역:**
 
 ```bash
 npx ai-markdown-translator -i ./docs -o ./translated -l "Chinese" \
@@ -213,7 +213,7 @@ npx ai-markdown-translator -i ./docs -o ./translated -l "Chinese" \
   --log-file "./logs/translation.log"
 ```
 
-12. **실패 추적 기능이 있는 디렉토리 번역:**
+12. **실패 추적 기능과 함께 디렉토리 번역:**
 
 ```bash
 npx ai-markdown-translator -i ./markdown-files -o ./output -l "Japanese" \
@@ -230,7 +230,7 @@ npx ai-markdown-translator -i ./markdown-files -o ./output -l "Japanese" \
 ## Git 정보
 
 - **저장소**: [h7ml/ai-markdown-translator](https://github.com/h7ml/ai-markdown-translator)
-- **이슈**: [이슈 보고](https://github.com/h7ml/ai-markdown-translator/issues)
+- **이슈**: [문제 보고](https://github.com/h7ml/ai-markdown-translator/issues)
 
 ## 버전 정보
 
@@ -241,15 +241,15 @@ npx ai-markdown-translator -i ./markdown-files -o ./output -l "Japanese" \
 
 이 프로젝트는 지속적 통합을 위해 GitHub Actions를 사용합니다. CI 워크플로우에는 다음이 포함됩니다:
 
-- ESLint를 사용한 코드 린팅
-- 테스트 실행 (해당되는 경우)
+- ESLint로 코드 린팅
+- (해당 시) 테스트 실행
 - 프로젝트 빌드
-- 빠른 빌드를 위한 의존성 캐싱
+- 빌드 속도를 높이기 위한 의존성 캐싱
 
 ## 기여
 
-기여를 환영합니다! 언제든지 Pull Request를 제출해 주세요.
+기여는 환영합니다! Pull Request를 자유롭게 제출해 주세요.
 
 ## 지원
 
-문제가 발생하거나 질문이 있을 경우, 이 저장소에 이슈를 등록해 주세요.
+문제가 발생하거나 질문이 있으시면, 이 저장소에 이슈를 올려주시기 바랍니다.

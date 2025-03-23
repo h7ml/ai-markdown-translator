@@ -30,3 +30,8 @@ export interface DirectoryPrintOptions {
   currentDepth: number;
   fileFilter: (filename: string) => boolean;
 }
+
+export interface ChatData {
+  model: string;
+  messages: { role: 'developer' | 'user' | 'assistant'; content: string }[];
+}

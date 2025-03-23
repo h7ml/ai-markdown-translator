@@ -29,5 +29,5 @@ export default {
       targets: [{ src: 'src/prompts/*.md', dest: 'dist/prompts' }],
     }),
   ],
-  external: ['fs', 'path', 'dotenv', 'yargs', 'yargs/helpers'],
+  external: ['fs', 'path', 'dotenv', 'yargs', 'yargs/helpers', 'openai'],
 };

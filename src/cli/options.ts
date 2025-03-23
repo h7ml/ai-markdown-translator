@@ -4,7 +4,7 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { fileURLToPath } from 'url';
 import { DEFAULT_MODEL, DEFAULT_OPENAI_URL } from '../config/constants';
-import { getDefaultApiKey } from '../services/api';
+import { getDefaultApiKey } from '../services/openai';
 import { SupportedLocale } from '../config/i18n';
 import { setLocale } from '../utils/i18n';
 import { isValidUrl } from '../utils/validator';
