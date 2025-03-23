@@ -55,15 +55,13 @@ export async function translateText(
 
       const prompt = `将以下文本翻译成${targetLanguage}。请保持格式不变:\n\n${text}`;
       const systemContent = await getFileContent('system.md');
-      const translateContent = await getFileContent('input.md');
-      const assistantContent = await getFileContent('output.md');
+      const inputContent = await getFileContent('input.md');
+      const outputContent = await getFileContent('output.md');
 
-      if (!(systemContent && translateContent && assistantContent)) {
+      if (!(systemContent && inputContent && outputContent)) {
         console.error(t('api.prompt.error'));
         throw new Error(t('api.prompt.error'));
       }
-
-      console.log('read all prompt contents');
 
       const data = {
         model: model,
@@ -71,17 +69,15 @@ export async function translateText(
           { role: 'system', content: systemContent },
           {
             role: 'user',
-            content: `请将以下文本翻译成英文。请保持格式不变:\n\n${translateContent}`,
+            content: `请将以下文本翻译成英文。请保持格式不变:\n\n${inputContent}`,
           },
-          { role: 'assistant', content: assistantContent },
+          { role: 'assistant', content: outputContent },
           { role: 'user', content: prompt },
         ],
       };
 
       try {
         const response = await axios.post(openaiUrl, data, { headers });
-
-        console.log('API response status:', response.status, response.statusText);
 
         if (response.status === 200) {
           logLocalizedMessage(

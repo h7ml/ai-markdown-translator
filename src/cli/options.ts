@@ -110,6 +110,13 @@ export async function parseCliOptions() {
       type: 'string',
       default: path.join(__dirname, '../..', 'log'),
     })
+    .option('locale', {
+      description:
+        '日志消息语言设置 / Log message language setting / 로그 메시지 언어 설정 (en, zh, ko)',
+      type: 'string',
+      choices: ['en', 'zh', 'ko'],
+      default: 'zh',
+    })
     .option('retry-count', {
       description: '重试次数 / Retry count / 재시도 횟수',
       type: 'number',
@@ -147,14 +154,7 @@ export async function parseCliOptions() {
         '文件过滤器（例如: .md,.txt） / File filter (e.g. .md,.txt) / 파일 필터 (예: .md,.txt)',
       type: 'string',
     })
-    .option('locale', {
-      alias: 'lang',
-      description:
-        '日志消息语言设置 / Log message language setting / 로그 메시지 언어 설정 (en, zh, ko)',
-      type: 'string',
-      choices: ['en', 'zh', 'ko'],
-      default: 'zh',
-    })
+
     .help()
     .alias('help', 'h').argv;
 

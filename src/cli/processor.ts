@@ -44,7 +44,6 @@ export async function processInputPath(
   rename: string | null,
   options: DirectoryOptions,
 ): Promise<void> {
-  console.log('input path:', inputPath);
   const resolvedInputPath = path.resolve(inputPath);
   const stats = fs.statSync(resolvedInputPath);
 

@@ -93,35 +93,21 @@ npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/
 
 - `--input`, `-i`: Input Markdown file or directory (alternative to `--url`). This option allows you to specify the path to the Markdown file or directory you want to translate.
 - `--url`, `-u`: URL of a Markdown file to translate (alternative to `--input`). Use this option to provide a direct link to a Markdown file that you want to translate.
-
 - `--extension`, `-e`: Specify the file extension to translate (e.g., `md`). If not provided, all files will be processed. This option allows you to filter which files to translate based on their extension.
-
 - `--rename`: Whether to modify the file name. If true, the output file will be named `<original-filename>-translated.<extension>`. This option allows you to specify if you want to append a suffix to the translated file name.
-
 - `--output`, `-o`: Output Markdown file (if not provided, defaults to the input file name). This option allows you to specify the name of the output file where the translated content will be saved.
-
 - `--language`, `-l`: Target language for translation (required). This option specifies the language into which you want the Markdown content to be translated.
-
 - `--openai-url`: OpenAI API URL (default: uses `OPENAI_URL` environment variable). This option allows you to specify a custom URL for the OpenAI API if needed.
-
 - `--api-key`: OpenAI API Key (default: uses `API_KEY` environment variable). This option is used to provide your OpenAI API key for authentication.
-
 - `--model`: OpenAI Model to use (default: uses `MODEL` environment variable or `gpt-3.5-turbo`). This option allows you to specify which OpenAI model to use for translation.
-
 - `--help`, `-h`: Show help. This option displays the help information for the command-line tool.
-
 - `--show-version`, `-v`: Show version. This option displays the current version of the tool.
-
 - `--log`: Enable logging (default: false). Enables detailed logging of the translation process, including success and failure information.
-
 - `--log-file`: Specify the log file path (default: `<project_root>/log/translator-err.log`). The file where translation errors and failures will be logged.
-
 - `--log-dir`: Specify the log directory (default: `<project_root>/log`). The directory where all log files will be stored.
-
+- `--locale`: Log message language setting (default: 'zh'). This option allows you to specify the language for log messages (choices: 'en', 'zh', 'ko').
 - `--retry-count`: Number of retry attempts for failed translations (default: 3). How many times the translator should attempt to retry failed translations.
-
 - `--retry-delay`: Delay in seconds between retry attempts (default: 10). How long to wait between retry attempts.
-
 - `--path`, `-p`: Display directory structure (default: current script directory). Shows a tree view of the specified directory structure.
 
 > Note: `--input` and `--url` are mutually exclusive; you must provide one or the other.
