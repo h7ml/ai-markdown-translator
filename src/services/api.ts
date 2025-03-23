@@ -33,7 +33,7 @@ export async function translateText(text: string, options: RuntimeOptions): Prom
     ],
   };
 
-  if (options.openaiUrl === DEFAULT_OPENAI_URL) {
+  if (options.openaiUrl !== DEFAULT_OPENAI_URL) {
     return translateTextWithModule(options.apiKey, options.directoryOptions, data);
   } else {
     return translateTextWithRestApi(
