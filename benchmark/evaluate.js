@@ -90,12 +90,12 @@ export async function evaluate(
 
 原始文本 (Markdown格式):
 \`\`\`
-${originalData}
+{originalData}
 \`\`\`
 
-翻译后文本 (目标语言: ${targetLanguage}):
+翻译后文本 (目标语言: {targetLanguage}):
 \`\`\`
-${translatedData}
+{translatedData}
 \`\`\`
 
 请根据以下几个维度对翻译质量进行评估，每个维度的评分范围为0-10分：

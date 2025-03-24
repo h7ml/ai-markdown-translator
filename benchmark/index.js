@@ -1,4 +1,5 @@
 /* global console, setTimeout */
+
 import { runBenchmark } from './benchmark.js';
 import { testModels, testCases } from './testsuit.js';
 import { analyzeReports } from './analyze.js';
@@ -56,9 +57,8 @@ async function runBenchmarkWithInterval(iterations = 10, intervalMs = 1000) {
 
 function reportOutput(result) {
   // 生成文件名: 模型名_测试用例名_目标语言_日期.json
-  const fileName = `${result.modelName}_${result.testCaseName}_$ {
-    result.targetLanguage || 'unknown'
-  }_${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
+  const fileName = `${result.modelName}_${result.testCaseName}_${result.targetLanguage || 'unknown'
+    }_${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
   const filePath = path.join(reportDir, fileName);
 
   // 将结果保存为JSON文件

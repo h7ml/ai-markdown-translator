@@ -13,3 +13,7 @@ dist/
 .idea
 .env
 dist/
+
+.specstory/
+
+benchmark/report/

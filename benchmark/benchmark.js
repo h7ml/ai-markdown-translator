@@ -80,7 +80,6 @@ export async function runBenchmark(model, testCase) {
 
   // 检查测试用例是否有提供内容，否则使用默认样本
   const markdownContent = testCase.content || sampleMarkdownText;
-
   // 记录开始时间
   const startTime = Date.now();
 
@@ -89,7 +88,6 @@ export async function runBenchmark(model, testCase) {
     const llm = getLLMForModel(model);
     // 执行翻译
     const result = await translateMarkdown(llm, markdownContent, testCase.targetLanguage, model);
-
     // 计算耗时（秒）
     const timeCost = (Date.now() - startTime) / 1000;
 
@@ -114,7 +112,7 @@ export async function runBenchmark(model, testCase) {
         markdownContent,
         result.translatedText,
         testCase.targetLanguage,
-        'gpt-4o', // 使用GPT-4o进行评估
+        'deepseek-r1', // 使用deepseek-r1进行评估
       );
     } catch (evalError) {
       console.error('评估失败:', evalError);
@@ -145,10 +143,6 @@ export async function runBenchmark(model, testCase) {
       outputTokensCost,
       ...evaluationResult,
     };
-
-    // 转换为Markdown表格并输出到控制台
-    console.log(resultToMarkdownTable(resultObj));
-
     return resultObj;
   } catch (error) {
     console.error('基准测试错误:', error);
@@ -172,9 +166,6 @@ export async function runBenchmark(model, testCase) {
       suggestions: [],
     };
 
-    // 错误结果也转换为Markdown表格
-    console.log(resultToMarkdownTable(errorResult));
-
     return errorResult;
   }
 }
@@ -195,7 +186,7 @@ function getLLMForModel(model) {
         baseUrl: process.env.OPENAI_BASE_URL,
       },
     });
-  } else if (model.type === 'openai') {
+  } else if (model.type === 'openai' || model.type === 'aliyun') {
     // 使用环境变量中的端点和API密钥
     return new ChatOpenAI({
       openAIApiKey: process.env.OPENAI_API_KEY,
@@ -249,7 +240,7 @@ ${markdown}
     let inputTokens = 0;
     let outputTokens = 0;
 
-    if (model.type === 'azure' || model.type === 'openai') {
+    if (model.type === 'azure' || model.type === 'openai' || model.type === 'aliyun') {
       // OpenAI 或 Azure OpenAI API via LangChain
       const messages = [
         { role: 'system', content: systemPrompt },
@@ -258,7 +249,6 @@ ${markdown}
 
       const response = await llm.invoke(messages);
       translatedText = response.content;
-      console.log(translatedText);
       // 只能估算token数量，因为LangChain不直接提供这些信息
       // 简单估算：每个单词约1.3个token
       const wordCount = (systemPrompt + userPrompt).split(/\s+/).length;
