@@ -204,9 +204,9 @@ export const OPTIONS: Record<keyof CliOptions, OptionDefinition> = {
   },
   locale: {
     description: {
-      zh: '语言设置 (en, zh, ko)',
-      en: 'Language setting (en, zh, ko)',
-      ko: '언어 설정 (en, zh, ko)',
+      zh: '日志消息语言设置',
+      en: 'Log message language setting',
+      ko: '로그 메시지 언어 설정',
     },
     type: 'string',
     choices: ['en', 'zh', 'ko'],
