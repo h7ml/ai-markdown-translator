@@ -1,11 +1,11 @@
-import * as path from 'path';
-import { fileURLToPath } from 'url';
-
-import { DEFAULT_MODEL, DEFAULT_OPENAI_URL } from '../config/constants';
+import {
+  DEFAULT_LOG_DIR,
+  DEFAULT_LOG_FILE,
+  DEFAULT_MODEL,
+  DEFAULT_OPENAI_URL,
+  PROJECT_ROOT,
+} from '../config/constants';
 import { CliOptions, DirectoryOptions, OptionDefinition, RuntimeOptions } from '../types/option';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // Options definition separated into an object
 // 将选项定义分离到对象中
@@ -136,7 +136,7 @@ export const OPTIONS: Record<keyof CliOptions, OptionDefinition> = {
       ko: '로그 파일 경로',
     },
     type: 'string',
-    default: path.join(__dirname, '../..', 'log', 'translator-err.log'),
+    default: DEFAULT_LOG_FILE,
   },
   'log-dir': {
     description: {
@@ -145,7 +145,7 @@ export const OPTIONS: Record<keyof CliOptions, OptionDefinition> = {
       ko: '로그 디렉토리',
     },
     type: 'string',
-    default: path.join(__dirname, '../..', 'log'),
+    default: DEFAULT_LOG_DIR,
   },
   'retry-count': {
     description: {
@@ -172,7 +172,7 @@ export const OPTIONS: Record<keyof CliOptions, OptionDefinition> = {
       ko: '현재 파일 위치 디렉토리',
     },
     type: 'string',
-    default: __dirname,
+    default: PROJECT_ROOT,
   },
   'show-path': {
     description: {
