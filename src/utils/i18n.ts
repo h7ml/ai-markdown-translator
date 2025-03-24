@@ -1,4 +1,4 @@
-import { SupportedLocale, messages } from '../config/i18n';
+import { messages, SupportedLocale } from '../config/i18n';
 
 // 현재 로케일 설정 (기본값은 'zh')
 let currentLocale: SupportedLocale = 'zh';

@@ -1,16 +1,17 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import * as os from 'os';
-import * as glob from 'glob';
 import axios from 'axios';
-import { MAX_FILE_SIZE, ALLOWED_CONTENT_TYPES } from '../config/constants';
-import { validateContent } from '../utils/validator';
+import * as fs from 'fs';
+import * as glob from 'glob';
+import * as os from 'os';
+import * as path from 'path';
+
+import { ALLOWED_CONTENT_TYPES, MAX_FILE_SIZE } from '../config/constants';
+import { DirectoryStats } from '../types/common';
+import { DirectoryPrintOptions, RuntimeOptions } from '../types/option';
 import { formatFileSize } from '../utils/formatter';
-import { DirectoryStats, DirectoryPrintOptions } from '../types';
-import { logMessage, logFailedFile, clearLogFile } from '../utils/logger';
-import { translateText } from './api';
 import { t } from '../utils/i18n';
-import { RuntimeOptions } from '../types';
+import { clearLogFile, logFailedFile, logMessage } from '../utils/logger';
+import { validateContent } from '../utils/validator';
+import { translateText } from './api';
 
 export function readMarkdownFile(filePath: string): string {
   if (!fs.existsSync(filePath)) {

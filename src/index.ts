@@ -1,24 +1,21 @@
 #!/usr/bin/env node
 
-import * as fs from 'fs';
 import { config } from 'dotenv';
-import { LOG_DIR } from './config/constants';
+import * as fs from 'fs';
+
+import { showDirectoryPath, showVersion } from './cli/helper';
+import { parseCliOptions } from './cli/main';
+import { prepareOptions } from './cli/options';
+import { processInputPath, processUrlContent } from './cli/processor';
+import { DEFAULT_LOG_DIR } from './config/constants';
+import { CliOptions } from './types/option';
 import { t } from './utils/i18n';
-import {
-  parseCliOptions,
-  showVersion,
-  showDirectoryPath,
-  prepareOptions,
-  processUrlContent,
-  processInputPath,
-} from './cli';
-import { CliOptions } from './types';
 
 config();
 
 // 检查日志目录是否存在 / Check if log directory exists / 로그 디렉토리 존재 확인
-if (!fs.existsSync(LOG_DIR)) {
-  fs.mkdirSync(LOG_DIR, { recursive: true });
+if (!fs.existsSync(DEFAULT_LOG_DIR)) {
+  fs.mkdirSync(DEFAULT_LOG_DIR, { recursive: true });
 }
 
 async function main() {

@@ -1,10 +1,12 @@
-import { ChatData, RuntimeOptions } from '../types';
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
 import { fileURLToPath } from 'url';
+
+import { OFFICIAL_OPENAI_URL_V1 } from '../config/constants';
+import { ChatData } from '../types/common';
+import { RuntimeOptions } from '../types/option';
 import { t } from '../utils/i18n';
 import { translateTextWithCompletionsModule, translateTextWithRestApi } from './openai';
-import { OFFICIAL_OPENAI_URL_V1 } from '../config/constants';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

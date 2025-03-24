@@ -1,14 +1,15 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { t } from '../utils/i18n';
-import {
-  readMarkdownFile,
-  writeMarkdownFile,
-  getContentFromUrl,
-  translateDirectory,
-} from '../services/file';
+
 import { translateText } from '../services/api';
-import { RuntimeOptions } from '../types';
+import {
+  getContentFromUrl,
+  readMarkdownFile,
+  translateDirectory,
+  writeMarkdownFile,
+} from '../services/file';
+import { RuntimeOptions } from '../types/option';
+import { t } from '../utils/i18n';
 
 /**
  * Process URL content.
