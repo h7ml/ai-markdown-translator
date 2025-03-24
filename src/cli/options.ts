@@ -1,4 +1,4 @@
-import { DEFAULT_LOG_DIR, DEFAULT_LOG_FILE, PROJECT_ROOT } from '../config/constants';
+import { DEFAULT_LOG_DIR, DEFAULT_LOG_FILE, EXECUTE_PATH } from '../config/constants';
 import { CliOptions, DirectoryOptions, OptionDefinition, RuntimeOptions } from '../types/option';
 
 // Options definition separated into an object
@@ -165,7 +165,7 @@ export const OPTIONS: Record<keyof CliOptions, OptionDefinition> = {
       ko: '현재 파일 위치 디렉토리',
     },
     type: 'string',
-    default: PROJECT_ROOT,
+    default: EXECUTE_PATH,
   },
   'show-path': {
     description: {
