@@ -1,10 +1,10 @@
-import { OPENAI_URL_COMPLETIONS } from '../config/constants';
 import { ChatData, RuntimeOptions } from '../types';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { t } from '../utils/i18n';
-import { translateTextWithModule, translateTextWithRestApi } from './openai';
+import { translateTextWithCompletionsModule, translateTextWithRestApi } from './openai';
+import { OFFICIAL_OPENAI_URL_V1 } from '../config/constants';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -33,16 +33,18 @@ export async function translateText(text: string, options: RuntimeOptions): Prom
     ],
   };
 
-  if (options.openaiUrl === OPENAI_URL_COMPLETIONS) {
-    return translateTextWithModule(options.apiKey, options.directoryOptions, data);
-  } else {
-    return translateTextWithRestApi(
-      options.apiKey,
-      options.openaiUrl,
-      options.directoryOptions,
-      data,
-    );
+  if (options.openaiUrl.includes(OFFICIAL_OPENAI_URL_V1)) {
+    if (options.apiType === 'completions') {
+      return translateTextWithCompletionsModule(options.apiKey, options.directoryOptions, data);
+    }
   }
+
+  return translateTextWithRestApi(
+    options.apiKey,
+    options.openaiUrl,
+    options.directoryOptions,
+    data,
+  );
 }
 
 async function getFileContent(fileName: string): Promise<string> {

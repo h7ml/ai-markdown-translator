@@ -28,6 +28,31 @@ export interface ChatData {
   messages: { role: 'developer' | 'user' | 'assistant'; content: string }[];
 }
 
+export type ApiType = 'completions' | 'responses'; // | 'assistants'
+
+export interface CliOptions {
+  input?: string;
+  url?: string;
+  output?: string;
+  language: string;
+  'openai-url': string;
+  'api-key': string;
+  model: string;
+  extension?: string;
+  rename: string | null;
+  log: boolean;
+  'log-file': string;
+  'log-dir': string;
+  'retry-count': number;
+  'retry-delay': number;
+  path: string;
+  locale: SupportedLocale;
+  'file-filter'?: string;
+  'show-hidden': boolean;
+  'max-depth': number;
+  'api-type': ApiType;
+}
+
 export interface RuntimeOptions {
   input?: string;
   url?: string;
@@ -39,4 +64,5 @@ export interface RuntimeOptions {
   extension: string | null;
   rename?: string;
   directoryOptions: DirectoryOptions;
+  apiType: ApiType;
 }

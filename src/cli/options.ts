@@ -10,32 +10,10 @@ import { setLocale } from '../utils/i18n';
 import { isValidUrl } from '../utils/validator';
 import { t } from '../utils/i18n';
 import { printDirectoryStructure } from '../services/file';
-import { DirectoryOptions, RuntimeOptions } from '../types';
+import { CliOptions, DirectoryOptions, RuntimeOptions } from '../types';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-export interface CliOptions {
-  input?: string;
-  url?: string;
-  output?: string;
-  language: string;
-  'openai-url': string;
-  'api-key': string;
-  model: string;
-  extension?: string;
-  rename: string | null;
-  log: boolean;
-  'log-file': string;
-  'log-dir': string;
-  'retry-count': number;
-  'retry-delay': number;
-  path: string;
-  locale: SupportedLocale;
-  'file-filter'?: string;
-  'show-hidden': boolean;
-  'max-depth': number;
-}
 
 /**
  * Define and parse CLI options.
@@ -105,6 +83,12 @@ export async function parseCliOptions() {
       description: '使用的OpenAI模型 / OpenAI model to use / 사용할 OpenAI 모델',
       type: 'string',
       default: process.env.MODEL || DEFAULT_MODEL,
+    })
+    .option('api-type', {
+      description: 'OpenAI API 类型 / OpenAI API type / OpenAI API 타입 (completions/responses)',
+      type: 'string',
+      choices: ['completions', 'responses'],
+      default: 'completions',
     })
     .option('show-version', {
       alias: 'v',
@@ -259,6 +243,7 @@ export function prepareOptions(argv: CliOptions): RuntimeOptions {
     openaiUrl: argv['openai-url'],
     apiKey: argv['api-key'],
     model: argv.model,
+    apiType: argv['api-type'],
     extension: argv.extension || null,
     rename: argv.rename || undefined,
     directoryOptions,

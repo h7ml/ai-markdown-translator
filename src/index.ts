@@ -12,7 +12,7 @@ import {
   processUrlContent,
   processInputPath,
 } from './cli';
-import { CliOptions } from './cli/options';
+import { CliOptions } from './types';
 
 config();
 

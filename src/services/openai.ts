@@ -58,7 +58,7 @@ async function withRetry<T>(
   return null;
 }
 
-export async function translateTextWithModule(
+export async function translateTextWithCompletionsModule(
   apiKey: string,
   retryOptions: DirectoryOptions,
   data: OpenAI.Chat.Completions.ChatCompletionCreateParamsNonStreaming,
