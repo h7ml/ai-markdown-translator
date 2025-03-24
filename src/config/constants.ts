@@ -13,4 +13,5 @@ export const LOG_DIR = path.join(__dirname, '../../log');
 export const FAIL_LOG = path.join(LOG_DIR, 'translator-err.log');
 
 export const DEFAULT_OPENAI_URL = 'https://api.302.ai/v1/chat/completions';
+export const OPENAI_URL_COMPLETIONS = 'https://api.openai.com/v1/chat/completions';
 export const DEFAULT_MODEL = 'gpt-4o-mini';

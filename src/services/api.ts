@@ -1,4 +1,4 @@
-import { DEFAULT_OPENAI_URL } from '../config/constants';
+import { OPENAI_URL_COMPLETIONS } from '../config/constants';
 import { ChatData, RuntimeOptions } from '../types';
 import path from 'path';
 import fs from 'fs';
@@ -33,7 +33,7 @@ export async function translateText(text: string, options: RuntimeOptions): Prom
     ],
   };
 
-  if (options.openaiUrl !== DEFAULT_OPENAI_URL) {
+  if (options.openaiUrl === OPENAI_URL_COMPLETIONS) {
     return translateTextWithModule(options.apiKey, options.directoryOptions, data);
   } else {
     return translateTextWithRestApi(
