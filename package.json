@@ -5,16 +5,18 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc && node ./scripts/copy.js",
+    "build": "rollup -c",
     "start": "node dist/index.js",
+    "dev": "rollup -c -w",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,md}\"",
     "format:check": "prettier --check \"src/**/*.{js,jsx,ts,tsx,json,md}\"",
-    "postbuild": "chmod +x dist/index.js",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
-    "test": "npm run build && node dist/index.js -i README.md -o README-zh.md -l Chinese"
+    "test": "npm run build && node dist/index.js -i README.md -o README-zh.md -l Chinese",
+    "test:ko": "npm run build && node dist/index.js -i README.md -o README-ko.md -l Korean --locale ko --log",
+    "test:ko-prompt": "npm run build && node dist/index.js -i src/prompts/system.md -o prompts_translated/system-ko.md -l Korean --locale ko --log"
   },
   "bin": {
     "ai-markdown-translator": "dist/index.js"
@@ -32,12 +34,19 @@
     "axios": "^1.4.0",
     "dotenv": "^16.0.3",
     "glob": "^11.0.0",
+    "openai": "^4.89.0",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.6.0",
     "@commitlint/config-conventional": "^19.6.0",
-    "@types/node": "^18.16.3",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@tsconfig/node22": "^22.0.0",
+    "@types/express": "^5.0.1",
+    "@types/node": "^18.19.80",
     "@types/yargs": "^17.0.24",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
@@ -47,7 +56,10 @@
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^9.1.7",
     "prettier": "^2.0.0",
-    "typescript": "^5.1.6"
+    "rollup": "^4.36.0",
+    "rollup-plugin-copy": "^3.5.0",
+    "tslib": "^2.8.1",
+    "typescript": "^5.8.2"
   },
   "keywords": [
     "markdown",
