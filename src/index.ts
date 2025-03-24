@@ -12,6 +12,7 @@ import {
   processUrlContent,
   processInputPath,
 } from './cli';
+import { CliOptions } from './cli/options';
 
 config();
 
@@ -32,7 +33,7 @@ async function main() {
 
     // 显示目录结构 / Show directory structure / 디렉토리 구조 표시
     if (argv['show-path']) {
-      showDirectoryPath(argv);
+      showDirectoryPath(argv as CliOptions);
     }
 
     // 验证必需的 OpenAI URL 和 API 密钥 / Validate required OpenAI URL and API key / OpenAI URL 및 API 키 필수 검증
@@ -44,7 +45,7 @@ async function main() {
     }
 
     // 准备选项 / Prepare options / 옵션 준비
-    const runtimeOptions = prepareOptions(argv);
+    const runtimeOptions = prepareOptions(argv as CliOptions);
 
     // 处理 URL 或文件/目录 / Process URL or file/directory / URL 또는 파일/디렉토리 처리
     if (runtimeOptions.url) {

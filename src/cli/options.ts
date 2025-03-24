@@ -15,6 +15,28 @@ import { DirectoryOptions, RuntimeOptions } from '../types';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+export interface CliOptions {
+  input?: string;
+  url?: string;
+  output?: string;
+  language: string;
+  'openai-url': string;
+  'api-key': string;
+  model: string;
+  extension?: string;
+  rename: string | null;
+  log: boolean;
+  'log-file': string;
+  'log-dir': string;
+  'retry-count': number;
+  'retry-delay': number;
+  path: string;
+  locale: SupportedLocale;
+  'file-filter'?: string;
+  'show-hidden': boolean;
+  'max-depth': number;
+}
+
 /**
  * Define and parse CLI options.
  * 定义并解析命令行选项。
@@ -181,14 +203,14 @@ export function showVersion() {
  * 显示目录结构。
  * 디렉토리 구조를 표시합니다.
  */
-export function showDirectoryPath(argv: any) {
-  const pathToShow = path.resolve(argv.path as string);
+export function showDirectoryPath(argv: CliOptions) {
+  const pathToShow = path.resolve(argv.path);
   console.log(`\n📂 디렉토리 구조: ${pathToShow}`);
   console.log('.');
 
   const fileFilter = argv['file-filter']
     ? (filename: string) => {
-        const extensions = (argv['file-filter'] as string)
+        const extensions = (argv['file-filter'] ?? '')
           .split(',')
           .map((ext) => (ext.startsWith('.') ? ext : `.${ext}`));
         return extensions.some((ext) => filename.endsWith(ext));
@@ -218,27 +240,27 @@ export function showDirectoryPath(argv: any) {
  * 准备程序选项。
  * 프로그램 옵션을 준비합니다.
  */
-export function prepareOptions(argv: any): RuntimeOptions {
+export function prepareOptions(argv: CliOptions): RuntimeOptions {
   const directoryOptions: DirectoryOptions = {
-    log: argv.log as boolean,
-    logFile: argv['log-file'] as string,
-    logDir: argv['log-dir'] as string,
-    retryCount: argv['retry-count'] as number,
-    retryDelay: argv['retry-delay'] as number,
-    path: argv.path as string,
-    locale: argv.locale as SupportedLocale,
+    log: argv.log,
+    logFile: argv['log-file'],
+    logDir: argv['log-dir'],
+    retryCount: argv['retry-count'],
+    retryDelay: argv['retry-delay'],
+    path: argv.path,
+    locale: argv.locale,
   };
 
   return {
     input: argv.input,
     url: argv.url,
-    output: argv.output,
+    output: argv.output || '',
     language: argv.language,
     openaiUrl: argv['openai-url'],
     apiKey: argv['api-key'],
     model: argv.model,
     extension: argv.extension || null,
-    rename: argv.rename,
+    rename: argv.rename || undefined,
     directoryOptions,
   };
 }

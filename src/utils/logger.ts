@@ -18,7 +18,7 @@ export function logMessage(message: string, options: LogOptions) {
   }
 }
 
-export function logLocalizedMessage(key: string, options: LogOptions, ...args: any[]) {
+export function logLocalizedMessage(key: string, options: LogOptions, ...args: unknown[]) {
   // 특정 로케일이 지정된 경우 해당 로케일 사용
   const currentLocale = options.locale || getLocale();
   options.locale = currentLocale;

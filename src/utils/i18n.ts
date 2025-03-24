@@ -29,7 +29,7 @@ export function getLocale(): SupportedLocale {
  * @param args 메시지 포맷팅을 위한 인자들
  * @returns 현지화된 메시지
  */
-export function t(key: string, ...args: any[]): string {
+export function t(key: string, ...args: unknown[]): string {
   const locale = currentLocale;
 
   // 현재 로케일에 해당 키가 없으면 영어로 폴백
@@ -49,7 +49,7 @@ export function t(key: string, ...args: any[]): string {
  * @param args 포맷팅 인자들
  * @returns 포맷팅된 메시지
  */
-function formatMessage(message: string, ...args: any[]): string {
+function formatMessage(message: string, ...args: unknown[]): string {
   if (!args || args.length === 0) return message;
 
   return message.replace(/%([sdifoO])/g, (match, type) => {
@@ -63,15 +63,15 @@ function formatMessage(message: string, ...args: any[]): string {
       case 'd':
         return Number(arg).toString();
       case 'i':
-        return parseInt(arg).toString();
+        return parseInt(String(arg)).toString();
       case 'f':
-        return parseFloat(arg).toString();
+        return parseFloat(String(arg)).toString();
       case 'o':
         return JSON.stringify(arg);
       case 'O':
         return JSON.stringify(arg, null, 2);
       default:
-        return arg;
+        return String(arg);
     }
   });
 }
