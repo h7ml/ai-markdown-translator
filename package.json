@@ -16,6 +16,7 @@
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
     "benchmark": "node benchmark/index.js",
     "analyze": "node benchmark/analyze.js",
+    "analyze:models": "node benchmark/analyzeModelStreaming.js",
     "test": "npm run build && node dist/index.js -i README.md -o README-zh.md -l Chinese",
     "test:ko": "npm run build && node dist/index.js -i README.md -o README-ko.md -l Korean --locale ko --log",
     "test:ko-prompt": "npm run build && node dist/index.js -i src/prompts/system.md -o prompts_translated/system-ko.md -l Korean --locale ko --log"

@@ -22,10 +22,6 @@ function loadModelNames() {
 const modelNames = loadModelNames();
 console.log(`加载了${modelNames.length}个模型名称`);
 
-// 根据特定条件筛选模型
-const qwenModels = modelNames.filter(name => name.startsWith('qwen'));
-console.log(`通义千问系列模型数量: ${qwenModels.length}`);
-
 /**
  * 所有待测试模型
  * name: 模型名称
@@ -91,7 +87,7 @@ function getModelTypeAndCost(modelName) {
 }
 
 // 动态生成测试模型列表
-export const testModels = modelNames.slice(0, 10).map(modelName => {
+export const testModels = modelNames.slice(0, modelNames.length - 1).map(modelName => {
   const { type, tokenCostInfo } = getModelTypeAndCost(modelName);
   return {
     name: modelName,
