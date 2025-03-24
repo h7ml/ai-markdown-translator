@@ -22,6 +22,7 @@ export async function parseCliOptions() {
       choices: ['en', 'zh', 'ko'],
       default: 'zh',
     })
+    .help(false)
     .parse();
 
   setLocale(preArgv.locale as SupportedLocale);
