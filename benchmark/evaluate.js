@@ -117,7 +117,12 @@ export async function evaluate(
     });
 
     const parsed = await parser.parse(result.content);
-    console.log(parsed);
+    if (parsed?.issues) {
+      console.log(parsed.issues);
+    }
+    if (parsed?.suggestions) {
+      console.log(parsed.suggestions);
+    }
     return parsed;
   } catch (error) {
     console.error('评估过程出错:', error);
