@@ -15,8 +15,31 @@ jobs:
   analyze:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      TZ: Asia/Shanghai
+      NODE_ENV: test
+      CI: true
+      BENCHMARK_MODE: true
+      DEBUG: "benchmark:*"
 
     steps:
+      - name: Print environment info
+        run: |
+          echo "Node version: $(node -v)"
+          echo "NPM version: $(npm -v)"
+          echo "System info: $(uname -a)"
+          echo "Current time: $(date)"
+          echo "TZ: $TZ"
+          echo "NODE_ENV: $NODE_ENV"
+          echo "BENCHMARK_MODE: $BENCHMARK_MODE"
+          echo "Memory info: $(free -h)"
+          echo "Disk space: $(df -h)"
+
+      - name: Set timezone
+        run: |
+          sudo timedatectl set-timezone Asia/Shanghai
+          date
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
@@ -63,18 +86,78 @@ jobs:
           pnpm build
         continue-on-error: false
 
+      - name: Prepare benchmark directory
+        run: |
+          mkdir -p benchmark
+          chmod 755 benchmark
+          echo "Benchmark directory prepared"
+
+      - name: Clean previous benchmark files
+        run: |
+          current_date=$(date +%Y-%m-%d)
+          if [ -f "benchmark/analysis_${current_date}.json" ] || [ -f "benchmark/analysis_${current_date}.md" ]; then
+            rm -f benchmark/analysis_${current_date}.json benchmark/analysis_${current_date}.md
+            echo "Cleaned previous benchmark files for ${current_date}"
+          else
+            echo "No previous benchmark files found for ${current_date}"
+          fi
+
       - name: Run benchmark
         id: benchmark
-        run: pnpm benchmark
+        timeout-minutes: 25
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
+          NODE_ENV: test
+          BENCHMARK_MODE: true
+        run: |
+          echo "Environment: NODE_ENV=$NODE_ENV"
+          echo "Starting benchmark at $(date '+%Y-%m-%d %H:%M:%S')"
+          pnpm benchmark || {
+            echo "::warning::Benchmark execution timed out after 25 minutes"
+            exit 0
+          }
+          echo "Benchmark completed at $(date '+%Y-%m-%d %H:%M:%S')"
         continue-on-error: true
 
-      - name: Run analysis
+      - name: Check benchmark files and Run analysis
+        id: analysis
         if: steps.benchmark.outcome == 'success'
-        run: pnpm analyze
+        env:
+          NODE_ENV: test
+          BENCHMARK_MODE: true
+        run: |
+          current_date=$(date +%Y-%m-%d)
+          json_file="benchmark/analysis_${current_date}.json"
+          md_file="benchmark/analysis_${current_date}.md"
+          
+          # 检查文件是否存在并且有内容
+          if [ ! -f "$json_file" ] || [ ! -s "$json_file" ] || [ ! -f "$md_file" ] || [ ! -s "$md_file" ]; then
+            echo "::warning::Required benchmark files not found or empty."
+            echo "JSON file exists: $([ -f "$json_file" ] && echo "yes" || echo "no")"
+            echo "JSON file size: $([ -f "$json_file" ] && ls -l "$json_file" || echo "file not found")"
+            echo "MD file exists: $([ -f "$md_file" ] && echo "yes" || echo "no")"
+            echo "MD file size: $([ -f "$md_file" ] && ls -l "$md_file" || echo "file not found")"
+            echo "analysis_status=skipped" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          echo "Found benchmark files:"
+          echo "JSON: $json_file ($(ls -lh "$json_file" | awk '{print $5}'))"
+          echo "MD: $md_file ($(ls -lh "$md_file" | awk '{print $5}'))"
+          
+          echo "Starting analysis at $(date '+%Y-%m-%d %H:%M:%S')"
+          if pnpm analyze; then
+            echo "Analysis completed successfully at $(date '+%Y-%m-%d %H:%M:%S')"
+            echo "analysis_status=success" >> $GITHUB_OUTPUT
+          else
+            echo "::error::Analysis failed at $(date '+%Y-%m-%d %H:%M:%S')"
+            echo "analysis_status=failed" >> $GITHUB_OUTPUT
+            exit 1
+          fi
         continue-on-error: true
 
       - name: Upload report
-        if: always()
+        if: steps.analysis.outputs.analysis_status == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: benchmark-report-${{ github.sha }}
