@@ -72,10 +72,7 @@ jobs:
       - name: Test
         run: |
           pnpm test || (echo "Test failed" && exit 1)
-          mkdir -p translate
-          node ./dist/index.js -i ./src/prompts/system.md -o ./translate/system-gpt-4o-en.md -l English --openai-url https://models.inference.ai.azure.com/chat/completions --api-key ${{ secrets.OPENAI_API_KEY }} --model gpt-4o
-          node ./dist/index.js -i ./src/prompts/system.md -o ./translate/system-ministral-3b-ja.md -l Japanese --openai-url https://models.inference.ai.azure.com/chat/completions --api-key ${{ secrets.OPENAI_API_KEY }} --model Ministral-3B
-          node ./dist/index.js -i ./src/prompts/system.md -o ./translate/system-phi-3.5-mini-instruct-fr.md -l 法语 --openai-url https://models.inference.ai.azure.com/chat/completions --api-key ${{ secrets.OPENAI_API_KEY }} --model Ministral-3B
+          node ./script/test.js
       - name: Commit and Push
         run: |
           git add README-zh.md translate/
