@@ -1,10 +1,4 @@
-import {
-  DEFAULT_LOG_DIR,
-  DEFAULT_LOG_FILE,
-  DEFAULT_MODEL,
-  DEFAULT_OPENAI_URL,
-  PROJECT_ROOT,
-} from '../config/constants';
+import { DEFAULT_LOG_DIR, DEFAULT_LOG_FILE, PROJECT_ROOT } from '../config/constants';
 import { CliOptions, DirectoryOptions, OptionDefinition, RuntimeOptions } from '../types/option';
 
 // Options definition separated into an object
@@ -73,7 +67,6 @@ export const OPTIONS: Record<keyof CliOptions, OptionDefinition> = {
       ko: 'OpenAI API URL',
     },
     type: 'string',
-    default: DEFAULT_OPENAI_URL,
   },
   'api-key': {
     description: {
@@ -90,7 +83,6 @@ export const OPTIONS: Record<keyof CliOptions, OptionDefinition> = {
       ko: '사용할 OpenAI 모델',
     },
     type: 'string',
-    default: DEFAULT_MODEL,
   },
   'api-type': {
     description: {

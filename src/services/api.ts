@@ -1,15 +1,11 @@
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-import { OFFICIAL_OPENAI_URL_V1 } from '../config/constants';
+import { OFFICIAL_OPENAI_URL_V1, PROMPTS_DIR } from '../config/constants';
 import { ChatData } from '../types/common';
 import { RuntimeOptions } from '../types/option';
 import { t } from '../utils/i18n';
 import { translateTextWithCompletionsModule, translateTextWithRestApi } from './openai';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 export async function translateText(text: string, options: RuntimeOptions): Promise<string | null> {
   const prompt = `将以下文本翻译成${options.language}。请保持格式不变:\n\n${text}`;
@@ -35,6 +31,7 @@ export async function translateText(text: string, options: RuntimeOptions): Prom
     ],
   };
 
+  console.log(options.openaiUrl, OFFICIAL_OPENAI_URL_V1);
   if (options.openaiUrl.includes(OFFICIAL_OPENAI_URL_V1)) {
     if (options.apiType === 'completions') {
       return translateTextWithCompletionsModule(options.apiKey, options.directoryOptions, data);
@@ -50,7 +47,7 @@ export async function translateText(text: string, options: RuntimeOptions): Prom
 }
 
 async function getFileContent(fileName: string): Promise<string> {
-  const filePath = path.join(__dirname, './prompts/', fileName);
+  const filePath = path.join(PROMPTS_DIR, fileName);
 
   try {
     return fs.readFileSync(filePath, 'utf-8');
