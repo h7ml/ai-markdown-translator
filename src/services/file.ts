@@ -92,6 +92,10 @@ export async function getContentFromUrl(urlString: string): Promise<string> {
 
       return content;
     } catch (secondError) {
+      logMessage(t('file.url.fetch.failed', urlString, String(secondError)), {
+        log: true,
+        logFile: 'error.log',
+      });
       throw new Error(t('file.url.fetch.failed', urlString));
     } finally {
       if (fs.existsSync(tempFile)) {
@@ -155,7 +159,10 @@ export async function translateDirectory(
         logMessage(t('file.translation.complete', file, outputFileName), options.directoryOptions);
         successfulFiles.push(file);
       } catch (writeError) {
-        logMessage(t('file.write.failed', file), options.directoryOptions);
+        logMessage(t('file.write.failed', file, String(writeError)), {
+          log: true,
+          logFile: 'error.log',
+        });
         logFailedFile(file);
       }
     } else {
