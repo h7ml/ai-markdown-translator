@@ -75,7 +75,7 @@ jobs:
           node ./script/test.js
       - name: Commit and Push
         run: |
-          git add README-zh.md translate/
+          git add README-zh.md prompts_translated/
           git config --local user.email "action@h7ml.cn"
           git config --local user.name "GitHub Action"
           git config advice.ignoredHook false

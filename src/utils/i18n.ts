@@ -41,11 +41,10 @@ export function t(key: string, ...args: unknown[]): string {
     if (messages['en'] && messages['en'][key]) {
       return formatMessage(messages['en'][key], ...args);
     }
-    return key;
-
     // Return the key itself if not found in English
     // 如果在英语中也找不到，则返回键本身
     // 영어에도 없으면 키 자체를 반환
+    return key;
   }
 
   return formatMessage(messages[locale][key], ...args);
