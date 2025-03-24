@@ -1,1 +1,1956 @@
-{}
+{
+  "streamOnly": [],
+  "nonStreamOnly": [],
+  "both": [
+    "qwen-max-latest",
+    "qwen-max-2025-01-25",
+    "qwen-max",
+    "qwen2.5-vl-72b-instruct",
+    "qwen2.5-vl-7b-instruct",
+    "qwen2.5-vl-3b-instruct",
+    "qwen2.5-7b-instruct-1m",
+    "qwen2.5-14b-instruct-1m",
+    "qvq-72b-preview",
+    "qwq-32b-preview",
+    "qwen-vl-plus",
+    "qwen-vl-plus-latest",
+    "qwen-vl-plus-2025-01-25",
+    "qwen-audio-turbo-latest",
+    "qwen-audio-turbo-1204",
+    "qwen-plus",
+    "qwen-plus-latest",
+    "deepseek-r1",
+    "deepseek-v3",
+    "llama3.3-70b-instruct",
+    "deepseek-r1-distill-qwen-1.5b",
+    "deepseek-r1-distill-qwen-7b",
+    "deepseek-r1-distill-qwen-14b",
+    "deepseek-r1-distill-qwen-32b",
+    "deepseek-r1-distill-llama-8b",
+    "deepseek-r1-distill-llama-70b",
+    "qwen-max-0919",
+    "qwen-plus-2025-01-25",
+    "qwen-turbo",
+    "qwen-turbo-0919",
+    "qwen-turbo-2025-02-11",
+    "qwen-turbo-latest",
+    "qwen-vl-max-2025-01-25",
+    "qwen-vl-max",
+    "qwen-vl-max-latest",
+    "qwen-vl-max-1030",
+    "qwen-vl-max-1119",
+    "qwen-vl-max-1230",
+    "qwen2-vl-7b-instruct",
+    "qwen2-vl-2b-instruct",
+    "qwen-turbo-1101",
+    "qwen2-vl-72b-instruct",
+    "qwen2.5-72b-instruct",
+    "qwen2.5-32b-instruct",
+    "qwen2.5-14b-instruct",
+    "qwen2.5-math-72b-instruct",
+    "qwen2.5-math-7b-instruct",
+    "qwen2.5-coder-7b-instruct",
+    "qwen-math-plus",
+    "qwen-math-plus-0919",
+    "qwen-math-plus-latest",
+    "qwen-math-turbo",
+    "qwen-math-turbo-0919",
+    "qwen-math-turbo-latest",
+    "qwen-coder-turbo",
+    "qwen-coder-turbo-0919",
+    "qwen-coder-turbo-latest",
+    "qwen2.5-math-1.5b-instruct",
+    "qwen2.5-3b-instruct",
+    "qwen2.5-1.5b-instruct",
+    "qwen2.5-0.5b-instruct",
+    "qwen2.5-7b-instruct",
+    "qwen-vl-max-0809",
+    "qwen-vl-max-0201",
+    "tongyi-intent-detect-v3",
+    "qwen2-math-72b-instruct",
+    "qwen2-math-7b-instruct",
+    "qwen2-math-1.5b-instruct",
+    "qwen-max-0428",
+    "qwen-long",
+    "qwen2-72b-instruct",
+    "qwen2-57b-a14b-instruct",
+    "qwen2-7b-instruct",
+    "qwen2-1.5b-instruct",
+    "qwen2-0.5b-instruct",
+    "qwen1.5-110b-chat",
+    "llama3.1-405b-instruct",
+    "llama3.1-70b-instruct",
+    "llama3.1-8b-instruct",
+    "llama3-8b-instruct",
+    "qwen-7b-chat",
+    "qwen-plus-0919",
+    "qwen-plus-1125",
+    "qwen-plus-1127",
+    "qwen-plus-1220",
+    "qwen-plus-0112",
+    "qwen-math-plus-0816",
+    "qwen-vl-plus-0809",
+    "qwen-vl-plus-0102",
+    "qwen-plus-character",
+    "qwen2.5-coder-3b-instruct",
+    "qwen2.5-coder-32b-instruct",
+    "qwen2.5-coder-14b-instruct",
+    "qwen2.5-coder-0.5b-instruct",
+    "qwen-coder-plus-latest",
+    "qwen-coder-plus-1106",
+    "qwen-coder-plus",
+    "qwen2.5-coder-1.5b-instruct",
+    "qwen-14b-chat",
+    "qwen-1.8b-chat",
+    "qwen-72b-chat",
+    "qwen-max-0403",
+    "qwen-max-0107",
+    "qwen1.5-7b-chat",
+    "qwen1.5-72b-chat",
+    "qwen1.5-32b-chat",
+    "qwen1.5-14b-chat",
+    "qwen1.5-1.8b-chat",
+    "qwen1.5-0.5b-chat",
+    "qwen-plus-0206",
+    "qwen-plus-0624",
+    "qwen-turbo-0206",
+    "qwen-turbo-0624",
+    "qwen-plus-0723",
+    "qwen-plus-0806"
+  ],
+  "none": [
+    "qwen-omni-turbo",
+    "qwen-omni-turbo-latest",
+    "qwen-omni-turbo-2025-01-19",
+    "qwq-plus",
+    "qwq-32b",
+    "qwq-plus-2025-03-05",
+    "qwq-plus-latest",
+    "qwen-audio-turbo",
+    "multimodal-embedding-v1",
+    "gte-rerank",
+    "qwen-audio-asr",
+    "qwen-audio-asr-latest",
+    "qwen-audio-asr-1204",
+    "qwen-vl-ocr",
+    "qwen-vl-ocr-1028",
+    "qwen-vl-ocr-latest",
+    "wanx2.1-i2v-turbo",
+    "wanx2.1-i2v-plus",
+    "aitryon-parsing-v1",
+    "wanx2.1-t2v-turbo",
+    "wanx2.1-t2i-turbo",
+    "wanx2.1-t2i-plus",
+    "wanx2.1-t2v-plus",
+    "flux-schnell",
+    "flux-dev",
+    "llama3.2-3b-instruct",
+    "llama3.2-11b-vision",
+    "llama3.2-90b-vision-instruct",
+    "llama3.2-1b-instruct",
+    "llama3-70b-instruct",
+    "llama2-7b-chat-v2",
+    "llama2-13b-chat-v2",
+    "chatglm-6b-v2",
+    "baichuan2-7b-chat-v1",
+    "ziya-llama-13b-v1",
+    "wanx-v1",
+    "emoji-v1",
+    "yi-large",
+    "emoji-detect-v1",
+    "yi-large-turbo",
+    "yi-large-rag",
+    "yi-medium",
+    "animate-anyone-gen2",
+    "cosyvoice-clone-v1",
+    "animate-anyone-template-gen2",
+    "animate-anyone-detect-gen2",
+    "videoretalk",
+    "video-style-transform",
+    "emo-v1",
+    "emo-detect-v1",
+    "text-embedding-v3",
+    "liveportrait",
+    "liveportrait-detect",
+    "motionshop-synthesis",
+    "cosyvoice-v1",
+    "motionshop-video-detect",
+    "text-embedding-v2",
+    "text-embedding-v1",
+    "text-embedding-async-v2",
+    "text-embedding-async-v1",
+    "motionshop-gen3d",
+    "paraformer-8k-v2",
+    "qwen-mt-turbo",
+    "qwen-mt-plus",
+    "wanx2.0-t2i-turbo",
+    "qwen-audio-turbo-0807",
+    "gummy-realtime-v1",
+    "gummy-chat-v1",
+    "billa-7b-sft-v1",
+    "chatyuan-large-v2",
+    "belle-llama-13b-2m-v1",
+    "chatglm3-6b",
+    "baichuan2-13b-chat-v1",
+    "baichuan-7b-v1",
+    "qwen-1.8b-longcontext-chat",
+    "wanx-style-repaint-v1",
+    "wanx-background-generation-v2",
+    "facechain-facedetect",
+    "facechain-generation",
+    "facechain-finetune",
+    "wordart-texture",
+    "wordart-semantic",
+    "stable-diffusion-xl",
+    "stable-diffusion-v1.5",
+    "opennlu-v1",
+    "paraformer-8k-v1",
+    "paraformer-mtl-v1",
+    "paraformer-v1",
+    "sambert-beth-v1",
+    "sambert-brian-v1",
+    "sambert-cally-v1",
+    "sambert-camila-v1",
+    "sambert-cindy-v1",
+    "sambert-clara-v1",
+    "sambert-donna-v1",
+    "sambert-eva-v1",
+    "sambert-hanna-v1",
+    "sambert-indah-v1",
+    "sambert-perla-v1",
+    "sambert-waan-v1",
+    "sambert-zhichu-v1",
+    "sambert-zhida-v1",
+    "sambert-zhide-v1",
+    "sambert-zhifei-v1",
+    "sambert-zhigui-v1",
+    "sambert-zhihao-v1",
+    "sambert-zhijia-v1",
+    "sambert-zhijing-v1",
+    "sambert-zhilun-v1",
+    "sambert-zhimao-v1",
+    "sambert-zhimiao-emo-v1",
+    "sambert-zhiming-v1",
+    "sambert-zhimo-v1",
+    "sambert-zhina-v1",
+    "sambert-zhiqi-v1",
+    "sambert-zhiqian-v1",
+    "sambert-zhiru-v1",
+    "sambert-zhishu-v1",
+    "sambert-zhishuo-v1",
+    "sambert-zhistella-v1",
+    "sambert-zhiting-v1",
+    "sambert-zhiwei-v1",
+    "sambert-zhixiang-v1",
+    "sambert-zhixiao-v1",
+    "sambert-zhiya-v1",
+    "sambert-zhiye-v1",
+    "sambert-zhiying-v1",
+    "sambert-zhiyuan-v1",
+    "sambert-zhiyue-v1",
+    "sambert-betty-v1",
+    "sambert-zhinan-v1",
+    "baichuan2-turbo",
+    "emo-detect",
+    "emo",
+    "animate-anyone-detect",
+    "animate-anyone",
+    "farui-plus",
+    "wanx-v1-0521",
+    "aitryon",
+    "image-out-painting",
+    "wanx-x-painting",
+    "wanx-style-cosplay-v1",
+    "wanx-sketch-to-image-lite",
+    "shoemodel-v1",
+    "wanx-poster-generation-v1",
+    "paraformer-realtime-v1",
+    "paraformer-realtime-8k-v1",
+    "wanx-virtualmodel",
+    "virtualmodel-v2",
+    "wordart-surnames",
+    "aitryon-refiner",
+    "abab6.5s-chat",
+    "abab6.5t-chat",
+    "abab6.5g-chat",
+    "image-instance-segmentation",
+    "image-erase-completion",
+    "flux-merged",
+    "dolly-12b-v2",
+    "paraformer-v2",
+    "paraformer-realtime-v2",
+    "stable-diffusion-3.5-large",
+    "stable-diffusion-3.5-large-turbo",
+    "paraformer-realtime-8k-v2"
+  ],
+  "all": {
+    "qwen-omni-turbo": {
+      "name": "qwen-omni-turbo",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:48:27.071Z"
+    },
+    "qwen-omni-turbo-latest": {
+      "name": "qwen-omni-turbo-latest",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:48:27.190Z"
+    },
+    "qwen-omni-turbo-2025-01-19": {
+      "name": "qwen-omni-turbo-2025-01-19",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:48:27.304Z"
+    },
+    "qwq-plus": {
+      "name": "qwq-plus",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:48:27.500Z"
+    },
+    "qwen-max-latest": {
+      "name": "qwen-max-latest",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:48:29.141Z"
+    },
+    "qwen-max-2025-01-25": {
+      "name": "qwen-max-2025-01-25",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:48:30.484Z"
+    },
+    "qwen-max": {
+      "name": "qwen-max",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:48:31.698Z"
+    },
+    "qwen2.5-vl-72b-instruct": {
+      "name": "qwen2.5-vl-72b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:48:33.671Z"
+    },
+    "qwen2.5-vl-7b-instruct": {
+      "name": "qwen2.5-vl-7b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:48:34.531Z"
+    },
+    "qwen2.5-vl-3b-instruct": {
+      "name": "qwen2.5-vl-3b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:48:36.235Z"
+    },
+    "qwen2.5-7b-instruct-1m": {
+      "name": "qwen2.5-7b-instruct-1m",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:48:37.070Z"
+    },
+    "qwen2.5-14b-instruct-1m": {
+      "name": "qwen2.5-14b-instruct-1m",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:48:38.139Z"
+    },
+    "qvq-72b-preview": {
+      "name": "qvq-72b-preview",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:48:43.541Z"
+    },
+    "qwq-32b": {
+      "name": "qwq-32b",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:48:43.723Z"
+    },
+    "qwq-plus-2025-03-05": {
+      "name": "qwq-plus-2025-03-05",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:48:45.036Z"
+    },
+    "qwq-plus-latest": {
+      "name": "qwq-plus-latest",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:48:45.236Z"
+    },
+    "qwq-32b-preview": {
+      "name": "qwq-32b-preview",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:48:46.364Z"
+    },
+    "qwen-vl-plus": {
+      "name": "qwen-vl-plus",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:48:47.319Z"
+    },
+    "qwen-vl-plus-latest": {
+      "name": "qwen-vl-plus-latest",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:48:48.069Z"
+    },
+    "qwen-vl-plus-2025-01-25": {
+      "name": "qwen-vl-plus-2025-01-25",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:48:48.779Z"
+    },
+    "qwen-audio-turbo": {
+      "name": "qwen-audio-turbo",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:48:48.924Z"
+    },
+    "qwen-audio-turbo-latest": {
+      "name": "qwen-audio-turbo-latest",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:48:49.969Z"
+    },
+    "qwen-audio-turbo-1204": {
+      "name": "qwen-audio-turbo-1204",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:48:51.032Z"
+    },
+    "qwen-plus": {
+      "name": "qwen-plus",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:48:52.003Z"
+    },
+    "qwen-plus-latest": {
+      "name": "qwen-plus-latest",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:48:53.092Z"
+    },
+    "deepseek-r1": {
+      "name": "deepseek-r1",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:49:06.146Z"
+    },
+    "deepseek-v3": {
+      "name": "deepseek-v3",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:49:08.577Z"
+    },
+    "llama3.3-70b-instruct": {
+      "name": "llama3.3-70b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:49:09.440Z"
+    },
+    "deepseek-r1-distill-qwen-1.5b": {
+      "name": "deepseek-r1-distill-qwen-1.5b",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:49:13.163Z"
+    },
+    "deepseek-r1-distill-qwen-7b": {
+      "name": "deepseek-r1-distill-qwen-7b",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:49:15.624Z"
+    },
+    "deepseek-r1-distill-qwen-14b": {
+      "name": "deepseek-r1-distill-qwen-14b",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:49:18.334Z"
+    },
+    "deepseek-r1-distill-qwen-32b": {
+      "name": "deepseek-r1-distill-qwen-32b",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:49:21.177Z"
+    },
+    "deepseek-r1-distill-llama-8b": {
+      "name": "deepseek-r1-distill-llama-8b",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:49:24.946Z"
+    },
+    "deepseek-r1-distill-llama-70b": {
+      "name": "deepseek-r1-distill-llama-70b",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:49:50.806Z"
+    },
+    "qwen-max-0919": {
+      "name": "qwen-max-0919",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:49:52.498Z"
+    },
+    "qwen-plus-2025-01-25": {
+      "name": "qwen-plus-2025-01-25",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:49:53.968Z"
+    },
+    "multimodal-embedding-v1": {
+      "name": "multimodal-embedding-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:49:54.131Z"
+    },
+    "qwen-turbo": {
+      "name": "qwen-turbo",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:49:54.945Z"
+    },
+    "qwen-turbo-0919": {
+      "name": "qwen-turbo-0919",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:49:56.101Z"
+    },
+    "qwen-turbo-2025-02-11": {
+      "name": "qwen-turbo-2025-02-11",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:49:58.096Z"
+    },
+    "qwen-turbo-latest": {
+      "name": "qwen-turbo-latest",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:49:58.769Z"
+    },
+    "gte-rerank": {
+      "name": "gte-rerank",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:49:58.897Z"
+    },
+    "qwen-vl-max-2025-01-25": {
+      "name": "qwen-vl-max-2025-01-25",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:01.032Z"
+    },
+    "qwen-vl-max": {
+      "name": "qwen-vl-max",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:02.465Z"
+    },
+    "qwen-vl-max-latest": {
+      "name": "qwen-vl-max-latest",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:04.617Z"
+    },
+    "qwen-audio-asr": {
+      "name": "qwen-audio-asr",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:50:05.019Z"
+    },
+    "qwen-audio-asr-latest": {
+      "name": "qwen-audio-asr-latest",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:50:05.171Z"
+    },
+    "qwen-audio-asr-1204": {
+      "name": "qwen-audio-asr-1204",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:50:05.296Z"
+    },
+    "qwen-vl-max-1030": {
+      "name": "qwen-vl-max-1030",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:06.769Z"
+    },
+    "qwen-vl-ocr": {
+      "name": "qwen-vl-ocr",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:50:07.152Z"
+    },
+    "qwen-vl-ocr-1028": {
+      "name": "qwen-vl-ocr-1028",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:50:07.505Z"
+    },
+    "qwen-vl-ocr-latest": {
+      "name": "qwen-vl-ocr-latest",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:50:07.855Z"
+    },
+    "qwen-vl-max-1119": {
+      "name": "qwen-vl-max-1119",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:09.481Z"
+    },
+    "qwen-vl-max-1230": {
+      "name": "qwen-vl-max-1230",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:10.553Z"
+    },
+    "qwen2-vl-7b-instruct": {
+      "name": "qwen2-vl-7b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:11.686Z"
+    },
+    "qwen2-vl-2b-instruct": {
+      "name": "qwen2-vl-2b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:12.887Z"
+    },
+    "qwen-turbo-1101": {
+      "name": "qwen-turbo-1101",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:15.472Z"
+    },
+    "qwen2-vl-72b-instruct": {
+      "name": "qwen2-vl-72b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:16.715Z"
+    },
+    "qwen2.5-72b-instruct": {
+      "name": "qwen2.5-72b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:18.031Z"
+    },
+    "qwen2.5-32b-instruct": {
+      "name": "qwen2.5-32b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:19.120Z"
+    },
+    "qwen2.5-14b-instruct": {
+      "name": "qwen2.5-14b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:20.694Z"
+    },
+    "qwen2.5-math-72b-instruct": {
+      "name": "qwen2.5-math-72b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:22.128Z"
+    },
+    "qwen2.5-math-7b-instruct": {
+      "name": "qwen2.5-math-7b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:23.878Z"
+    },
+    "qwen2.5-coder-7b-instruct": {
+      "name": "qwen2.5-coder-7b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:25.138Z"
+    },
+    "qwen-math-plus": {
+      "name": "qwen-math-plus",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:26.633Z"
+    },
+    "qwen-math-plus-0919": {
+      "name": "qwen-math-plus-0919",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:28.111Z"
+    },
+    "qwen-math-plus-latest": {
+      "name": "qwen-math-plus-latest",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:29.580Z"
+    },
+    "qwen-math-turbo": {
+      "name": "qwen-math-turbo",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:31.368Z"
+    },
+    "qwen-math-turbo-0919": {
+      "name": "qwen-math-turbo-0919",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:33.265Z"
+    },
+    "qwen-math-turbo-latest": {
+      "name": "qwen-math-turbo-latest",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:34.970Z"
+    },
+    "qwen-coder-turbo": {
+      "name": "qwen-coder-turbo",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:36.194Z"
+    },
+    "qwen-coder-turbo-0919": {
+      "name": "qwen-coder-turbo-0919",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:37.366Z"
+    },
+    "qwen-coder-turbo-latest": {
+      "name": "qwen-coder-turbo-latest",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:38.614Z"
+    },
+    "qwen2.5-math-1.5b-instruct": {
+      "name": "qwen2.5-math-1.5b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:39.787Z"
+    },
+    "qwen2.5-3b-instruct": {
+      "name": "qwen2.5-3b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:41.074Z"
+    },
+    "qwen2.5-1.5b-instruct": {
+      "name": "qwen2.5-1.5b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:42.184Z"
+    },
+    "qwen2.5-0.5b-instruct": {
+      "name": "qwen2.5-0.5b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:43.423Z"
+    },
+    "qwen2.5-7b-instruct": {
+      "name": "qwen2.5-7b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:44.656Z"
+    },
+    "wanx2.1-i2v-turbo": {
+      "name": "wanx2.1-i2v-turbo",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:50:44.798Z"
+    },
+    "wanx2.1-i2v-plus": {
+      "name": "wanx2.1-i2v-plus",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:50:44.945Z"
+    },
+    "aitryon-parsing-v1": {
+      "name": "aitryon-parsing-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:50:45.075Z"
+    },
+    "wanx2.1-t2v-turbo": {
+      "name": "wanx2.1-t2v-turbo",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:50:45.220Z"
+    },
+    "wanx2.1-t2i-turbo": {
+      "name": "wanx2.1-t2i-turbo",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:50:45.358Z"
+    },
+    "qwen-vl-max-0809": {
+      "name": "qwen-vl-max-0809",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:46.806Z"
+    },
+    "qwen-vl-max-0201": {
+      "name": "qwen-vl-max-0201",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:48.133Z"
+    },
+    "tongyi-intent-detect-v3": {
+      "name": "tongyi-intent-detect-v3",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:49.157Z"
+    },
+    "wanx2.1-t2i-plus": {
+      "name": "wanx2.1-t2i-plus",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:50:49.295Z"
+    },
+    "wanx2.1-t2v-plus": {
+      "name": "wanx2.1-t2v-plus",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:50:49.437Z"
+    },
+    "flux-schnell": {
+      "name": "flux-schnell",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:50:49.586Z"
+    },
+    "qwen2-math-72b-instruct": {
+      "name": "qwen2-math-72b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:50:55.802Z"
+    },
+    "qwen2-math-7b-instruct": {
+      "name": "qwen2-math-7b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:51:02.371Z"
+    },
+    "qwen2-math-1.5b-instruct": {
+      "name": "qwen2-math-1.5b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:51:06.775Z"
+    },
+    "qwen-max-0428": {
+      "name": "qwen-max-0428",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:51:08.514Z"
+    },
+    "qwen-long": {
+      "name": "qwen-long",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:51:09.866Z"
+    },
+    "qwen2-72b-instruct": {
+      "name": "qwen2-72b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:51:12.064Z"
+    },
+    "qwen2-57b-a14b-instruct": {
+      "name": "qwen2-57b-a14b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:51:13.390Z"
+    },
+    "qwen2-7b-instruct": {
+      "name": "qwen2-7b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:51:14.761Z"
+    },
+    "qwen2-1.5b-instruct": {
+      "name": "qwen2-1.5b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:51:15.975Z"
+    },
+    "qwen2-0.5b-instruct": {
+      "name": "qwen2-0.5b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:51:16.781Z"
+    },
+    "flux-dev": {
+      "name": "flux-dev",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:51:16.919Z"
+    },
+    "qwen1.5-110b-chat": {
+      "name": "qwen1.5-110b-chat",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:51:18.540Z"
+    },
+    "llama3.2-3b-instruct": {
+      "name": "llama3.2-3b-instruct",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:51:30.563Z"
+    },
+    "llama3.2-11b-vision": {
+      "name": "llama3.2-11b-vision",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:51:35.962Z"
+    },
+    "llama3.2-90b-vision-instruct": {
+      "name": "llama3.2-90b-vision-instruct",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:51:44.529Z"
+    },
+    "llama3.2-1b-instruct": {
+      "name": "llama3.2-1b-instruct",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:51:49.320Z"
+    },
+    "llama3.1-405b-instruct": {
+      "name": "llama3.1-405b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:51:56.369Z"
+    },
+    "llama3.1-70b-instruct": {
+      "name": "llama3.1-70b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:02.936Z"
+    },
+    "llama3.1-8b-instruct": {
+      "name": "llama3.1-8b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:09.047Z"
+    },
+    "llama3-8b-instruct": {
+      "name": "llama3-8b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:10.132Z"
+    },
+    "llama3-70b-instruct": {
+      "name": "llama3-70b-instruct",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:10.272Z"
+    },
+    "llama2-7b-chat-v2": {
+      "name": "llama2-7b-chat-v2",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:10.399Z"
+    },
+    "llama2-13b-chat-v2": {
+      "name": "llama2-13b-chat-v2",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:10.530Z"
+    },
+    "chatglm-6b-v2": {
+      "name": "chatglm-6b-v2",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:10.662Z"
+    },
+    "baichuan2-7b-chat-v1": {
+      "name": "baichuan2-7b-chat-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:10.799Z"
+    },
+    "ziya-llama-13b-v1": {
+      "name": "ziya-llama-13b-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:10.946Z"
+    },
+    "wanx-v1": {
+      "name": "wanx-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:11.164Z"
+    },
+    "emoji-v1": {
+      "name": "emoji-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:12.905Z"
+    },
+    "yi-large": {
+      "name": "yi-large",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:13.048Z"
+    },
+    "emoji-detect-v1": {
+      "name": "emoji-detect-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:14.286Z"
+    },
+    "yi-large-turbo": {
+      "name": "yi-large-turbo",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:14.431Z"
+    },
+    "yi-large-rag": {
+      "name": "yi-large-rag",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:14.571Z"
+    },
+    "qwen-7b-chat": {
+      "name": "qwen-7b-chat",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:15.843Z"
+    },
+    "yi-medium": {
+      "name": "yi-medium",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:15.978Z"
+    },
+    "qwen-plus-0919": {
+      "name": "qwen-plus-0919",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:17.255Z"
+    },
+    "qwen-plus-1125": {
+      "name": "qwen-plus-1125",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:18.556Z"
+    },
+    "qwen-plus-1127": {
+      "name": "qwen-plus-1127",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:19.847Z"
+    },
+    "qwen-plus-1220": {
+      "name": "qwen-plus-1220",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:21.095Z"
+    },
+    "qwen-plus-0112": {
+      "name": "qwen-plus-0112",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:22.258Z"
+    },
+    "animate-anyone-gen2": {
+      "name": "animate-anyone-gen2",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:22.425Z"
+    },
+    "qwen-math-plus-0816": {
+      "name": "qwen-math-plus-0816",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:25.190Z"
+    },
+    "qwen-vl-plus-0809": {
+      "name": "qwen-vl-plus-0809",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:26.146Z"
+    },
+    "cosyvoice-clone-v1": {
+      "name": "cosyvoice-clone-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:26.288Z"
+    },
+    "animate-anyone-template-gen2": {
+      "name": "animate-anyone-template-gen2",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:26.434Z"
+    },
+    "qwen-vl-plus-0102": {
+      "name": "qwen-vl-plus-0102",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:27.568Z"
+    },
+    "qwen-plus-character": {
+      "name": "qwen-plus-character",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:30.057Z"
+    },
+    "animate-anyone-detect-gen2": {
+      "name": "animate-anyone-detect-gen2",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:30.195Z"
+    },
+    "videoretalk": {
+      "name": "videoretalk",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:31.931Z"
+    },
+    "video-style-transform": {
+      "name": "video-style-transform",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:32.066Z"
+    },
+    "emo-v1": {
+      "name": "emo-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:32.196Z"
+    },
+    "emo-detect-v1": {
+      "name": "emo-detect-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:32.327Z"
+    },
+    "text-embedding-v3": {
+      "name": "text-embedding-v3",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:32.469Z"
+    },
+    "liveportrait": {
+      "name": "liveportrait",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:32.617Z"
+    },
+    "liveportrait-detect": {
+      "name": "liveportrait-detect",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:32.761Z"
+    },
+    "motionshop-synthesis": {
+      "name": "motionshop-synthesis",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:34.291Z"
+    },
+    "cosyvoice-v1": {
+      "name": "cosyvoice-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:34.439Z"
+    },
+    "motionshop-video-detect": {
+      "name": "motionshop-video-detect",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:34.564Z"
+    },
+    "text-embedding-v2": {
+      "name": "text-embedding-v2",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:34.704Z"
+    },
+    "text-embedding-v1": {
+      "name": "text-embedding-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:34.829Z"
+    },
+    "text-embedding-async-v2": {
+      "name": "text-embedding-async-v2",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:34.974Z"
+    },
+    "text-embedding-async-v1": {
+      "name": "text-embedding-async-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:36.708Z"
+    },
+    "motionshop-gen3d": {
+      "name": "motionshop-gen3d",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:38.685Z"
+    },
+    "qwen2.5-coder-3b-instruct": {
+      "name": "qwen2.5-coder-3b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:39.903Z"
+    },
+    "qwen2.5-coder-32b-instruct": {
+      "name": "qwen2.5-coder-32b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:41.298Z"
+    },
+    "qwen2.5-coder-14b-instruct": {
+      "name": "qwen2.5-coder-14b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:42.423Z"
+    },
+    "qwen2.5-coder-0.5b-instruct": {
+      "name": "qwen2.5-coder-0.5b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:43.488Z"
+    },
+    "qwen-coder-plus-latest": {
+      "name": "qwen-coder-plus-latest",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:44.433Z"
+    },
+    "qwen-coder-plus-1106": {
+      "name": "qwen-coder-plus-1106",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:45.693Z"
+    },
+    "qwen-coder-plus": {
+      "name": "qwen-coder-plus",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:47.023Z"
+    },
+    "qwen2.5-coder-1.5b-instruct": {
+      "name": "qwen2.5-coder-1.5b-instruct",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:52:47.773Z"
+    },
+    "paraformer-8k-v2": {
+      "name": "paraformer-8k-v2",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:47.907Z"
+    },
+    "qwen-mt-turbo": {
+      "name": "qwen-mt-turbo",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:48.254Z"
+    },
+    "qwen-mt-plus": {
+      "name": "qwen-mt-plus",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:48.556Z"
+    },
+    "wanx2.0-t2i-turbo": {
+      "name": "wanx2.0-t2i-turbo",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:52:48.687Z"
+    },
+    "qwen-audio-turbo-0807": {
+      "name": "qwen-audio-turbo-0807",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:48.694Z"
+    },
+    "gummy-realtime-v1": {
+      "name": "gummy-realtime-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:48.931Z"
+    },
+    "gummy-chat-v1": {
+      "name": "gummy-chat-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:49.074Z"
+    },
+    "qwen-14b-chat": {
+      "name": "qwen-14b-chat",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:53:50.209Z"
+    },
+    "billa-7b-sft-v1": {
+      "name": "billa-7b-sft-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:50.323Z"
+    },
+    "chatyuan-large-v2": {
+      "name": "chatyuan-large-v2",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:50.467Z"
+    },
+    "belle-llama-13b-2m-v1": {
+      "name": "belle-llama-13b-2m-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:50.617Z"
+    },
+    "chatglm3-6b": {
+      "name": "chatglm3-6b",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:50.763Z"
+    },
+    "baichuan2-13b-chat-v1": {
+      "name": "baichuan2-13b-chat-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:50.909Z"
+    },
+    "baichuan-7b-v1": {
+      "name": "baichuan-7b-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:51.160Z"
+    },
+    "qwen-1.8b-chat": {
+      "name": "qwen-1.8b-chat",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:53:52.969Z"
+    },
+    "qwen-1.8b-longcontext-chat": {
+      "name": "qwen-1.8b-longcontext-chat",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:53.129Z"
+    },
+    "qwen-72b-chat": {
+      "name": "qwen-72b-chat",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:53:54.260Z"
+    },
+    "wanx-style-repaint-v1": {
+      "name": "wanx-style-repaint-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:54.388Z"
+    },
+    "wanx-background-generation-v2": {
+      "name": "wanx-background-generation-v2",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:54.520Z"
+    },
+    "facechain-facedetect": {
+      "name": "facechain-facedetect",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:54.646Z"
+    },
+    "facechain-generation": {
+      "name": "facechain-generation",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:54.787Z"
+    },
+    "facechain-finetune": {
+      "name": "facechain-finetune",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:54.873Z"
+    },
+    "wordart-texture": {
+      "name": "wordart-texture",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:55.018Z"
+    },
+    "wordart-semantic": {
+      "name": "wordart-semantic",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:55.146Z"
+    },
+    "stable-diffusion-xl": {
+      "name": "stable-diffusion-xl",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:55.284Z"
+    },
+    "stable-diffusion-v1.5": {
+      "name": "stable-diffusion-v1.5",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:55.407Z"
+    },
+    "opennlu-v1": {
+      "name": "opennlu-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:55.556Z"
+    },
+    "paraformer-8k-v1": {
+      "name": "paraformer-8k-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:55.681Z"
+    },
+    "paraformer-mtl-v1": {
+      "name": "paraformer-mtl-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:55.799Z"
+    },
+    "paraformer-v1": {
+      "name": "paraformer-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:55.938Z"
+    },
+    "sambert-beth-v1": {
+      "name": "sambert-beth-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:56.070Z"
+    },
+    "sambert-brian-v1": {
+      "name": "sambert-brian-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:56.197Z"
+    },
+    "sambert-cally-v1": {
+      "name": "sambert-cally-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:56.355Z"
+    },
+    "sambert-camila-v1": {
+      "name": "sambert-camila-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:56.495Z"
+    },
+    "sambert-cindy-v1": {
+      "name": "sambert-cindy-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:56.626Z"
+    },
+    "sambert-clara-v1": {
+      "name": "sambert-clara-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:56.768Z"
+    },
+    "sambert-donna-v1": {
+      "name": "sambert-donna-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:56.897Z"
+    },
+    "sambert-eva-v1": {
+      "name": "sambert-eva-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:57.051Z"
+    },
+    "sambert-hanna-v1": {
+      "name": "sambert-hanna-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:57.195Z"
+    },
+    "sambert-indah-v1": {
+      "name": "sambert-indah-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:57.333Z"
+    },
+    "sambert-perla-v1": {
+      "name": "sambert-perla-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:57.474Z"
+    },
+    "sambert-waan-v1": {
+      "name": "sambert-waan-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:57.601Z"
+    },
+    "sambert-zhichu-v1": {
+      "name": "sambert-zhichu-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:57.748Z"
+    },
+    "sambert-zhida-v1": {
+      "name": "sambert-zhida-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:57.883Z"
+    },
+    "sambert-zhide-v1": {
+      "name": "sambert-zhide-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:58.017Z"
+    },
+    "sambert-zhifei-v1": {
+      "name": "sambert-zhifei-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:58.135Z"
+    },
+    "sambert-zhigui-v1": {
+      "name": "sambert-zhigui-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:58.303Z"
+    },
+    "sambert-zhihao-v1": {
+      "name": "sambert-zhihao-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:58.445Z"
+    },
+    "sambert-zhijia-v1": {
+      "name": "sambert-zhijia-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:58.592Z"
+    },
+    "sambert-zhijing-v1": {
+      "name": "sambert-zhijing-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:58.723Z"
+    },
+    "sambert-zhilun-v1": {
+      "name": "sambert-zhilun-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:58.925Z"
+    },
+    "sambert-zhimao-v1": {
+      "name": "sambert-zhimao-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:59.144Z"
+    },
+    "sambert-zhimiao-emo-v1": {
+      "name": "sambert-zhimiao-emo-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:59.273Z"
+    },
+    "sambert-zhiming-v1": {
+      "name": "sambert-zhiming-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:59.429Z"
+    },
+    "sambert-zhimo-v1": {
+      "name": "sambert-zhimo-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:59.575Z"
+    },
+    "sambert-zhina-v1": {
+      "name": "sambert-zhina-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:59.699Z"
+    },
+    "sambert-zhiqi-v1": {
+      "name": "sambert-zhiqi-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:59.829Z"
+    },
+    "sambert-zhiqian-v1": {
+      "name": "sambert-zhiqian-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:53:59.948Z"
+    },
+    "sambert-zhiru-v1": {
+      "name": "sambert-zhiru-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:00.091Z"
+    },
+    "sambert-zhishu-v1": {
+      "name": "sambert-zhishu-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:00.232Z"
+    },
+    "sambert-zhishuo-v1": {
+      "name": "sambert-zhishuo-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:00.377Z"
+    },
+    "sambert-zhistella-v1": {
+      "name": "sambert-zhistella-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:00.510Z"
+    },
+    "sambert-zhiting-v1": {
+      "name": "sambert-zhiting-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:00.639Z"
+    },
+    "sambert-zhiwei-v1": {
+      "name": "sambert-zhiwei-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:00.776Z"
+    },
+    "sambert-zhixiang-v1": {
+      "name": "sambert-zhixiang-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:00.912Z"
+    },
+    "sambert-zhixiao-v1": {
+      "name": "sambert-zhixiao-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:01.051Z"
+    },
+    "sambert-zhiya-v1": {
+      "name": "sambert-zhiya-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:01.176Z"
+    },
+    "sambert-zhiye-v1": {
+      "name": "sambert-zhiye-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:01.309Z"
+    },
+    "sambert-zhiying-v1": {
+      "name": "sambert-zhiying-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:01.440Z"
+    },
+    "sambert-zhiyuan-v1": {
+      "name": "sambert-zhiyuan-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:01.587Z"
+    },
+    "sambert-zhiyue-v1": {
+      "name": "sambert-zhiyue-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:01.730Z"
+    },
+    "qwen-max-0403": {
+      "name": "qwen-max-0403",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:54:03.413Z"
+    },
+    "qwen-max-0107": {
+      "name": "qwen-max-0107",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:54:05.154Z"
+    },
+    "qwen1.5-7b-chat": {
+      "name": "qwen1.5-7b-chat",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:54:06.133Z"
+    },
+    "qwen1.5-72b-chat": {
+      "name": "qwen1.5-72b-chat",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:54:07.230Z"
+    },
+    "qwen1.5-32b-chat": {
+      "name": "qwen1.5-32b-chat",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:54:08.174Z"
+    },
+    "qwen1.5-14b-chat": {
+      "name": "qwen1.5-14b-chat",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:54:09.165Z"
+    },
+    "qwen1.5-1.8b-chat": {
+      "name": "qwen1.5-1.8b-chat",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:54:10.628Z"
+    },
+    "qwen1.5-0.5b-chat": {
+      "name": "qwen1.5-0.5b-chat",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:54:11.660Z"
+    },
+    "sambert-betty-v1": {
+      "name": "sambert-betty-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:11.789Z"
+    },
+    "sambert-zhinan-v1": {
+      "name": "sambert-zhinan-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:11.923Z"
+    },
+    "baichuan2-turbo": {
+      "name": "baichuan2-turbo",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:12.070Z"
+    },
+    "emo-detect": {
+      "name": "emo-detect",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:12.208Z"
+    },
+    "emo": {
+      "name": "emo",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:12.339Z"
+    },
+    "animate-anyone-detect": {
+      "name": "animate-anyone-detect",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:12.467Z"
+    },
+    "animate-anyone": {
+      "name": "animate-anyone",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:12.599Z"
+    },
+    "farui-plus": {
+      "name": "farui-plus",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:12.749Z"
+    },
+    "wanx-v1-0521": {
+      "name": "wanx-v1-0521",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:12.840Z"
+    },
+    "aitryon": {
+      "name": "aitryon",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:12.991Z"
+    },
+    "image-out-painting": {
+      "name": "image-out-painting",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:13.119Z"
+    },
+    "wanx-x-painting": {
+      "name": "wanx-x-painting",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:13.256Z"
+    },
+    "wanx-style-cosplay-v1": {
+      "name": "wanx-style-cosplay-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:13.384Z"
+    },
+    "wanx-sketch-to-image-lite": {
+      "name": "wanx-sketch-to-image-lite",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:13.504Z"
+    },
+    "shoemodel-v1": {
+      "name": "shoemodel-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:15.125Z"
+    },
+    "wanx-poster-generation-v1": {
+      "name": "wanx-poster-generation-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:15.254Z"
+    },
+    "paraformer-realtime-v1": {
+      "name": "paraformer-realtime-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:15.392Z"
+    },
+    "paraformer-realtime-8k-v1": {
+      "name": "paraformer-realtime-8k-v1",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:15.513Z"
+    },
+    "wanx-virtualmodel": {
+      "name": "wanx-virtualmodel",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:15.641Z"
+    },
+    "virtualmodel-v2": {
+      "name": "virtualmodel-v2",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:16.960Z"
+    },
+    "wordart-surnames": {
+      "name": "wordart-surnames",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:17.105Z"
+    },
+    "aitryon-refiner": {
+      "name": "aitryon-refiner",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:17.238Z"
+    },
+    "abab6.5s-chat": {
+      "name": "abab6.5s-chat",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:17.383Z"
+    },
+    "abab6.5t-chat": {
+      "name": "abab6.5t-chat",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:17.503Z"
+    },
+    "abab6.5g-chat": {
+      "name": "abab6.5g-chat",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:17.624Z"
+    },
+    "qwen-plus-0206": {
+      "name": "qwen-plus-0206",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:54:18.788Z"
+    },
+    "qwen-plus-0624": {
+      "name": "qwen-plus-0624",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:54:20.767Z"
+    },
+    "qwen-turbo-0206": {
+      "name": "qwen-turbo-0206",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:54:21.861Z"
+    },
+    "qwen-turbo-0624": {
+      "name": "qwen-turbo-0624",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:54:25.532Z"
+    },
+    "qwen-plus-0723": {
+      "name": "qwen-plus-0723",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:54:27.032Z"
+    },
+    "qwen-plus-0806": {
+      "name": "qwen-plus-0806",
+      "supportsNonStream": true,
+      "supportsStream": true,
+      "testedAt": "2025-03-24T16:54:28.416Z"
+    },
+    "image-instance-segmentation": {
+      "name": "image-instance-segmentation",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:28.546Z"
+    },
+    "image-erase-completion": {
+      "name": "image-erase-completion",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:28.675Z"
+    },
+    "flux-merged": {
+      "name": "flux-merged",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:28.790Z"
+    },
+    "dolly-12b-v2": {
+      "name": "dolly-12b-v2",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:28.938Z"
+    },
+    "paraformer-v2": {
+      "name": "paraformer-v2",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:29.060Z"
+    },
+    "paraformer-realtime-v2": {
+      "name": "paraformer-realtime-v2",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:29.185Z"
+    },
+    "stable-diffusion-3.5-large": {
+      "name": "stable-diffusion-3.5-large",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:29.312Z"
+    },
+    "stable-diffusion-3.5-large-turbo": {
+      "name": "stable-diffusion-3.5-large-turbo",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:29.451Z"
+    },
+    "paraformer-realtime-8k-v2": {
+      "name": "paraformer-realtime-8k-v2",
+      "supportsNonStream": false,
+      "supportsStream": false,
+      "testedAt": "2025-03-24T16:54:29.588Z"
+    }
+  }
+}

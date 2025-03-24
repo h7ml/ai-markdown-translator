@@ -9,9 +9,14 @@ const __dirname = path.resolve();
  */
 function loadModelNames() {
   try {
-    const modelNamesPath = path.join(__dirname, 'benchmark', 'modelNames.json');
-    const rawData = fs.readFileSync(modelNamesPath, 'utf8');
-    return JSON.parse(rawData);
+    const modelSupportPath = path.join(__dirname, 'benchmark', 'modelStreamingSupport.json');
+    const rawData = fs.readFileSync(modelSupportPath, 'utf8');
+    const supportData = JSON.parse(rawData);
+
+    // 合并 both 和 nonStreamOnly 数组
+    const modelNames = [...supportData.both, ...supportData.nonStreamOnly];
+
+    return modelNames;
   } catch (error) {
     console.error('加载模型名称时出错:', error.message);
     return [];

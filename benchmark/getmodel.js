@@ -43,6 +43,10 @@ function extractAndSaveModelNames(inputFilePath, outputFilePath) {
 }
 
 // 使用示例
+// 根据 https://bailian.console.aliyun.com/?userCode=okjhlpr5#/model-market 获取模型列表
+// 接口 https://bailian.console.aliyun.com/data/api.json?action=BroadScopeAspnGateway&product=sfm_bailian&api=zeldaEasy.broadscope-platform.modelCenter.getModels&_v=undefined
+// 相关说明 https://zhuanlan.zhihu.com/p/20988126752
+// 模型列表保存在 model.json 文件中
 const modelJsonPath = path.join(__dirname, 'benchmark', 'model.json');
 const outputFilePath = path.join(__dirname, 'benchmark', 'modelNames.json');
 const names = extractAndSaveModelNames(modelJsonPath, outputFilePath);
