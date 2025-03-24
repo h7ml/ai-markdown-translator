@@ -93,6 +93,7 @@ export const OPTIONS: Record<keyof CliOptions, OptionDefinition> = {
     type: 'string',
     choices: ['completions', 'responses'],
     default: 'completions',
+    disabled: true,
   },
   'show-version': {
     alias: 'v',

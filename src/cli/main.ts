@@ -4,7 +4,8 @@ import { hideBin } from 'yargs/helpers';
 import { SupportedLocale } from '../config/i18n';
 import { CliOptions } from '../types/option';
 import { setLocale } from '../utils/i18n';
-import { applyOptions, checkArgument, setDefault } from './helper';
+import { checkArgument, setDefault } from './helper';
+import { OPTIONS } from './options';
 
 /**
  * Define and parse CLI options.
@@ -39,4 +40,23 @@ export async function parseCliOptions() {
   const argv = await yargsInstance.argv;
 
   return argv as unknown as CliOptions;
+}
+
+// Helper function for applying options
+// 应用选项的辅助函数
+// 옵션 적용을 위한 헬퍼 함수
+export function applyOptions(yargs: yargs.Argv, locale: SupportedLocale) {
+  Object.entries(OPTIONS).forEach(([key, option]) => {
+    if (option.disabled) return;
+    const description = option.description[locale];
+    yargs.option(key, {
+      alias: option.alias,
+      description,
+      type: option.type as any,
+      default: option.default,
+      demandOption: option.demandOption,
+      choices: option.choices,
+    });
+  });
+  return yargs;
 }

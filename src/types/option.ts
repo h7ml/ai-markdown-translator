@@ -15,6 +15,7 @@ export interface OptionDefinition {
   default?: unknown;
   demandOption?: boolean;
   choices?: string[];
+  disabled?: boolean;
 }
 
 export interface CliOptions {

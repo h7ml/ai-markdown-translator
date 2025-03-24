@@ -31,11 +31,10 @@ export async function translateText(text: string, options: RuntimeOptions): Prom
     ],
   };
 
-  console.log(options.openaiUrl, OFFICIAL_OPENAI_URL_V1);
   if (options.openaiUrl.includes(OFFICIAL_OPENAI_URL_V1)) {
-    if (options.apiType === 'completions') {
-      return translateTextWithCompletionsModule(options.apiKey, options.directoryOptions, data);
-    }
+    // if (options.apiType === 'completions') {
+    return translateTextWithCompletionsModule(options.apiKey, options.directoryOptions, data);
+    // }
   }
 
   return translateTextWithRestApi(

@@ -1,15 +1,12 @@
 import axios from 'axios';
 import * as fs from 'fs';
 import path from 'path';
-import yargs from 'yargs';
 
 import { DEFAULT_MODEL, DEFAULT_OPENAI_URL } from '../config/constants';
-import { SupportedLocale } from '../config/i18n';
 import { printDirectoryStructure } from '../services/file';
 import { CliOptions } from '../types/option';
 import { t } from '../utils/i18n';
 import { isValidUrl } from '../utils/validator';
-import { OPTIONS } from './options';
 
 // Set default values based on environment variables
 // 根据环境变量设置默认值
@@ -38,24 +35,6 @@ export function checkArgument(argv: any) {
     throw new Error(t('cli.url.invalid'));
   }
   return true;
-}
-
-// Helper function for applying options
-// 应用选项的辅助函数
-// 옵션 적용을 위한 헬퍼 함수
-export function applyOptions(yargs: yargs.Argv, locale: SupportedLocale) {
-  Object.entries(OPTIONS).forEach(([key, option]) => {
-    const description = option.description[locale];
-    yargs.option(key, {
-      alias: option.alias,
-      description,
-      type: option.type as any,
-      default: option.default,
-      demandOption: option.demandOption,
-      choices: option.choices,
-    });
-  });
-  return yargs;
 }
 
 export async function getDefaultApiKey(): Promise<string> {
