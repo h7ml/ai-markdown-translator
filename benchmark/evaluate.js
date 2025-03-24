@@ -1,7 +1,7 @@
 /* global console */
 import { ChatOpenAI } from '@langchain/openai';
 import { StructuredOutputParser } from 'langchain/output_parsers';
-import { ChatPromptTemplate } from '@langchain/core/prompts';
+import { PromptTemplate } from '@langchain/core/prompts';
 import { config } from 'dotenv';
 import { z } from 'zod';
 
@@ -13,8 +13,8 @@ config({ path: '.env.local' });
  * @param {string} modelName - 模型名称
  * @returns {ChatOpenAI} - LangChain Chat模型实例
  */
-export function getEvaluatorForModel(modelName) {
-  let model = new ChatOpenAI({
+function getEvaluatorForModel(modelName) {
+  return new ChatOpenAI({
     model: modelName,
     openAIApiKey: process.env.OPENAI_API_KEY,
     temperature: 0,
@@ -23,8 +23,6 @@ export function getEvaluatorForModel(modelName) {
       baseUrl: process.env.OPENAI_BASE_URL,
     },
   });
-
-  return model;
 }
 
 /**
@@ -83,10 +81,7 @@ export async function evaluate(
   );
 
   // 构建评估提示
-  const formatInstructions = parser.getFormatInstructions();
-
-  const prompt = ChatPromptTemplate.fromTemplate(
-    `你是一位精通多种语言的专业翻译评估专家，需要对机器翻译的质量进行评估。
+  const prompt = PromptTemplate.fromTemplate(`你是一位精通多种语言的专业翻译评估专家，需要对机器翻译的质量进行评估。
 
 原始文本 (Markdown格式):
 \`\`\`
@@ -110,20 +105,20 @@ export async function evaluate(
 
 最后，提供具体的问题列表和改进建议。
 
-${formatInstructions}
+{formatInstructions}
 `);
 
   try {
-    const response = await evaluator.invoke([
-      await prompt.formatMessages({
-        originalData,
-        translatedData,
-        targetLanguage,
-      }),
-    ]);
+    const result = await prompt.pipe(evaluator).invoke({
+      originalData,
+      translatedData,
+      targetLanguage,
+      formatInstructions: parser.getFormatInstructions(),
+    });
 
-    const result = await parser.parse(response.content);
-    return result;
+    const parsed = await parser.parse(result.content);
+    console.log(parsed);
+    return parsed;
   } catch (error) {
     console.error('评估过程出错:', error);
     // 返回默认评估结果

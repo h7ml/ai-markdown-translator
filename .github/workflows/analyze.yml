@@ -1,0 +1,114 @@
+name: Analyze
+
+on:
+  push:
+    branches:
+      - feat/benchmark
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: feat/benchmark
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            **/node_modules
+            ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        continue-on-error: false
+
+      - name: Set environment variables
+        run: |
+          if [ -z "${{ secrets.OPENAI_BENCHMARK_API_KEY }}" ]; then
+            echo "Error: OPENAI_API_KEY is not set"
+            exit 1
+          fi
+          echo "OPENAI_BASE_URL=${{ secrets.OPENAI_BENCHMARK_BASE_URL }}" >> .env.local
+          echo "OPENAI_API_KEY=${{ secrets.OPENAI_BENCHMARK_API_KEY }}" >> .env.local
+
+      - name: Build
+        run: |
+          pnpm build
+        continue-on-error: false
+
+      - name: Run benchmark
+        id: benchmark
+        run: pnpm benchmark
+        continue-on-error: true
+
+      - name: Run analysis
+        if: steps.benchmark.outcome == 'success'
+        run: pnpm analyze
+        continue-on-error: true
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-report-${{ github.sha }}
+          path: benchmark
+          retention-days: 7
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@h7ml.cn"
+          git config --local user.name "GitHub Action"
+          git config --local core.autocrlf false
+          git config --local core.safecrlf false
+          git config advice.ignoredHook false
+
+      - name: Commit and Push Changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            git add .
+            git commit -m "feat: update benchmark results [skip ci]"
+            git push origin feat/benchmark --force || {
+              echo "Push failed, retrying after pull..."
+              git pull --rebase origin feat/benchmark
+              git push origin feat/benchmark --force
+            }
+          else
+            echo "No changes to commit"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -rf node_modules
+          rm -rf .env.local
+
+
