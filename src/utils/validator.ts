@@ -26,6 +26,6 @@ export function isValidUrl(urlString: string): boolean {
 export function validateContent(content: string): boolean {
   // 基本的 Markdown 格式验证 / Basic Markdown format validation / 기본 마크다운 형식 검증
   const hasMarkdownSyntax = /[#*_[\]()-`]/.test(content);
-  const hasText = /[a-zA-Z\u4e00-\u9fa5]/.test(content);
+  const hasText = /[a-zA-Z\u4e00-\u9fa5\uAC00-\uD7A3]/.test(content);
   return hasMarkdownSyntax && hasText;
 }

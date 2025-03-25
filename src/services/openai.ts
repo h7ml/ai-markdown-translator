@@ -1,36 +1,10 @@
-import OpenAI from 'openai';
-import { logLocalizedMessage } from '../utils/logger';
-import { sleep } from '../utils/formatter';
-import { DirectoryOptions } from '../types';
-import { t } from '../utils/i18n';
 import axios from 'axios';
+import OpenAI from 'openai';
 
-export async function getDefaultApiKey(): Promise<string> {
-  try {
-    const response = await axios({
-      method: 'get',
-      url: 'https://dash-api.302.ai/bot/v1/302aitool11-prompter',
-      headers: {
-        accept: 'application/json',
-        'accept-language': 'zh-CN,zh;q=0.9',
-        'cache-control': 'no-cache',
-        pragma: 'no-cache',
-      },
-    });
-
-    if (response.status === 200 && response.data) {
-      const data = response.data;
-      if (data.code === 0 && data.data && data.data.api_key) {
-        return data.data.api_key;
-      }
-    }
-    console.error(t('api.key.error'));
-    return '';
-  } catch (error) {
-    console.error(t('api.key.request.error'), error);
-    return '';
-  }
-}
+import { DirectoryOptions } from '../types/option';
+import { sleep } from '../utils/formatter';
+import { t } from '../utils/i18n';
+import { logLocalizedMessage } from '../utils/logger';
 
 type ApiCallFunction<T> = () => Promise<T>;
 
@@ -58,7 +32,7 @@ async function withRetry<T>(
   return null;
 }
 
-export async function translateTextWithModule(
+export async function translateTextWithCompletionsModule(
   apiKey: string,
   retryOptions: DirectoryOptions,
   data: OpenAI.Chat.Completions.ChatCompletionCreateParamsNonStreaming,

@@ -234,7 +234,7 @@ npx ai-markdown-translator -i ./markdown-files -o ./output -l "Japanese" \
 
 ## Version Information
 
-- **Current Version**: 1.0.13
+- **Current Version**: ![NPM Version](https://img.shields.io/npm/v/ai-markdown-translator)
 - **NPM Package**: [ai-markdown-translator](https://www.npmjs.com/package/ai-markdown-translator)
 
 ## CI Information
