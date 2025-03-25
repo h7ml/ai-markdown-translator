@@ -2,7 +2,18 @@
 import { ChatOpenAI } from '@langchain/openai';
 import { config } from 'dotenv';
 import { evaluate } from './evaluate.js';
-import axios from 'axios';
+import { exec } from 'child_process';
+import { promisify } from 'util';
+import path from 'path';
+import fs from 'fs';
+import os from 'os';
+
+import { fileURLToPath } from 'url';
+
+// 获取当前文件的目录路径
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const execAsync = promisify(exec);
 
 // 加载环境变量
 config({ path: '.env.local' });
@@ -69,6 +80,18 @@ ${result.suggestions.length > 0
 `;
 }
 
+// 定义基准测试目录结构
+const benchmarkDir = path.join(__dirname);
+const inputDir = path.join(benchmarkDir, 'input');
+const outputDir = path.join(benchmarkDir, 'output');
+
+// 确保目录存在
+[inputDir, outputDir].forEach(dir => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+});
+
 /**
  * 执行一次基准测试
  * @param {Object} model - 模型配置
@@ -78,45 +101,49 @@ ${result.suggestions.length > 0
 export async function runBenchmark(model, testCase) {
   console.log(`开始基准测试: ${model.name} / ${testCase.name} -> ${testCase.targetLanguage}`);
 
-  // 检查测试用例是否有提供内容，否则使用默认样本
-  const markdownContent = testCase.content || sampleMarkdownText;
+  // 使用更清晰的文件命名
+  const timestamp = Date.now();
+  const safeModelName = model.name.replace(/[^a-zA-Z0-9-]/g, '-');
+  const inputFile = path.join(inputDir, `input-${safeModelName}-${testCase.name}-${testCase.targetLanguage}-${timestamp}.md`);
+  const outputFile = path.join(outputDir, `output-${safeModelName}-${testCase.name}-${testCase.targetLanguage}-${timestamp}.md`);
+
   // 记录开始时间
   const startTime = Date.now();
 
   try {
-    // 获取LLM客户端
-    const llm = getLLMForModel(model);
-    // 执行翻译
-    const result = await translateMarkdown(llm, markdownContent, testCase.targetLanguage, model);
+    // 写入测试内容到输入文件
+    fs.writeFileSync(inputFile, testCase.content, 'utf8');
+    fs.writeFileSync(outputFile, '', 'utf8');
+    // 构建命令
+    const cmd = `node "${path.resolve(__dirname, '../dist/index.js')}" --input "${inputFile}" --output "${outputFile}" --language "${testCase.targetLanguage}" --model "${model.name}" --log`;
+
+    const { stdout, stderr } = await execAsync(cmd);
+
+    if (stdout) console.log('命令输出:', stdout);
+    if (stderr) console.error('命令错误:', stderr);
+
+    // 检查输出文件是否存在
+    if (!fs.existsSync(outputFile)) {
+      throw new Error(`翻译后的输出文件不存在: ${outputFile}`);
+    }
+
+    // 读取翻译结果
+    const translatedText = fs.readFileSync(outputFile, 'utf8');
+
     // 计算耗时（秒）
     const timeCost = (Date.now() - startTime) / 1000;
-
-    // 计算tokens
-    let inputTokensCost = 0;
-    let outputTokensCost = 0;
-
-    // 不同模型有不同的token计费方式
-    if (model.tokenCostInfo) {
-      if (result.inputTokens) {
-        inputTokensCost = (result.inputTokens / 1000) * model.tokenCostInfo.inputTokenCost;
-      }
-      if (result.outputTokens) {
-        outputTokensCost = (result.outputTokens / 1000) * model.tokenCostInfo.outputTokenCost;
-      }
-    }
 
     // 评估翻译质量
     let evaluationResult;
     try {
       evaluationResult = await evaluate(
-        markdownContent,
-        result.translatedText,
+        testCase.content,
+        translatedText,
         testCase.targetLanguage,
         'deepseek-r1', // 使用deepseek-r1进行评估
       );
     } catch (evalError) {
       console.error('评估失败:', evalError);
-      // 提供默认评估结果
       evaluationResult = {
         semanticAccuracy: 0,
         markdownPreservation: 0,
@@ -129,30 +156,55 @@ export async function runBenchmark(model, testCase) {
       };
     }
 
+    // 清理文件
+    try {
+      fs.unlinkSync(inputFile);
+      fs.unlinkSync(outputFile);
+    } catch (e) {
+      console.warn('清理文件失败:', e.message);
+    }
+
     // 返回测试结果
     const resultObj = {
       modelName: model.name,
       testCaseName: testCase.name,
       targetLanguage: testCase.targetLanguage,
-      inputText: markdownContent,
-      translatedText: result.translatedText,
+      inputText: testCase.content,
+      translatedText,
       timeCost,
-      inputTokens: result.inputTokens || 0,
-      outputTokens: result.outputTokens || 0,
-      inputTokensCost,
-      outputTokensCost,
+      inputTokens: 0, // 由于使用命令行工具,这里暂时无法获取token数
+      outputTokens: 0,
+      inputTokensCost: 0,
+      outputTokensCost: 0,
       ...evaluationResult,
     };
     return resultObj;
   } catch (error) {
-    console.error('基准测试错误:', error);
+    // 清理文件
+    try {
+      if (fs.existsSync(inputFile)) fs.unlinkSync(inputFile);
+      if (fs.existsSync(outputFile)) fs.unlinkSync(outputFile);
+    } catch (e) {
+      console.warn('清理文件失败:', e.message);
+    }
+
+    // 格式化错误信息
+    const errorDetails = {
+      message: error.message,
+      code: error.code || 'UNKNOWN',
+      type: error.type || 'UNKNOWN',
+      status: error.status || 'UNKNOWN',
+      requestId: error.request_id || 'UNKNOWN'
+    };
+
+    console.error('错误详情:', JSON.stringify(errorDetails, null, 2));
 
     // 返回错误结果
     const errorResult = {
       modelName: model.name,
       testCaseName: testCase.name,
       targetLanguage: testCase.targetLanguage,
-      error: error.message,
+      error: errorDetails,
       timeCost: (Date.now() - startTime) / 1000,
       inputTokensCost: 0,
       outputTokensCost: 0,
@@ -162,8 +214,8 @@ export async function runBenchmark(model, testCase) {
       fluency: 0,
       styleMatching: 0,
       wrongStructure: true,
-      issues: ['执行失败: ' + error.message],
-      suggestions: [],
+      issues: [`执行失败: ${errorDetails.message}`],
+      suggestions: ['请检查模型配置和API参数设置'],
     };
 
     return errorResult;
@@ -296,7 +348,20 @@ ${markdown}
       outputTokens,
     };
   } catch (error) {
-    console.error('翻译过程出错:', error);
-    throw error;
+    console.error('翻译错误详情:', {
+      message: error.message,
+      code: error.code || 'UNKNOWN',
+      type: error.type || 'UNKNOWN',
+      status: error.status || 'UNKNOWN',
+      requestId: error.request_id || 'UNKNOWN',
+      model: model.name,
+      targetLanguage
+    });
+
+    if (error.error && error.error.message) {
+      console.error('API错误信息:', error.error.message);
+    }
+
+    throw error;  // 继续抛出错误，但已经打印了有用的信息
   }
 }

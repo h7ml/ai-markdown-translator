@@ -14,7 +14,7 @@ permissions:
 jobs:
   analyze:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 90
     env:
       TZ: Asia/Shanghai
       NODE_ENV: test
@@ -104,7 +104,7 @@ jobs:
 
       - name: Run benchmark
         id: benchmark
-        timeout-minutes: 25
+        timeout-minutes: 75
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
           NODE_ENV: test
@@ -113,7 +113,7 @@ jobs:
           echo "Environment: NODE_ENV=$NODE_ENV"
           echo "Starting benchmark at $(date '+%Y-%m-%d %H:%M:%S')"
           pnpm benchmark || {
-            echo "::warning::Benchmark execution timed out after 25 minutes"
+            echo "::warning::Benchmark execution timed out after 75 minutes"
             exit 0
           }
           echo "Benchmark completed at $(date '+%Y-%m-%d %H:%M:%S')"

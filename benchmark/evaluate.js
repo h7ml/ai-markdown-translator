@@ -117,10 +117,12 @@ export async function evaluate(
     });
 
     const parsed = await parser.parse(result.content);
-    if (parsed?.issues) {
+    if (parsed?.issues?.length > 0) {
+      console.log('issues:');
       console.log(parsed.issues);
     }
-    if (parsed?.suggestions) {
+    if (parsed?.suggestions?.length > 0) {
+      console.log('suggestions:');
       console.log(parsed.suggestions);
     }
     return parsed;
