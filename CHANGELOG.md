@@ -1,3 +1,7 @@
+## [1.0.14](https://github.com/h7ml/ai-markdown-translator/compare/v1.0.15...v1.0.14) (2025-03-25)
+
+
+
 ## v1.0.13
 
 [compare changes](https://github.com/h7ml/ai-markdown-translator/compare/v1.0.13...v1.0.13)
