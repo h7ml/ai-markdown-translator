@@ -75,6 +75,8 @@ jobs:
 
       - name: Publish to NPM
         run: |
+          # 使用 NPM_TOKEN 进行认证，避免 OTP 问题
+          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
           pnpm publish --no-git-checks || echo "Publish to NPM failed"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
