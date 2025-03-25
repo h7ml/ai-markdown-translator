@@ -1,13 +1,11 @@
-import { DEFAULT_OPENAI_URL } from '../config/constants';
-import { ChatData, RuntimeOptions } from '../types';
-import path from 'path';
 import fs from 'fs';
-import { fileURLToPath } from 'url';
-import { t } from '../utils/i18n';
-import { translateTextWithModule, translateTextWithRestApi } from './openai';
+import path from 'path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { OFFICIAL_OPENAI_URL_V1, PROMPTS_DIR } from '../config/constants';
+import { ChatData } from '../types/common';
+import { RuntimeOptions } from '../types/option';
+import { t } from '../utils/i18n';
+import { translateTextWithCompletionsModule, translateTextWithRestApi } from './openai';
 
 export async function translateText(text: string, options: RuntimeOptions): Promise<string | null> {
   const prompt = `将以下文本翻译成${options.language}。请保持格式不变:\n\n${text}`;
@@ -23,7 +21,7 @@ export async function translateText(text: string, options: RuntimeOptions): Prom
   const data: ChatData = {
     model: options.model,
     messages: [
-      { role: 'developer', content: systemContent },
+      { role: 'system', content: systemContent },
       {
         role: 'user',
         content: `请将以下文本翻译成英文。请保持格式不变:\n\n${inputContent}`,
@@ -33,20 +31,22 @@ export async function translateText(text: string, options: RuntimeOptions): Prom
     ],
   };
 
-  if (options.openaiUrl !== DEFAULT_OPENAI_URL) {
-    return translateTextWithModule(options.apiKey, options.directoryOptions, data);
-  } else {
-    return translateTextWithRestApi(
-      options.apiKey,
-      options.openaiUrl,
-      options.directoryOptions,
-      data,
-    );
+  if (options.openaiUrl.includes(OFFICIAL_OPENAI_URL_V1)) {
+    // if (options.apiType === 'completions') {
+    return translateTextWithCompletionsModule(options.apiKey, options.directoryOptions, data);
+    // }
   }
+
+  return translateTextWithRestApi(
+    options.apiKey,
+    options.openaiUrl,
+    options.directoryOptions,
+    data,
+  );
 }
 
 async function getFileContent(fileName: string): Promise<string> {
-  const filePath = path.join(__dirname, './prompts/', fileName);
+  const filePath = path.join(PROMPTS_DIR, fileName);
 
   try {
     return fs.readFileSync(filePath, 'utf-8');

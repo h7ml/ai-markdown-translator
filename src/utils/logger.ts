@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+
 import { FAIL_LOG } from '../config/constants';
 import { SupportedLocale } from '../config/i18n';
 import { getLocale, t } from './i18n';
