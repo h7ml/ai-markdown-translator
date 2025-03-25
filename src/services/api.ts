@@ -21,7 +21,7 @@ export async function translateText(text: string, options: RuntimeOptions): Prom
   const data: ChatData = {
     model: options.model,
     messages: [
-      { role: 'developer', content: systemContent },
+      { role: 'system', content: systemContent },
       {
         role: 'user',
         content: `请将以下文本翻译成英文。请保持格式不变:\n\n${inputContent}`,
