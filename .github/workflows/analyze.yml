@@ -1,9 +1,9 @@
 name: Analyze
 
 on:
-  push:
-    branches:
-      - feat/benchmark
+  # push:
+  #   branches:
+  #     - feat/benchmark
   workflow_dispatch:
 
 permissions:
@@ -21,6 +21,9 @@ jobs:
       CI: true
       BENCHMARK_MODE: true
       DEBUG: "benchmark:*"
+      BENCHMARK_ITERATIONS: 1
+      BENCHMARK_INTERVAL: 1000
+      BENCHMARK_MAX_WORKERS: 35
 
     steps:
       - name: Print environment info
@@ -173,15 +176,42 @@ jobs:
           git config advice.ignoredHook false
 
       - name: Commit and Push Changes
+        id: commit
         run: |
           if [[ -n $(git status --porcelain) ]]; then
+            current_date=$(date +%Y-%m-%d)
+            md_file="benchmark/analysis_${current_date}.md"
+            
+            # 保持 commit message 简洁
             git add .
             git commit -m "feat: update benchmark results [skip ci]"
+            
+            # 推送更改并获取 commit SHA
             git push origin feat/benchmark --force || {
               echo "Push failed, retrying after pull..."
               git pull --rebase origin feat/benchmark
               git push origin feat/benchmark --force
             }
+            
+            # 获取最新的 commit SHA
+            COMMIT_SHA=$(git rev-parse HEAD)
+            
+            # 如果有报告文件，添加为 commit comment
+            if [ -f "$md_file" ]; then
+              echo "Adding benchmark report as commit comment..."
+              # 读取报告内容并转义特殊字符
+              REPORT_CONTENT=$(cat "$md_file" | sed 's/"/\\"/g' | tr -d '\n')
+              
+              # 使用 GitHub API 添加 commit comment
+              curl -s -X POST \
+                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                -H "Accept: application/vnd.github.v3+json" \
+                -H "Content-Type: application/json" \
+                -d "{\"body\":\"# Benchmark Report\n\n$REPORT_CONTENT\"}" \
+                "https://api.github.com/repos/${{ github.repository }}/commits/$COMMIT_SHA/comments" || {
+                echo "Failed to add commit comment"
+              }
+            fi
           else
             echo "No changes to commit"
           fi

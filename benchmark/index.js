@@ -66,13 +66,16 @@ function createWorker(model, iteration, intervalMs) {
   });
 }
 
-async function runBenchmarkWithInterval(iterations = 10, intervalMs = 1000) {
+async function runBenchmarkWithInterval({
+  iterations = 2,
+  intervalMs = 1000,
+  maxWorkers = 35,
+  reportDir = path.join(__dirname, 'report')
+} = {}) {
   const startTime = new Date();
   console.log(`开始基准测试: ${startTime.toLocaleString()}`);
   console.log(`加载了${testModels.length}个模型`);
-
-  // 设置并发执行的worker数量
-  const maxWorkers = 35;
+  console.log(`配置: iterations=${iterations}, intervalMs=${intervalMs}, maxWorkers=${maxWorkers}`);
 
   for (let i = 0; i < iterations; i++) {
     // 将模型列表分成多个批次
@@ -119,5 +122,11 @@ function reportOutput(result) {
 }
 
 // 运行基准测试
-// 每个模型运行2次，每次间隔1秒，确保总消耗token不超过0.2美元
-runBenchmarkWithInterval(2, 1000);
+// 从环境变量获取配置，如果没有则使用默认值
+const config = {
+  iterations: parseInt(process.env.BENCHMARK_ITERATIONS) || 2,
+  intervalMs: parseInt(process.env.BENCHMARK_INTERVAL) || 1000,
+  maxWorkers: parseInt(process.env.BENCHMARK_MAX_WORKERS) || 35
+};
+
+runBenchmarkWithInterval(config);
