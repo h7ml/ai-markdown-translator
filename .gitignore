@@ -17,3 +17,5 @@ dist/
 .specstory/
 
 benchmark/report/
+benchmark/input/
+benchmark/output/

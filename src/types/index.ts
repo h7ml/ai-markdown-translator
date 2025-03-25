@@ -25,7 +25,7 @@ export interface DirectoryPrintOptions {
 
 export interface ChatData {
   model: string;
-  messages: { role: 'developer' | 'user' | 'assistant'; content: string }[];
+  messages: { role: 'system' | 'developer' | 'user' | 'assistant'; content: string }[];
 }
 
 export interface RuntimeOptions {

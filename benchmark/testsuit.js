@@ -14,10 +14,8 @@ function loadModelNames() {
     const supportData = JSON.parse(rawData);
 
     // 合并 both 和 nonStreamOnly 数组 
-    // 只需要 deepseek 相关的
     const modelNames = [...supportData.both, ...supportData.nonStreamOnly];
-    // 转化为小写
-    return modelNames.filter(name => name.toLowerCase().includes('deepseek'));
+    return modelNames;
   } catch (error) {
     console.error('加载模型名称时出错:', error.message);
     return [];

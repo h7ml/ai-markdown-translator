@@ -18,8 +18,8 @@ function extractAndSaveModelNames(inputFilePath, outputFilePath) {
     const models = JSON.parse(rawData);
 
     // 检查是否是数组
-    if (!Array.isArray(models)) {
-      throw new Error('文件内容不是一个数组');
+    if (!Array.isArray(models) || models.length === 0) {
+      throw new Error('文件内容不是一个数组 或 数组为空');
     }
 
     // 提取所有模型的name字段
