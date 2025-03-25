@@ -11,8 +11,7 @@ export type SupportedLocale = 'en' | 'zh' | 'ko';
 export const messages: LocaleMessages = {
   en: {
     // API related messages
-    'api.key.error': 'Failed to get default API Key: Invalid response format',
-    'api.key.request.error': 'Failed to get default API Key:',
+    'api.key.error': 'Failed to get default API Key:',
     'api.prompt.error': 'Cannot read prompt contents',
     'api.translation.complete': 'Translation completed',
     'api.translation.retry.success': 'Retry successful (%d/%d)',
@@ -56,8 +55,7 @@ export const messages: LocaleMessages = {
 
   zh: {
     // API related messages
-    'api.key.error': '获取默认API Key失败: 接口返回数据格式错误',
-    'api.key.request.error': '获取默认API Key失败:',
+    'api.key.error': '获取默认API Key失败:',
     'api.prompt.error': 'cannot read prompt contents',
     'api.translation.complete': '翻译完成',
     'api.translation.retry.success': '重试成功 (%d/%d)',
@@ -100,8 +98,7 @@ export const messages: LocaleMessages = {
 
   ko: {
     // API related messages
-    'api.key.error': '기본 API 키 가져오기 실패: 응답 형식이 잘못되었습니다',
-    'api.key.request.error': '기본 API 키 가져오기 실패:',
+    'api.key.error': '기본 API 키 가져오기 실패:',
     'api.prompt.error': '프롬프트 내용을 읽을 수 없습니다',
     'api.translation.complete': '번역 완료',
     'api.translation.retry.success': '재시도 성공 (%d/%d)',

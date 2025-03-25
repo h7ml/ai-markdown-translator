@@ -10,7 +10,6 @@ import { isValidUrl } from '../utils/validator';
 
 // Set default values based on environment variables
 // 根据环境变量设置默认值
-// 환경 변수 기반 기본값 설정
 export async function setDefault(argv: any) {
   // TODO: specify type
   const defaultApiKey = await getDefaultApiKey();
@@ -22,7 +21,6 @@ export async function setDefault(argv: any) {
 
 // Input validation function
 // 输入验证函数
-// 기본 동작 체크 함수
 export function checkArgument(argv: any) {
   // TODO: specify type
   if (!argv.input && !argv.url) {
@@ -37,30 +35,46 @@ export function checkArgument(argv: any) {
   return true;
 }
 
-export async function getDefaultApiKey(): Promise<string> {
-  try {
-    const response = await axios({
-      method: 'get',
-      url: 'https://dash-api.302.ai/bot/v1/302aitool11-prompter',
-      headers: {
-        accept: 'application/json',
-        'accept-language': 'zh-CN,zh;q=0.9',
-        'cache-control': 'no-cache',
-        pragma: 'no-cache',
-      },
-    });
+interface ApiKeyResponse {
+  code: number;
+  data: {
+    api_key: string;
+  };
+}
 
-    if (response.status === 200 && response.data) {
-      const data = response.data;
-      if (data.code === 0 && data.data && data.data.api_key) {
-        return data.data.api_key;
-      }
+export async function getDefaultApiKey(): Promise<string | null> {
+  try {
+    const response = await axios.get<ApiKeyResponse>(
+      'https://dash-api.302.ai/bot/v1/302aitool11-prompter',
+      {
+        headers: {
+          accept: 'application/json',
+          'accept-language': 'zh-CN,zh;q=0.9',
+          'cache-control': 'no-cache',
+          pragma: 'no-cache',
+        },
+      },
+    );
+
+    if (response.status !== 200) {
+      throw new Error(`Failed to fetch API key: HTTP ${response.status} - ${response.statusText}`);
     }
-    console.error(t('api.key.error'));
-    return '';
+
+    const { code, data } = response.data;
+
+    // TODO: Need to investigate API error codes and their meanings
+    // If you know about the API documentation, could you give me the reference link?
+    // I'll improve error handling once we have better understanding of possible error cases
+    if (code !== 0) {
+      throw new Error(
+        `API key retrieval failed with code ${code}: ${JSON.stringify(response.data)}`,
+      );
+    }
+
+    return data.api_key;
   } catch (error) {
-    console.error(t('api.key.request.error'), error);
-    return '';
+    console.error(t('api.key.error'), error);
+    return null;
   }
 }
 
@@ -74,7 +88,6 @@ export function showVersion() {
 /**
  * Display directory structure.
  * 显示目录结构。
- * 디렉토리 구조를 표시합니다.
  */
 export function showDirectoryPath(argv: CliOptions) {
   const pathToShow = path.resolve(argv.path);
@@ -83,7 +96,6 @@ export function showDirectoryPath(argv: CliOptions) {
 
   // Create file filter based on user input
   // 根据用户输入创建文件过滤器
-  // 파일 필터 생성
   const fileFilter = argv['file-filter']
     ? (filename: string) => {
         const extensions = (argv['file-filter'] ?? '')
