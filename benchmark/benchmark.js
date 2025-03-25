@@ -115,7 +115,7 @@ export async function runBenchmark(model, testCase) {
     fs.writeFileSync(inputFile, testCase.content, 'utf8');
     fs.writeFileSync(outputFile, '', 'utf8');
     // 构建命令
-    const cmd = `node "${path.resolve(__dirname, '../dist/index.js')}" --input "${inputFile}" --output "${outputFile}" --language "${testCase.targetLanguage}" --model "${model.name}" --log`;
+    const cmd = `node "${path.resolve(__dirname, '../dist/index.js')}" --input "${inputFile}" --output "${outputFile}" --language "${testCase.targetLanguage}" --model "${model.name}" --api-key "${process.env.OPENAI_API_KEY}" --openai-url "${process.env.OPENAI_BASE_URL}/chat/completions" --log`;
 
     const { stdout, stderr } = await execAsync(cmd);
 

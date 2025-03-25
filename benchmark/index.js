@@ -72,7 +72,7 @@ async function runBenchmarkWithInterval(iterations = 10, intervalMs = 1000) {
   console.log(`加载了${testModels.length}个模型`);
 
   // 设置并发执行的worker数量
-  const maxWorkers = 20;
+  const maxWorkers = 35;
 
   for (let i = 0; i < iterations; i++) {
     // 将模型列表分成多个批次
