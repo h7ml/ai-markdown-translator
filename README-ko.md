@@ -14,13 +14,13 @@
 
 [English](README.md) | [中文](README-zh.md) | [한국어](README-ko.md)
 
-`ai-markdown-translator`는 OpenAI의 언어 모델을 사용하여 마크다운 파일을 한 언어에서 다른 언어로 번역하는 명령줄 도구입니다. 콘텐츠를 번역하는 동안 마크다운 구문을 유지합니다.
+`ai-markdown-translator`는 OpenAI의 언어 모델을 사용하여 마크다운 파일을 한 언어에서 다른 언어로 번역하는 CLI 도구입니다. 콘텐츠를 번역하는 동안 마크다운 구문을 유지합니다.
 
 ## 기능
 
 - OpenAI의 모델이 지원하는 모든 언어로 마크다운 파일 번역
 - 번역 중 마크다운 구문 유지
-- 재귀 디렉토리 번역 지원
+- 재귀적 디렉토리 번역 지원
 - 실패한 번역에 대한 자동 재시도 메커니즘
 - 포괄적인 로깅 시스템
 - 디렉토리 구조 시각화
@@ -57,7 +57,7 @@ npm run build
 - `format`: `src` 디렉토리의 다양한 파일 유형에 대해 Prettier를 사용하여 코드를 포맷합니다.
 - `format:check`: `src` 디렉토리의 다양한 파일 유형에 대한 코드 포맷을 변경하지 않고 확인합니다.
 - `postbuild`: 컴파일된 `index.js` 파일을 실행 가능하게 만듭니다.
-- `changelog`: 관행적인 커밋 기반의 변경 로그를 생성합니다.
+- `changelog`: 표준화된 커밋 기반의 변경 로그를 생성합니다.
 - `version`: 버전을 업데이트하고 커밋을 위해 스테이징합니다.
 - `test`: 프로젝트를 빌드하고 테스트를 실행합니다.
 
@@ -91,15 +91,15 @@ npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/
 
 ## 옵션
 
-- `--input`, `-i`: 입력 마크다운 파일 또는 디렉토리 (`--url`의 대안). 번역할 마크다운 파일 또는 디렉토리의 경로를 지정할 수 있는 옵션입니다.
-- `--url`, `-u`: 번역할 마크다운 파일의 URL (`--input`의 대안). 번역할 마크다운 파일에 대한 직접 링크를 제공하는 옵션입니다.
+- `--input`, `-i`: 입력 마크다운 파일 또는 디렉토리 (`--url`로 대체 가능). 번역할 마크다운 파일 또는 디렉토리의 경로를 지정할 수 있는 옵션입니다.
+- `--url`, `-u`: 번역할 마크다운 파일의 URL (`--input`로 대체 가능). 번역할 마크다운 파일에 대한 직접 링크를 제공하는 옵션입니다.
 - `--extension`, `-e`: 번역할 파일 확장자를 지정합니다 (예: `md`). 제공하지 않으면 모든 파일이 처리됩니다. 이 옵션은 확장자에 따라 번역할 파일을 필터링할 수 있습니다.
 - `--rename`: 파일 이름을 수정할지를 결정합니다. true일 경우 출력 파일 이름은 `<original-filename>-translated.<extension>`이 됩니다. 이 옵션은 번역된 파일 이름에 접미사를 추가할지 여부를 지정할 수 있습니다.
 - `--output`, `-o`: 출력 마크다운 파일 (제공되지 않으면 입력 파일 이름 기본값). 번역된 내용이 저장될 출력 파일 이름을 지정할 수 있는 옵션입니다.
 - `--language`, `-l`: 번역할 대상 언어 (필수). 마크다운 내용을 번역할 언어를 지정하는 옵션입니다.
 - `--openai-url`: OpenAI API URL(기본값: `OPENAI_URL` 환경 변수 사용). 이 옵션을 사용하면 필요한 경우 OpenAI API에 대한 사용자 지정 URL을 지정할 수 있습니다.
 - `--api-key`: OpenAI API 키(기본값: `API_KEY` 환경 변수 사용). 이 옵션은 인증을 위해 OpenAI API 키를 제공하는 데 사용됩니다.
-- `--model`: 사용할 OpenAI 모델(기본값: `MODEL` 환경 변수 또는 `gpt-3.5-turbo` 사용). 이 옵션을 사용하면 번역에 사용할 OpenAI 모델을 지정할 수 있습니다.
+- `--model`: 사용할 OpenAI 모델(기본값: `MODEL` 환경 변수 또는 `gpt-4o-mini` 사용). 이 옵션을 사용하면 번역에 사용할 OpenAI 모델을 지정할 수 있습니다.
 - `--api-type`: API 유형(선택: `'completions'`, `'responses'`, `'ollama'`, 기본값: `'completions'`).
 - `--ollama-url`: Ollama API URL(기본값: `OLLAMA_URL` 환경 변수 또는 `http://localhost:11434/api/chat` 사용).
 - `--ollama-model`: 사용할 Ollama 모델(기본값: `OLLAMA_MODEL` 환경 변수 또는 `llama3` 사용).
@@ -121,7 +121,7 @@ npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/
 
 - `OPENAI_URL`: OpenAI API의 URL.
 - `API_KEY`: OpenAI API 키.
-- `MODEL`: 사용할 OpenAI 모델(예: `'gpt-3.5-turbo'`).
+- `MODEL`: 사용할 OpenAI 모델(예: `'gpt-4o-mini'`).
 - `OLLAMA_URL`: Ollama API의 URL(기본값: `'http://localhost:11434/api/chat'`).
 - `OLLAMA_MODEL`: 사용할 Ollama 모델(기본값: `'llama3'`).
 - `API_TYPE`: 사용할 API 유형(선택: `'completions'`, `'responses'`, `'ollama'`).
@@ -130,55 +130,55 @@ npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/
 
 ## 예제
 
-1. **영어에서 스페인어로 마크다운 파일 번역하기:**
+1. **영어에서 스페인어로 번역하기:**
 
 ```bash
 npx ai-markdown-translator -i english.md -o spanish.md -l "Spanish"
 ```
 
-2. **특정 OpenAI 모델을 사용하여 번역하기:**
+2. **특정 OpenAI 모델을 지정:**
 
 ```bash
 npx ai-markdown-translator -i input.md -o output.md -l "French" --model "gpt-4"
 ```
 
-3. **사용자 정의 OpenAI URL 및 API 키로 번역하기:**
+3. **사용자 정의 OpenAI URL 및 API 키 지정:**
 
 ```bash
 npx ai-markdown-translator -i input.md -o output.md -l "German" --openai-url "https://api.302.ai/v1/chat/completions" --api-key "sk-302-api-key"
 ```
 
-4. **URL의 마크다운 내용을 번역하기:**
+4. **URL의 마크다운 번역:**
 
 ```bash
 npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/main/README.md -o output.md -l "Italian"
 ```
 
-5. **디렉토리의 모든 마크다운 파일을 번역하고 이름을 변경하기:**
+5. **지정된 디렉토리의 파일 모두 번역 후 이름 변경:**
 
 ```bash
 npx ai-markdown-translator -i ./markdown-files -l "Chinese" --rename
 ```
 
-6. **마크다운 파일을 번역하고 출력 파일 이름 지정하기:**
+6. **파일을 번역하고 출력 파일 이름 설정:**
 
 ```bash
 npx ai-markdown-translator -i example.md -o translated_example.md -l "Japanese"
 ```
 
-7. **로깅 및 재시도 옵션으로 번역하기:**
+7. **로깅 및 재시도 횟수 설정:**
 
 ```bash
 npx ai-markdown-translator -i ./docs -o ./translated -l "Chinese" --log --retry-count 5 --retry-delay 15
 ```
 
-8. **사용자 정의 로그 디렉토리로 번역하기:**
+8. **로그 파일 생성 위치 지정:**
 
 ```bash
 npx ai-markdown-translator -i input.md -o output.md -l "Japanese" --log --log-dir "./custom-logs"
 ```
 
-9. **모든 로깅 및 재시도 옵션으로 번역하기:**
+9. **모든 로깅 옵션 설정:**
 
 ```bash
 npx ai-markdown-translator -i ./markdown-files -l "French" \
@@ -227,7 +227,7 @@ npx ai-markdown-translator -i input.md -o output.md -l "중국어" --api-type "o
 
 ## Git 정보
 
-- **리포지토리**: [h7ml/ai-markdown-translator](https://github.com/h7ml/ai-markdown-translator)
+- **저장소**: [h7ml/ai-markdown-translator](https://github.com/h7ml/ai-markdown-translator)
 - **이슈**: [문제 보고하기](https://github.com/h7ml/ai-markdown-translator/issues)
 
 ## 버전 정보
