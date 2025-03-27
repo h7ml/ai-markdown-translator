@@ -27,18 +27,13 @@
   },
   "files": [
     "dist/**/*",
-    "src/**/*",
     "LICENSE",
-    "README.md",
-    "README-zh.md",
-    "CHANGELOG.md"
+    "*.md"
   ],
   "dependencies": {
-    "@types/glob": "^8.1.0",
     "axios": "^1.4.0",
     "dotenv": "^16.0.3",
     "glob": "^11.0.0",
-    "openai": "^4.89.0",
     "yargs": "^17.7.2"
   },
   "devDependencies": {
@@ -51,6 +46,7 @@
     "@rollup/plugin-typescript": "^12.1.2",
     "@tsconfig/node22": "^22.0.0",
     "@types/express": "^5.0.1",
+    "@types/glob": "^8.1.0",
     "@types/node": "^18.19.80",
     "@types/yargs": "^17.0.24",
     "@typescript-eslint/eslint-plugin": "^8.27.0",
