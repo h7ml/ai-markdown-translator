@@ -2,7 +2,12 @@ import axios from 'axios';
 import * as fs from 'fs';
 import path from 'path';
 
-import { DEFAULT_MODEL, DEFAULT_OLLAMA_MODEL, DEFAULT_OLLAMA_URL, DEFAULT_OPENAI_URL } from '../config/constants';
+import {
+  DEFAULT_MODEL,
+  DEFAULT_OLLAMA_MODEL,
+  DEFAULT_OLLAMA_URL,
+  DEFAULT_OPENAI_URL,
+} from '../config/constants';
 import { printDirectoryStructure } from '../services/file';
 import { CliOptions } from '../types/option';
 import { t } from '../utils/i18n';
@@ -11,8 +16,7 @@ import { isValidUrl } from '../utils/validator';
 // Set default values based on environment variables
 // 根据环境变量设置默认值
 // 환경 변수 기반 기본값 설정
-export async function setDefault(argv: any) {
-  // TODO: specify type
+export async function setDefault(argv: Record<string, unknown>) {
   const defaultApiKey = await getDefaultApiKey();
 
   argv['api-key'] = argv['api-key'] || process.env.API_KEY || defaultApiKey;
@@ -25,15 +29,14 @@ export async function setDefault(argv: any) {
 // Input validation function
 // 输入验证函数
 // 기본 동작 체크 함수
-export function checkArgument(argv: any) {
-  // TODO: specify type
+export function checkArgument(argv: Record<string, unknown>): boolean {
   if (!argv.input && !argv.url) {
     throw new Error(t('cli.input.file.required'));
   }
   if (argv.input && argv.url) {
     throw new Error(t('cli.input.mutually.exclusive'));
   }
-  if (argv.url && !isValidUrl(argv.url)) {
+  if (argv.url && !isValidUrl(argv.url as string)) {
     throw new Error(t('cli.url.invalid'));
   }
   return true;

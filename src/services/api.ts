@@ -39,11 +39,7 @@ export async function translateText(text: string, options: RuntimeOptions): Prom
   // Use Ollama API
   // Ollama API 사용
   if (options.apiType === 'ollama' && options.ollamaUrl) {
-    return translateTextWithOllama(
-      options.ollamaUrl,
-      options.directoryOptions, 
-      data
-    );
+    return translateTextWithOllama(options.ollamaUrl, options.directoryOptions, data);
   }
 
   // 使用OpenAI官方API

@@ -52,7 +52,7 @@ export function applyOptions(yargs: yargs.Argv, locale: SupportedLocale) {
     yargs.option(key, {
       alias: option.alias,
       description,
-      type: option.type as any,
+      type: option.type as 'string' | 'number' | 'boolean' | 'array',
       default: option.default,
       demandOption: option.demandOption,
       choices: option.choices,
