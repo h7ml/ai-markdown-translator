@@ -5,7 +5,11 @@ import { OFFICIAL_OPENAI_URL_V1, PROMPTS_DIR } from '../config/constants';
 import { ChatData } from '../types/common';
 import { RuntimeOptions } from '../types/option';
 import { t } from '../utils/i18n';
-import { translateTextWithCompletionsModule, translateTextWithRestApi } from './openai';
+import {
+  translateTextWithCompletionsModule,
+  translateTextWithOllama,
+  translateTextWithRestApi,
+} from './openai';
 
 export async function translateText(text: string, options: RuntimeOptions): Promise<string | null> {
   const prompt = `将以下文本翻译成${options.language}。请保持格式不变:\n\n${text}`;
@@ -19,7 +23,7 @@ export async function translateText(text: string, options: RuntimeOptions): Prom
   }
 
   const data: ChatData = {
-    model: options.model,
+    model: options.apiType === 'ollama' ? options.ollamaModel || 'llama3' : options.model,
     messages: [
       { role: 'system', content: systemContent },
       {
@@ -31,12 +35,27 @@ export async function translateText(text: string, options: RuntimeOptions): Prom
     ],
   };
 
-  if (options.openaiUrl.includes(OFFICIAL_OPENAI_URL_V1)) {
-    // if (options.apiType === 'completions') {
-    return translateTextWithCompletionsModule(options.apiKey, options.directoryOptions, data);
-    // }
+  // 使用Ollama API
+  // Use Ollama API
+  // Ollama API 사용
+  if (options.apiType === 'ollama' && options.ollamaUrl) {
+    return translateTextWithOllama(
+      options.ollamaUrl,
+      options.directoryOptions, 
+      data
+    );
   }
 
+  // 使用OpenAI官方API
+  // Use OpenAI official API
+  // OpenAI 공식 API 사용
+  if (options.openaiUrl.includes(OFFICIAL_OPENAI_URL_V1)) {
+    return translateTextWithCompletionsModule(options.apiKey, options.directoryOptions, data);
+  }
+
+  // 使用第三方API
+  // Use third-party API
+  // 제3자 API 사용
   return translateTextWithRestApi(
     options.apiKey,
     options.openaiUrl,

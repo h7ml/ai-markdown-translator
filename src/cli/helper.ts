@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as fs from 'fs';
 import path from 'path';
 
-import { DEFAULT_MODEL, DEFAULT_OPENAI_URL } from '../config/constants';
+import { DEFAULT_MODEL, DEFAULT_OLLAMA_MODEL, DEFAULT_OLLAMA_URL, DEFAULT_OPENAI_URL } from '../config/constants';
 import { printDirectoryStructure } from '../services/file';
 import { CliOptions } from '../types/option';
 import { t } from '../utils/i18n';
@@ -18,6 +18,8 @@ export async function setDefault(argv: any) {
   argv['api-key'] = argv['api-key'] || process.env.API_KEY || defaultApiKey;
   argv['openai-url'] = argv['openai-url'] || process.env.OPENAI_URL || DEFAULT_OPENAI_URL;
   argv['model'] = argv['model'] || process.env.MODEL || DEFAULT_MODEL;
+  argv['ollama-url'] = argv['ollama-url'] || process.env.OLLAMA_URL || DEFAULT_OLLAMA_URL;
+  argv['ollama-model'] = argv['ollama-model'] || process.env.OLLAMA_MODEL || DEFAULT_OLLAMA_MODEL;
 }
 
 // Input validation function

@@ -97,9 +97,12 @@ npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/
 - `--rename`: 파일 이름을 수정할지를 결정합니다. true일 경우 출력 파일 이름은 `<original-filename>-translated.<extension>`이 됩니다. 이 옵션은 번역된 파일 이름에 접미사를 추가할지 여부를 지정할 수 있습니다.
 - `--output`, `-o`: 출력 마크다운 파일 (제공되지 않으면 입력 파일 이름 기본값). 번역된 내용이 저장될 출력 파일 이름을 지정할 수 있는 옵션입니다.
 - `--language`, `-l`: 번역할 대상 언어 (필수). 마크다운 내용을 번역할 언어를 지정하는 옵션입니다.
-- `--openai-url`: OpenAI API URL (기본값: `OPENAI_URL` 환경 변수 사용). 필요에 따라 OpenAI API의 사용자 정의 URL을 지정할 수 있는 옵션입니다.
-- `--api-key`: OpenAI API 키 (기본값: `API_KEY` 환경 변수 사용). 인증을 위해 OpenAI API 키를 제공하는 옵션입니다.
-- `--model`: 사용할 OpenAI 모델 (기본값: `MODEL` 환경 변수 또는 `gpt-3.5-turbo` 사용). 번역에 사용할 OpenAI 모델을 지정할 수 있는 옵션입니다.
+- `--openai-url`: OpenAI API URL(기본값: `OPENAI_URL` 환경 변수 사용). 이 옵션을 사용하면 필요한 경우 OpenAI API에 대한 사용자 지정 URL을 지정할 수 있습니다.
+- `--api-key`: OpenAI API 키(기본값: `API_KEY` 환경 변수 사용). 이 옵션은 인증을 위해 OpenAI API 키를 제공하는 데 사용됩니다.
+- `--model`: 사용할 OpenAI 모델(기본값: `MODEL` 환경 변수 또는 `gpt-3.5-turbo` 사용). 이 옵션을 사용하면 번역에 사용할 OpenAI 모델을 지정할 수 있습니다.
+- `--api-type`: API 유형(선택: `'completions'`, `'responses'`, `'ollama'`, 기본값: `'completions'`).
+- `--ollama-url`: Ollama API URL(기본값: `OLLAMA_URL` 환경 변수 또는 `http://localhost:11434/api/chat` 사용).
+- `--ollama-model`: 사용할 Ollama 모델(기본값: `OLLAMA_MODEL` 환경 변수 또는 `llama3` 사용).
 - `--help`, `-h`: 도움말 보기. 명령줄 도구에 대한 도움말 정보를 표시하는 옵션입니다.
 - `--show-version`, `-v`: 버전 보기. 도구의 현재 버전을 표시하는 옵션입니다.
 - `--log`: 로깅 활성화 (기본값: false). 성공 및 실패 정보를 포함하여 번역 프로세스의 자세한 로깅을 활성화합니다.
@@ -114,13 +117,16 @@ npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/
 
 ## 환경 변수
 
-명령줄 인수 대신 다음 환경 변수를 설정할 수 있습니다:
+다음 환경 변수를 명령행 인수 대신 설정할 수 있습니다:
 
 - `OPENAI_URL`: OpenAI API의 URL.
 - `API_KEY`: OpenAI API 키.
-- `MODEL`: 사용할 OpenAI 모델 (예: `'gpt-3.5-turbo'`).
+- `MODEL`: 사용할 OpenAI 모델(예: `'gpt-3.5-turbo'`).
+- `OLLAMA_URL`: Ollama API의 URL(기본값: `'http://localhost:11434/api/chat'`).
+- `OLLAMA_MODEL`: 사용할 Ollama 모델(기본값: `'llama3'`).
+- `API_TYPE`: 사용할 API 유형(선택: `'completions'`, `'responses'`, `'ollama'`).
 
-이들은 프로젝트 루트의 `.env` 파일에 설정하거나 셸에서 내보낼 수 있습니다.
+이러한 변수는 프로젝트 루트의 `.env` 파일에 설정하거나 쉘에서 내보낼 수 있습니다.
 
 ## 예제
 
@@ -183,7 +189,7 @@ npx ai-markdown-translator -i ./markdown-files -l "French" \
   --retry-delay 5
 ```
 
-10. **디렉토리 구조 표시하기:**
+10. **디렉토리 구조 표시:**
 
 ```bash
 npx ai-markdown-translator -p ./src
@@ -203,24 +209,16 @@ npx ai-markdown-translator -p ./src
 └── 📄 index.ts
 ```
 
-11. **자동 재시도 및 로깅으로 번역하기:**
+11. **Ollama를 사용한 번역:**
 
 ```bash
-npx ai-markdown-translator -i ./docs -o ./translated -l "Chinese" \
-  --log \
-  --retry-count 5 \
-  --retry-delay 15 \
-  --log-file "./logs/translation.log"
+npx ai-markdown-translator -i input.md -o output.md -l "독일어" --api-type "ollama" --ollama-url "http://localhost:11434/api/chat" --ollama-model "llama3"
 ```
 
-12. **실패 추적으로 디렉토리 번역하기:**
+12. **사용자 지정 Ollama 모델을 사용한 번역:**
 
 ```bash
-npx ai-markdown-translator -i ./markdown-files -o ./output -l "Japanese" \
-  --log \
-  --log-dir "./logs" \
-  --retry-count 3 \
-  --retry-delay 10
+npx ai-markdown-translator -i input.md -o output.md -l "중국어" --api-type "ollama" --ollama-model "llama3:latest"
 ```
 
 ## 라이센스

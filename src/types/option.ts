@@ -42,6 +42,8 @@ export interface CliOptions {
   'show-hidden': boolean;
   'max-depth': number;
   'api-type': ApiType;
+  'ollama-url': string;
+  'ollama-model': string;
 }
 
 export interface DirectoryPrintOptions {
@@ -64,6 +66,8 @@ export interface RuntimeOptions {
   rename?: string;
   directoryOptions: DirectoryOptions;
   apiType: ApiType;
+  ollamaUrl?: string;
+  ollamaModel?: string;
 }
 
 export interface DirectoryOptions {

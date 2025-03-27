@@ -119,6 +119,9 @@ You can set the following environment variables instead of passing them as comma
 - `OPENAI_URL`: The URL for the OpenAI API.
 - `API_KEY`: Your OpenAI API key.
 - `MODEL`: The OpenAI model to use (e.g., `'gpt-3.5-turbo'`).
+- `OLLAMA_URL`: The URL for the Ollama API (default: `'http://localhost:11434/api/chat'`).
+- `OLLAMA_MODEL`: The Ollama model to use (default: `'llama3'`).
+- `API_TYPE`: The API type to use (choices: `'completions'`, `'responses'`, `'ollama'`).
 
 You can set these in a `.env` file in the project root or export them in your shell.
 
@@ -203,24 +206,16 @@ Output example:
 └── 📄 index.ts
 ```
 
-11. **Translate with automatic retry and logging:**
+11. **Translate using Ollama:**
 
 ```bash
-npx ai-markdown-translator -i ./docs -o ./translated -l "Chinese" \
-  --log \
-  --retry-count 5 \
-  --retry-delay 15 \
-  --log-file "./logs/translation.log"
+npx ai-markdown-translator -i input.md -o output.md -l "German" --api-type "ollama" --ollama-url "http://localhost:11434/api/chat" --ollama-model "llama3"
 ```
 
-12. **Translate directory with failure tracking:**
+12. **Translate using Ollama with custom model:**
 
 ```bash
-npx ai-markdown-translator -i ./markdown-files -o ./output -l "Japanese" \
-  --log \
-  --log-dir "./logs" \
-  --retry-count 3 \
-  --retry-delay 10
+npx ai-markdown-translator -i input.md -o output.md -l "Chinese" --api-type "ollama" --ollama-model "llama3:latest"
 ```
 
 ## License

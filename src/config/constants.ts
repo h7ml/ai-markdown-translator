@@ -17,4 +17,6 @@ export const FAIL_LOG = path.resolve(DEFAULT_LOG_DIR, 'translator-err.log');
 
 export const DEFAULT_OPENAI_URL = 'https://api.302.ai/v1/chat/completions';
 export const OFFICIAL_OPENAI_URL_V1 = 'https://api.openai.com/v1';
+export const DEFAULT_OLLAMA_URL = 'http://localhost:11434/api/chat';
 export const DEFAULT_MODEL = 'gpt-4o-mini';
+export const DEFAULT_OLLAMA_MODEL = 'llama3';

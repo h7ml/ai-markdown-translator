@@ -88,6 +88,49 @@ export async function translateTextWithRestApi(
   }, directoryOptions);
 }
 
+export async function translateTextWithOllama(
+  ollamaUrl: string,
+  directoryOptions: DirectoryOptions,
+  data: {
+    model: string;
+    messages: { role: string; content: string }[];
+  },
+): Promise<string | null> {
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+
+  // 转换消息格式以适应Ollama API
+  // Convert message format to fit Ollama API
+  // Ollama API에 맞게 메시지 형식 변환
+  const ollamaData = {
+    model: data.model,
+    messages: data.messages,
+    stream: false,
+  };
+
+  return withRetry(async () => {
+    const response = await axios.post(ollamaUrl, ollamaData, { headers });
+
+    if (response.status === 200) {
+      if (response.data.message && response.data.message.content) {
+        console.log('Translation successful');
+        return response.data.message.content;
+      } else {
+        console.log(
+          'API response structure invalid:',
+          JSON.stringify(response.data).substring(0, 200),
+        );
+        throw new Error(t('api.translation.failed'));
+      }
+    }
+
+    console.log('API response invalid:', JSON.stringify(response.data).substring(0, 200));
+    const errorMsg = t('api.request.failed', response.status, response.statusText);
+    throw new Error(errorMsg);
+  }, directoryOptions);
+}
+
 async function handleError(error: unknown, directoryOptions: DirectoryOptions, attempt: number) {
   const errorMsg = t(
     'api.error.retry',

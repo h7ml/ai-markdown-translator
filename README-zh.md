@@ -102,11 +102,17 @@ npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/
 
 - `--language`, `-l`：翻译的目标语言（必需）。此选项指定将 Markdown 内容翻译成哪种语言。
 
-- `--openai-url`：OpenAI API 的 URL（默认：使用 `OPENAI_URL` 环境变量）。此选项允许你在需要时指定自定义的 OpenAI API URL。
+- `--openai-url`：OpenAI API URL（默认：使用`OPENAI_URL`环境变量）。此选项允许您在需要时指定OpenAI API的自定义URL。
 
-- `--api-key`：OpenAI API 密钥（默认：使用 `API_KEY` 环境变量）。此选项用于提供你的 OpenAI API 密钥以进行身份验证。
+- `--api-key`：OpenAI API密钥（默认：使用`API_KEY`环境变量）。此选项用于提供您的OpenAI API密钥进行身份验证。
 
-- `--model`：使用的 OpenAI 模型（默认：使用 `MODEL` 环境变量或 `gpt-3.5-turbo`）。此选项允许你指定用于翻译的 OpenAI 模型。
+- `--model`：要使用的OpenAI模型（默认：使用`MODEL`环境变量或`gpt-3.5-turbo`）。此选项允许您指定用于翻译的OpenAI模型。
+
+- `--api-type`：API类型（选项：`'completions'`，`'responses'`，`'ollama'`，默认：`'completions'`）。
+
+- `--ollama-url`：Ollama API URL（默认：使用`OLLAMA_URL`环境变量或`http://localhost:11434/api/chat`）。
+
+- `--ollama-model`：要使用的Ollama模型（默认：使用`OLLAMA_MODEL`环境变量或`llama3`）。
 
 - `--help`, `-h`：显示帮助信息。此选项显示命令行工具的帮助信息。
 
@@ -130,9 +136,12 @@ npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/
 
 你可以设置以下环境变量来代替命令行参数：
 
-- `OPENAI_URL`：OpenAI API 的 URL。
-- `API_KEY`：你的 OpenAI API 密钥。
-- `MODEL`：使用的 OpenAI 模型（例如，`'gpt-3.5-turbo'`）。
+- `OPENAI_URL`：OpenAI API的URL。
+- `API_KEY`：您的OpenAI API密钥。
+- `MODEL`：要使用的OpenAI模型（例如，`'gpt-3.5-turbo'`）。
+- `OLLAMA_URL`：Ollama API的URL（默认：`'http://localhost:11434/api/chat'`）。
+- `OLLAMA_MODEL`：要使用的Ollama模型（默认：`'llama3'`）。
+- `API_TYPE`：要使用的API类型（选项：`'completions'`，`'responses'`，`'ollama'`）。
 
 你可以在项目根目录下的 `.env` 文件中设置这些变量，或者在 shell 中导出它们。
 
@@ -217,24 +226,16 @@ npx ai-markdown-translator -p ./src
 └── 📄 index.ts
 ```
 
-11. **使用自动重试和日志记录进行翻译：**
+11. **使用Ollama进行翻译：**
 
 ```bash
-npx ai-markdown-translator -i ./docs -o ./translated -l "Chinese" \
-  --log \
-  --retry-count 5 \
-  --retry-delay 15 \
-  --log-file "./logs/translation.log"
+npx ai-markdown-translator -i input.md -o output.md -l "德语" --api-type "ollama" --ollama-url "http://localhost:11434/api/chat" --ollama-model "llama3"
 ```
 
-12. **翻译目录并进行故障跟踪：**
+12. **使用自定义Ollama模型进行翻译：**
 
 ```bash
-npx ai-markdown-translator -i ./markdown-files -o ./output -l "Japanese" \
-  --log \
-  --log-dir "./logs" \
-  --retry-count 3 \
-  --retry-delay 10
+npx ai-markdown-translator -i input.md -o output.md -l "中文" --api-type "ollama" --ollama-model "llama3:latest"
 ```
 
 ## 许可证

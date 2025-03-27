@@ -19,4 +19,4 @@ export interface ChatData {
 // OpenAI는 'system' 대신 'developer' 역할 사용을 권장하지만, 현재 LLM 표준과의 호환성을 위해 'system'을 유지합니다.
 // 향후 호환성을 위해 'developer' 역할도 포함했습니다.
 
-export type ApiType = 'completions' | 'responses'; // add 'assistants' later
+export type ApiType = 'completions' | 'responses' | 'ollama'; // add 'assistants' later

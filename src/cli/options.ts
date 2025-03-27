@@ -86,14 +86,13 @@ export const OPTIONS: Record<keyof CliOptions, OptionDefinition> = {
   },
   'api-type': {
     description: {
-      zh: 'OpenAI API 类型 (completions/responses)',
-      en: 'OpenAI API type (completions/responses)',
-      ko: 'OpenAI API 타입 (completions/responses)',
+      zh: 'API 类型 (completions/responses/ollama)',
+      en: 'API type (completions/responses/ollama)',
+      ko: 'API 타입 (completions/responses/ollama)',
     },
     type: 'string',
-    choices: ['completions', 'responses'],
+    choices: ['completions', 'responses', 'ollama'],
     default: 'completions',
-    disabled: true,
   },
   'show-version': {
     alias: 'v',
@@ -212,6 +211,22 @@ export const OPTIONS: Record<keyof CliOptions, OptionDefinition> = {
     choices: ['en', 'zh', 'ko'],
     default: 'zh',
   },
+  'ollama-url': {
+    description: {
+      zh: 'Ollama API 网址',
+      en: 'Ollama API URL',
+      ko: 'Ollama API URL',
+    },
+    type: 'string',
+  },
+  'ollama-model': {
+    description: {
+      zh: '使用的Ollama模型',
+      en: 'Ollama model to use',
+      ko: '사용할 Ollama 모델',
+    },
+    type: 'string',
+  },
 };
 
 /**
@@ -242,5 +257,7 @@ export function prepareOptions(argv: CliOptions): RuntimeOptions {
     extension: argv.extension || null,
     rename: argv.rename || undefined,
     directoryOptions,
+    ollamaUrl: argv['ollama-url'],
+    ollamaModel: argv['ollama-model'],
   };
 }
