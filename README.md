@@ -99,7 +99,7 @@ npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/
 - `--language`, `-l`: Target language for translation (required). This option specifies the language into which you want the Markdown content to be translated.
 - `--openai-url`: OpenAI API URL (default: uses `OPENAI_URL` environment variable). This option allows you to specify a custom URL for the OpenAI API if needed.
 - `--api-key`: OpenAI API Key (default: uses `API_KEY` environment variable). This option is used to provide your OpenAI API key for authentication.
-- `--model`: OpenAI Model to use (default: uses `MODEL` environment variable or `gpt-3.5-turbo`). This option allows you to specify which OpenAI model to use for translation.
+- `--model`: OpenAI Model to use (default: uses `MODEL` environment variable or `gpt-4o-mini`). This option allows you to specify which OpenAI model to use for translation.
 - `--help`, `-h`: Show help. This option displays the help information for the command-line tool.
 - `--show-version`, `-v`: Show version. This option displays the current version of the tool.
 - `--log`: Enable logging (default: false). Enables detailed logging of the translation process, including success and failure information.
@@ -118,7 +118,7 @@ You can set the following environment variables instead of passing them as comma
 
 - `OPENAI_URL`: The URL for the OpenAI API.
 - `API_KEY`: Your OpenAI API key.
-- `MODEL`: The OpenAI model to use (e.g., `'gpt-3.5-turbo'`).
+- `MODEL`: The OpenAI model to use (e.g., `'gpt-4o-mini'`).
 - `OLLAMA_URL`: The URL for the Ollama API (default: `'http://localhost:11434/api/chat'`).
 - `OLLAMA_MODEL`: The Ollama model to use (default: `'llama3'`).
 - `API_TYPE`: The API type to use (choices: `'completions'`, `'responses'`, `'ollama'`).
@@ -127,19 +127,19 @@ You can set these in a `.env` file in the project root or export them in your sh
 
 ## Examples
 
-1. **Translate a Markdown file from English to Spanish:**
+1. **Translate from English to Spanish:**
 
 ```bash
 npx ai-markdown-translator -i english.md -o spanish.md -l "Spanish"
 ```
 
-2. **Translate using a specific OpenAI model:**
+2. **Using a specific OpenAI model:**
 
 ```bash
 npx ai-markdown-translator -i input.md -o output.md -l "French" --model "gpt-4"
 ```
 
-3. **Translate with custom OpenAI URL and API key:**
+3. **Using custom OpenAI URL and API key:**
 
 ```bash
 npx ai-markdown-translator -i input.md -o output.md -l "German" --openai-url "https://api.302.ai/v1/chat/completions" --api-key "sk-302-api-key"
@@ -151,31 +151,31 @@ npx ai-markdown-translator -i input.md -o output.md -l "German" --openai-url "ht
 npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/main/README.md -o output.md -l "Italian"
 ```
 
-5. **Translate all Markdown files in a directory and rename them:**
+5. **Translate all files in a directory and rename them:**
 
 ```bash
 npx ai-markdown-translator -i ./markdown-files -l "Chinese" --rename
 ```
 
-6. **Translate a Markdown file and specify the output file name:**
+6. **Translate a file and specifying the output file name:**
 
 ```bash
 npx ai-markdown-translator -i example.md -o translated_example.md -l "Japanese"
 ```
 
-7. **Translate with logging and retry options:**
+7. **logging and specify retry options:**
 
 ```bash
 npx ai-markdown-translator -i ./docs -o ./translated -l "Chinese" --log --retry-count 5 --retry-delay 15
 ```
 
-8. **Translate with custom log directory:**
+8. **Specifying custom log directory:**
 
 ```bash
 npx ai-markdown-translator -i input.md -o output.md -l "Japanese" --log --log-dir "./custom-logs"
 ```
 
-9. **Translate with all logging and retry options:**
+9. **Using all option about logging:**
 
 ```bash
 npx ai-markdown-translator -i ./markdown-files -l "French" \

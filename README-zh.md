@@ -106,7 +106,7 @@ npx ai-markdown-translator -u https://gitee.com/h7ml/ai-markdown-translator/raw/
 
 - `--api-key`：OpenAI API密钥（默认：使用`API_KEY`环境变量）。此选项用于提供您的OpenAI API密钥进行身份验证。
 
-- `--model`：要使用的OpenAI模型（默认：使用`MODEL`环境变量或`gpt-3.5-turbo`）。此选项允许您指定用于翻译的OpenAI模型。
+- `--model`：要使用的OpenAI模型（默认：使用`MODEL`环境变量或`gpt-4o-mini`）。此选项允许您指定用于翻译的OpenAI模型。
 
 - `--api-type`：API类型（选项：`'completions'`，`'responses'`，`'ollama'`，默认：`'completions'`）。
 
