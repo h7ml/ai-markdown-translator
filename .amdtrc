@@ -1,0 +1,23 @@
+{
+    "input": "./src/prompts",
+    "extension": "md",
+    "rename": true,
+    "output": "./prompts_translated",
+    "language": "ko",
+    "openaiUrl": "https://api.302.ai/v1/chat/completions",
+    "apiKey": "",
+    "model": "gpt-4o-mini",
+    "apiType": "completions",
+    "retry": true,
+    "log": true,
+    "logFile": "./logs/translation.log",
+    "logDir": "./logs",
+    "retryCount": 5,
+    "retryDelay": 5,
+    "path": ".",
+    "showPath": true,
+    "showHidden": false,
+    "maxDepth": 5,
+    "fileFilter": ".ts,.txt",
+    "locale": "en"
+}
