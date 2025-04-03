@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as fs from 'fs';
 import path from 'path';
+import { cosmiconfig } from 'cosmiconfig';
 
 import { DEFAULT_MODEL, DEFAULT_OPENAI_URL } from '../config/constants';
 import { printDirectoryStructure } from '../services/file';
@@ -8,15 +9,45 @@ import { CliOptions } from '../types/option';
 import { t } from '../utils/i18n';
 import { isValidUrl } from '../utils/validator';
 
-// Set default values based on environment variables
-// 根据环境变量设置默认值
+// Set default values based on environment variables and configuration file
+// 根据环境变量和配置文件设置默认值
 export async function setDefault(argv: any) {
   // TODO: specify type
   const defaultApiKey = await getDefaultApiKey();
 
-  argv['api-key'] = argv['api-key'] || process.env.API_KEY || defaultApiKey;
-  argv['openai-url'] = argv['openai-url'] || process.env.OPENAI_URL || DEFAULT_OPENAI_URL;
-  argv['model'] = argv['model'] || process.env.MODEL || DEFAULT_MODEL;
+  // Load configuration from .amdtrc file using cosmiconfig
+  const explorer = cosmiconfig('amdt');
+  const result = await explorer.search();
+  const config = result?.config || {};
+
+  // Convert camelCase keys back to kebab-case for CLI options
+  const cliConfig: Record<string, any> = {};
+  if (config) {
+    Object.entries(config).forEach(([key, value]) => {
+      // Convert camelCase to kebab-case (e.g., logFile -> log-file)
+      const cliKey = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+      cliConfig[cliKey] = value;
+    });
+  }
+
+  // Apply configuration in the following order of precedence:
+  // 1. Command line arguments (already in argv)
+  // 2. Environment variables
+  // 3. Configuration file (.amdtrc)
+  // 4. Default values
+
+  argv['api-key'] = argv['api-key'] || process.env.API_KEY || cliConfig['api-key'] || defaultApiKey;
+  argv['openai-url'] =
+    argv['openai-url'] || process.env.OPENAI_URL || cliConfig['openai-url'] || DEFAULT_OPENAI_URL;
+  argv['model'] = argv['model'] || process.env.MODEL || cliConfig['model'] || DEFAULT_MODEL;
+
+  // Apply other options from config file if not specified in command line
+  Object.entries(cliConfig).forEach(([key, value]) => {
+    // Only set if not already specified by command line arguments
+    if (argv[key] === undefined) {
+      argv[key] = value;
+    }
+  });
 }
 
 // Input validation function

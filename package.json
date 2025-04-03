@@ -19,8 +19,12 @@
     "release:patch": "release-it patch --ci",
     "release:minor": "release-it minor --ci",
     "release:major": "release-it major --ci",
-    "test:ko": "npm run build && node dist/index.js -i README.md -o README-ko.md -l Korean --locale ko --log",
-    "test:ko-prompt": "npm run build && node dist/index.js -i src/prompts/system.md -o prompts_translated/system-ko.md -l Korean --locale ko --log"
+    "test:ko": "npm run build && node dist/index.js",
+    "test:ko-prompt": "npm run build && node dist/index.js -i src/prompts/system.md -o prompts_translated/system-ko.md -l Korean --locale ko --log",
+    "generate-config": "ts-node src/cli/generate-config.ts",
+    "generate-config:default": "ts-node src/cli/generate-config.ts --default",
+    "generate-config:custom": "ts-node src/cli/generate-config.ts --output=./.amdtrc",
+    "test:cosmi": "ts-node src/cli/test-config.ts"
   },
   "bin": {
     "ai-markdown-translator": "dist/index.js"
