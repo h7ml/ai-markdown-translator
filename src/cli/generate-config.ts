@@ -1,87 +1,103 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { OPTIONS } from './options';
+import { CliOptions } from '../types/option';
+import { ApiType } from '../types/common';
+import { SupportedLocale } from '../config/i18n';
+
+type RequiredConfig = Required<
+  Omit<CliOptions, 'input' | 'url' | 'output' | 'extension' | 'file-filter'>
+>;
+
+type Config = RequiredConfig & {
+  input?: string;
+  url?: string;
+  output?: string;
+  extension?: string;
+  'file-filter'?: string;
+};
+
+type ConfigValue = string | number | boolean | null;
 
 /**
  * Converts option definitions to JSON configuration.
  * Creates a configuration file based on CLI option definitions, their default values and types.
  */
-function optionsToConfig(customValues: Record<string, any> = {}): Record<string, any> {
-  const config: Record<string, any> = {};
+function optionsToConfig(customValues: Partial<Config> = {}): Config {
+  const tempConfig: Partial<Record<keyof Config, ConfigValue>> = {};
 
   // Process all items in the OPTIONS object
   Object.entries(OPTIONS).forEach(([key, option]) => {
     // Skip disabled options
     if (option.disabled) return;
 
-    // Convert kebab-case to camelCase (e.g., 'log-file' -> 'logFile')
-    const configKey = key.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+    const configKey = key as keyof Config;
 
     // Use custom values if available, otherwise use default values
-    if (configKey in customValues) {
-      config[configKey] = customValues[configKey];
-    } else if ('default' in option) {
-      config[configKey] = option.default;
+    if (configKey in customValues && customValues[configKey] !== undefined) {
+      tempConfig[configKey] = customValues[configKey] as ConfigValue;
+    } else if ('default' in option && option.default !== undefined) {
+      tempConfig[configKey] = option.default as ConfigValue;
     } else {
       // Set default values based on type
       switch (option.type) {
         case 'string':
-          config[configKey] = '';
+          tempConfig[configKey] = '';
           break;
         case 'boolean':
-          config[configKey] = false;
+          tempConfig[configKey] = false;
           break;
         case 'number':
-          config[configKey] = 0;
+          tempConfig[configKey] = 0;
           break;
         default:
-          config[configKey] = null;
+          tempConfig[configKey] = null;
       }
     }
   });
+
+  // Ensure all required fields are present with their default values
+  const config: Config = {
+    language: String(tempConfig.language || ''),
+    'openai-url': String(tempConfig['openai-url'] || ''),
+    'api-key': String(tempConfig['api-key'] || ''),
+    'show-version': String(tempConfig['show-version'] || ''),
+    retry: Boolean(tempConfig.retry ?? false),
+    model: String(tempConfig.model || ''),
+    rename: tempConfig.rename === null ? null : String(tempConfig.rename || ''),
+    log: Boolean(tempConfig.log ?? false),
+    'log-file': String(tempConfig['log-file'] || ''),
+    'log-dir': String(tempConfig['log-dir'] || ''),
+    'retry-count': Number(tempConfig['retry-count'] ?? 0),
+    'retry-delay': Number(tempConfig['retry-delay'] ?? 0),
+    path: String(tempConfig.path || ''),
+    'show-path': Boolean(tempConfig['show-path'] ?? false),
+    locale: String(tempConfig.locale || 'en') as SupportedLocale,
+    'show-hidden': Boolean(tempConfig['show-hidden'] ?? false),
+    'max-depth': Number(tempConfig['max-depth'] ?? 0),
+    'api-type': String(tempConfig['api-type'] || 'completions') as ApiType,
+    // Optional fields
+    ...(tempConfig.input !== undefined && { input: String(tempConfig.input) }),
+    ...(tempConfig.url !== undefined && { url: String(tempConfig.url) }),
+    ...(tempConfig.output !== undefined && { output: String(tempConfig.output) }),
+    ...(tempConfig.extension !== undefined && { extension: String(tempConfig.extension) }),
+    ...(tempConfig['file-filter'] !== undefined && {
+      'file-filter': String(tempConfig['file-filter']),
+    }),
+  };
 
   return config;
 }
 
 /**
- * Returns use-case based configuration values.
- * Based on examples from README.md.
- */
-function getUseCaseValues(): Record<string, any> {
-  return {
-    input: './docs',
-    extension: 'md',
-    rename: true,
-    output: './translated',
-    language: 'ko',
-    openaiUrl: 'https://api.openai.com/v1/chat/completions',
-    apiKey: '',
-    model: 'gpt-3.5-turbo',
-    retry: true,
-    log: true,
-    logFile: './logs/translation.log',
-    logDir: './logs',
-    retryCount: 3,
-    retryDelay: 10,
-    path: '.',
-    showPath: true,
-    showHidden: false,
-    maxDepth: 5,
-    fileFilter: '.md,.txt',
-    locale: 'ko',
-  };
-}
-
-/**
  * Creates a .amdtrc configuration file.
  * @param outputPath Configuration file path (default: .amdtrc in the project root)
- * @param useCustomValues Whether to use use-case based values
+ * @param customValues Optional custom values to override defaults
  */
 function generateConfigFile(
   outputPath: string = path.join(process.cwd(), '.amdtrc'),
-  useCustomValues: boolean = true,
+  customValues: Partial<Config> = {},
 ): void {
-  const customValues = useCustomValues ? getUseCaseValues() : {};
   const config = optionsToConfig(customValues);
 
   // Create nicely formatted JSON string
@@ -91,18 +107,12 @@ function generateConfigFile(
   fs.writeFileSync(outputPath, configStr);
 
   console.log(`Configuration file created: ${outputPath}`);
-  console.log(`Use-case based values used: ${useCustomValues ? 'Yes' : 'No'}`);
 }
 
-// Command line argument processing
-// Example: node generate-config.js --default --output=./custom-config.json
-if (require.main === module) {
-  const args = process.argv.slice(2);
-  const useDefault = args.includes('--default');
-  const outputArg = args.find((arg) => arg.startsWith('--output='));
-  const outputPath = outputArg ? outputArg.split('=')[1] : undefined;
+// Parse command line arguments and generate config file
+const args = process.argv.slice(2);
+const outputArg = args.find((arg) => arg.startsWith('--output='));
+const outputPath = outputArg ? outputArg.split('=')[1] : undefined;
+generateConfigFile(outputPath);
 
-  generateConfigFile(outputPath, !useDefault);
-}
-
-export { optionsToConfig, generateConfigFile, getUseCaseValues };
+export { optionsToConfig, generateConfigFile };

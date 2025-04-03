@@ -44,12 +44,7 @@ async function testConfigurationSystem() {
   console.log('Configuration system test complete');
 }
 
-// Run test when script is executed directly
-if (require.main === module) {
-  testConfigurationSystem().catch((error) => {
-    console.error('Error occurred during test:', error);
-    process.exit(1);
-  });
-}
-
-export { testConfigurationSystem };
+testConfigurationSystem().catch((error) => {
+  console.error('Error occurred during test:', error);
+  process.exit(1);
+});

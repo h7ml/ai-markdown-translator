@@ -14,3 +14,4 @@ dist/
 .env
 dist/
 .cursorrules
+.amdtrc
