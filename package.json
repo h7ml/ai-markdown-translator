@@ -21,10 +21,7 @@
     "release:major": "release-it major --ci",
     "test:ko": "npm run build && node dist/index.js",
     "test:ko-prompt": "npm run build && node dist/index.js -i src/prompts/system.md -o prompts_translated/system-ko.md -l Korean --locale ko --log",
-    "generate-config": "tsx src/cli/generate-config.ts",
-    "generate-config:default": "tsx src/cli/generate-config.ts --default",
-    "generate-config:custom": "tsx src/cli/generate-config.ts --output=./.amdtrc",
-    "test:cosmi": "tsx src/cli/test-config.ts"
+    "generate-config": "tsx src/cli/generate-config.ts"
   },
   "bin": {
     "ai-markdown-translator": "dist/index.js"
@@ -90,6 +87,5 @@
   },
   "bugs": {
     "url": "https://github.com/h7ml/ai-markdown-translator/issues"
-  },
-  "packageManager": "pnpm@10.5.2+sha512.da9dc28cd3ff40d0592188235ab25d3202add8a207afbedc682220e4a0029ffbff4562102b9e6e46b4e3f9e8bd53e6d05de48544b0c57d4b0179e22c76d1199b"
+  }
 }

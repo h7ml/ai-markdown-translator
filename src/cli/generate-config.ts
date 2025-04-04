@@ -94,10 +94,10 @@ function optionsToConfig(customValues: Partial<Config> = {}): Config {
  * @param outputPath Configuration file path (default: .amdtrc in the project root)
  * @param customValues Optional custom values to override defaults
  */
-function generateConfigFile(
-  outputPath: string = path.join(process.cwd(), '.amdtrc'),
-  customValues: Partial<Config> = {},
-): void {
+function generateConfigFile(): void {
+  const outputPath: string = path.join(process.cwd(), '.amdtrc');
+  const customValues: Partial<Config> = {};
+
   const config = optionsToConfig(customValues);
 
   // Create nicely formatted JSON string
@@ -109,10 +109,4 @@ function generateConfigFile(
   console.log(`Configuration file created: ${outputPath}`);
 }
 
-// Parse command line arguments and generate config file
-const args = process.argv.slice(2);
-const outputArg = args.find((arg) => arg.startsWith('--output='));
-const outputPath = outputArg ? outputArg.split('=')[1] : undefined;
-generateConfigFile(outputPath);
-
-export { optionsToConfig, generateConfigFile };
+generateConfigFile();
